@@ -19,5 +19,7 @@ public class ReimbursementApp
     	Employee e1 = new Employee("Kenny234", "turtles54", "Dave", "Mathew");
     	EmployeeDAO employeeDAO = new EmployeeDAO();
     	employeeDAO.addEmployee(e1);
+    	
+    	System.out.println("Done");
     }
 }

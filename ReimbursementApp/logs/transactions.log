@@ -1,0 +1,10 @@
+01-08 16:35:00 ReimbursementApp:17 - test
+01-08 16:35:00 EmployeeDAO:95 - MaxID in table employees = 0
+01-08 16:35:00 EmployeeDAO:47 - Failed To Insert Into employees Employee With 0, username = Kenny234, ... 
+01-08 16:35:00 EmployeeDAO:48 - 	ERROR: duplicate key value violates unique constraint "employees_pkey"
+  Detail: Key (employee_id)=(0) already exists.
+01-08 16:35:27 ReimbursementApp:17 - test
+01-08 16:35:28 EmployeeDAO:95 - MaxID in table employees = 0
+01-08 16:35:28 EmployeeDAO:47 - Failed To Insert Into employees Employee With 0, username = Kenny234, ... 
+01-08 16:35:28 EmployeeDAO:48 - 	ERROR: duplicate key value violates unique constraint "employees_pkey"
+  Detail: Key (employee_id)=(0) already exists.
