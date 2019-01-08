@@ -1,0 +1,3 @@
+jdbc:postgresql://onedb.c2b0efcnnuuk.us-east-2.rds.amazonaws.com:5432/onedb
+christianmeyer
+qwertyuiop
