@@ -11,6 +11,7 @@ import employees.Employee;
 public class ReimbursementApp 
 {
     public static void main( String[] args ) {
+    	//PropertyConfigurator.configure(System.getProperty("user.dir") + File.separator + "\\src\\main\\java\\resources\\log4j.properties");
     	/*
     	PropertyConfigurator.configure(System.getProperty("user.dir") + File.separator +
     			"\\src\\main\\java\\resources\\log4j.properties");

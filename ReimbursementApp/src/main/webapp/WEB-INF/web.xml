@@ -3,13 +3,13 @@
   
   <servlet>
     <description></description>
-    <display-name>CustomerServlet</display-name>
-    <servlet-name>CustomerServlet</servlet-name>
-    <servlet-class>com.servlets.CustomerServlet</servlet-class>
+    <display-name>EmployeeServlet</display-name>
+    <servlet-name>EmployeeServlet</servlet-name>
+    <servlet-class>com.servlets.EmployeeServlet</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>CustomerServlet</servlet-name>
-    <url-pattern>/CustomerServlet</url-pattern>
+    <servlet-name>EmployeeServlet</servlet-name>
+    <url-pattern>/EmployeeServlet</url-pattern>
   </servlet-mapping>
   
    <welcome-file-list>
@@ -20,4 +20,27 @@
   	<location>/404.html</location>
   </error-page>
   
+  
+<!--
+  <listener>
+      <listener-class>org.apache.logging.log4j.web.Log4jServletContextListener</listener-class>
+  </listener>
+
+  <filter>
+      <filter-name>log4jServletFilter</filter-name>
+      <filter-class>org.apache.logging.log4j.web.Log4jServletFilter</filter-class>
+  </filter>
+  <filter-mapping>
+      <filter-name>log4jServletFilter</filter-name>
+      <url-pattern>/*</url-pattern>
+      <dispatcher>REQUEST</dispatcher>
+      <dispatcher>FORWARD</dispatcher>
+      <dispatcher>INCLUDE</dispatcher>
+      <dispatcher>ERROR</dispatcher>
+  </filter-mapping>
+  <context-param>
+	<param-name>isLog4jAutoInitializationDisabled</param-name>
+	<param-value>true</param-value>
+  </context-param>
+-->
 </web-app>

@@ -18,21 +18,26 @@ public class DBConnection {
 	private static String pgUsername = null;
 	private static String pgPassword = null;
 	
-	private static File pgInfo = new File(new String("preferences/pgInfo.txt"));
-	static final Logger log = Logger.getLogger(DBConnection.class);
+	private static File pgInfo = new File("preferences/pgInfo.txt");
+	//static final Logger log = Logger.getLogger(DBConnection.class);
 	
 	public DBConnection() { }
 	
 	public static void startConnection() {
-		if (pgUrl == null)
-			getPgInfo();
-		
+		//if (pgUrl == null)
+			//getPgInfo();
 		try {
 			DriverManager.registerDriver(new org.postgresql.Driver());
-			connection = DriverManager.getConnection(pgUrl,  pgUsername,  pgPassword);
+			/*
+			jdbc:postgresql://onedb.c2b0efcnnuuk.us-east-2.rds.amazonaws.com:5432/onedb
+			christianmeyer
+			qwertyuiop
+			 */
+			connection = DriverManager.getConnection("jdbc:postgresql://onedb.c2b0efcnnuuk.us-east-2.rds.amazonaws.com:5432/onedb", "christianmeyer",  "qwertyuiop");
 		} catch (SQLException e) {
-			log.debug("Unable To Start Connection."); 
-			log.debug("\t" + e.getLocalizedMessage());
+			e.printStackTrace(); System.out.println();
+			//log.debug("Unable To Start Connection."); 
+			//log.debug("\t" + e.getLocalizedMessage());
 		}
 	}
 	
@@ -50,8 +55,9 @@ public class DBConnection {
 			pgUsername = in.nextLine();
 			pgPassword = in.nextLine();
 		} catch (FileNotFoundException e) {
-			log.debug("Unable To Verify pgDB Credentials.");
-			log.debug("\t" + e.getLocalizedMessage());
+			e.printStackTrace(); System.out.println();
+			//log.debug("Unable To Verify pgDB Credentials.");
+			//log.debug("\t" + e.getLocalizedMessage());
 		}
 	}
 }
