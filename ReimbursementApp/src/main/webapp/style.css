@@ -1,66 +1,52 @@
 @import url('bootstrap.min.css');
 
-body{
+body {
     background: url("images/explorer_mountains_cropped.jpg") no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
-    
+
     font-family: 'Bree Serif', serif;
     font-display: white;
     /* color: rgba(9, 50, 66, 0.966); */
     color: white;
 }
+
 .navbar {
     /*background: transparent;*/
     /*border-color: transparent;*/
-    background-color:rgba(47, 133, 167, 0.966);
+    background-color: rgba(47, 133, 167, 0.966);
 }
+
 @media (max-width : 577px) {
     .navbar-collapse li a {
-        
+
         background: rgba(62, 186, 235, 0.966);
     }
+
     .navbar-collapse last-child {
         padding-bottom: 5px;
     }
 }
+
 .search-input {
     max-width: 80%;
 }
+
 .search-btn {
-    background-color:rgba(47, 133, 167, 0.966);
+    background-color: rgba(47, 133, 167, 0.966);
     color: white;
 }
-.search-btn:hover { 
+
+.search-btn:hover {
     background-color: rgba(52, 129, 230, 0.966);
 }
-.submit-btn:active { 
+
+.submit-btn:active {
     background-color: rgba(52, 129, 230, 0.966);
 }
-.jumbotron-fluid{
-    margin: 0;
-    padding: 0;
-    display: block;
-}
-.container {
-    display: inline-block;
 
-    margin-top: 120px;
-    margin-bottom: 120px;
-
-    padding-left: 10%;
-    padding-right: 10%;
-    padding-top: 50px;
-    padding-bottom: 50px;
-
-    height: 425px;
-    width: 50%;
-    min-width: 425px;
-
-    background-color: rgba(47, 133, 167, 0.6);
-}
 .login {
     display: -ms-flexbox;
     display: -webkit-box;
@@ -81,11 +67,13 @@ body{
     /*padding: 15px;*/
     margin: 0 auto;
 }
+
 .form-signin .checkbox {
     transform: scale(1.2);
     font-size: 100%;
     font-weight: 575;
 }
+
 .form-signin .form-control {
     position: relative;
     box-sizing: border-box;
@@ -93,31 +81,94 @@ body{
     padding: 10px;
     font-size: 16px;
 }
+
 .form-signin .form-control:focus {
     z-index: 2;
 }
+
 .form-signin input[type="email"] {
     margin-bottom: -1px;
     border-bottom-right-radius: 0;
     border-bottom-left-radius: 0;
 }
+
 .form-signin input[type="password"] {
     margin-bottom: 10px;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
 }
-.submit-btn { /* will change button font */
-    background-color:rgba(47, 133, 167, 0.966);
+
+.submit-btn {
+    /* will change button font */
+    background-color: rgba(47, 133, 167, 0.966);
     color: white;
     /* color: blueviolet; */
 }
-.submit-btn:hover { 
+
+.submit-btn:hover {
     background-color: rgba(52, 129, 230, 0.966);
 }
-.submit-btn:active { 
+
+.submit-btn:active {
     background-color: rgba(52, 129, 230, 0.966);
 }
 
+/* CUSTOMER LOGIN */
+.jumbotron-fluid.customer-login {
+    margin: 0;
+    padding: 0;
+    display: block;
+}
 
+.container.customer-login {
+    display: inline-block;
 
-  
+    margin-top: 120px;
+    margin-bottom: 120px;
+
+    padding-left: 10%;
+    padding-right: 10%;
+    padding-top: 50px;
+    padding-bottom: 50px;
+
+    height: 425px;
+    width: 50%;
+    min-width: 425px;
+
+    background-color: rgba(47, 133, 167, 0.6);
+}
+
+/* REIMBURSEMENT VIEW */
+.jumbotron-fluid.reimbursement-view {
+    color: white;
+
+    margin-top: 60px;
+    margin-bottom: 60px;
+
+    padding-top: 30px;
+    padding-bottom: 10px;
+
+    height: 100%;
+    min-width: 425px;
+
+    background-color: rgba(47, 133, 167, 0.0);
+}
+
+.container.reimbursement-view {
+    display: inline-block;
+
+    padding-left: 10%;
+    padding-right: 10%;
+    padding-top: 50px;
+    padding-bottom: 50px;
+
+    width: 80%;
+    min-width: 425px;
+
+    background-color: rgba(47, 133, 167, 0.6);
+}
+
+#img-upload {
+    width: 100%;
+    height: auto;
+}

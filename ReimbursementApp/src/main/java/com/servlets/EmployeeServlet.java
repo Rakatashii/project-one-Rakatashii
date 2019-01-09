@@ -34,26 +34,18 @@ public class EmployeeServlet extends HttpServlet {
 		String password = request.getParameter("password");
 		output.write("[ username: " + username + ", ");
 		output.write("password: " + password + " ]");
-		if (employeeService.verifyLoginInfo(username, password))
+		if (employeeService.verifyLoginInfo(username, password)) {
 			loggedInEmployee = employeeService.getLoggedInEmployee();
-		if (loggedInEmployee != null) {
-			System.out.println("employee's username is " + loggedInEmployee.getUsername());
-			System.out.println("employee's password is " + loggedInEmployee.getPassword());
-			/*
-			try {
-				Thread.sleep(2000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			response.sendRedirect("http://localhost:8080/Reimbursements/employee_view.html");
+			//request.getRequestDispatcher("http://localhost:8080/Reimbursements/employee_view.html").forward(request, response);
+			if (loggedInEmployee != null) {
+				System.out.println("employee's username is " + loggedInEmployee.getUsername());
+				System.out.println("employee's password is " + loggedInEmployee.getPassword());
+		
 			}
-			*/
-			//request.getRequestDispatcher("https://google.com").forward(request, response);
-		} //else request.getRequestDispatcher("http:////localhost:8080//Reimbursements//").forward(request, response);
-		else { 
-			System.out.println("Employee is null.");
 		}
-		Employee newEmployee = new Employee(1, "Jayson", "skjdcn", "jay", "casper", 0);
-		new EmployeeDAO().addEmployee(newEmployee);
+		//Employee newEmployee = new Employee(1, "Jayson", "skjdcn", "jay", "casper", 0);
+		//new EmployeeDAO().addEmployee(newEmployee);
 	}
 
 }
