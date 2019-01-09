@@ -14,6 +14,9 @@
   	<maven.compiler.source>1.8</maven.compiler.source>
    	<maven.compiler.target>1.8</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <!-- 
+    <tomcat.version>8.</tomcat.version>
+    -->
   </properties>
 
   <dependencies>
@@ -39,6 +42,15 @@
 	    <version>2.5</version>
 	    <scope>provided</scope>
 	</dependency>
+	
+	<!-- 
+	<dependency>
+  		<groupId>org.apache.tomcat.embed</groupId>
+  		<artifactId>tomcat-embed-core</artifactId>
+  	</dependency>
+  	-->
   </dependencies>
+  
+
   
 </project>

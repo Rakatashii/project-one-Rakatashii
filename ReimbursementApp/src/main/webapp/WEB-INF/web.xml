@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
-  
   <servlet>
     <description></description>
     <display-name>EmployeeServlet</display-name>
@@ -12,35 +11,22 @@
     <url-pattern>/EmployeeServlet</url-pattern>
   </servlet-mapping>
   
-   <welcome-file-list>
+  <servlet>
+    <description></description>
+    <display-name>ReimbursementServlet</display-name>
+    <servlet-name>ReimbursementServlet</servlet-name>
+    <servlet-class>com.servlets.ReimbursementServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ReimbursementServlet</servlet-name>
+    <url-pattern>/ReimbursementServlet</url-pattern>
+  </servlet-mapping>
+  
+    <welcome-file-list>
     <welcome-file>home.html</welcome-file>
   </welcome-file-list>
   <error-page>
-  	<error-code>404</error-code>
-  	<location>/404.html</location>
+    <error-code>404</error-code>
+    <location>/404.html</location>
   </error-page>
-  
-  
-<!--
-  <listener>
-      <listener-class>org.apache.logging.log4j.web.Log4jServletContextListener</listener-class>
-  </listener>
-
-  <filter>
-      <filter-name>log4jServletFilter</filter-name>
-      <filter-class>org.apache.logging.log4j.web.Log4jServletFilter</filter-class>
-  </filter>
-  <filter-mapping>
-      <filter-name>log4jServletFilter</filter-name>
-      <url-pattern>/*</url-pattern>
-      <dispatcher>REQUEST</dispatcher>
-      <dispatcher>FORWARD</dispatcher>
-      <dispatcher>INCLUDE</dispatcher>
-      <dispatcher>ERROR</dispatcher>
-  </filter-mapping>
-  <context-param>
-	<param-name>isLog4jAutoInitializationDisabled</param-name>
-	<param-value>true</param-value>
-  </context-param>
--->
 </web-app>

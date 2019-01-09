@@ -7,6 +7,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import dao.EmployeeDAO;
 import employees.Employee;
@@ -24,7 +25,7 @@ public class EmployeeServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		PrintWriter output = response.getWriter();
 		output.write("GET");
-		response.sendRedirect("http://localhost:8080/Reimbursements/");
+		response.sendRedirect("http://localhost:8080/Reimbursements/home.html");
 	}
 
 	@Override
@@ -34,16 +35,24 @@ public class EmployeeServlet extends HttpServlet {
 		String password = request.getParameter("password");
 		output.write("[ username: " + username + ", ");
 		output.write("password: " + password + " ]");
+		HttpSession session = request.getSession();
+		session.setAttribute("username", username);
+		session.setAttribute("password", password);
 		if (employeeService.verifyLoginInfo(username, password)) {
 			loggedInEmployee = employeeService.getLoggedInEmployee();
-			response.sendRedirect("http://localhost:8080/Reimbursements/employee_view.html");
-			//request.getRequestDispatcher("http://localhost:8080/Reimbursements/employee_view.html").forward(request, response);
+			
+			request.getRequestDispatcher("ReimbursementServlet").forward(request,  response);
+			
+			//response.sendRedirect("http://localhost:8080/Reimbursements/employee_view.html");
 			if (loggedInEmployee != null) {
-				System.out.println("employee's username is " + loggedInEmployee.getUsername());
-				System.out.println("employee's password is " + loggedInEmployee.getPassword());
-		
+				//System.out.println("employee's username is " + loggedInEmployee.getUsername());
+				//System.out.println("employee's password is " + loggedInEmployee.getPassword());
 			}
+		} else {
+			response.sendRedirect("http://localhost:8080/Reimbursements/EmployeeServlet");
 		}
+		//request.getRequestDispatcher("http://localhost:8080/Reimbursements/employee_view.html").forward(request, response);
+		
 		//Employee newEmployee = new Employee(1, "Jayson", "skjdcn", "jay", "casper", 0);
 		//new EmployeeDAO().addEmployee(newEmployee);
 	}
