@@ -10,11 +10,14 @@ public class ReimbursementService {
 	public void addReimbursement(Reimbursement reimbursement) {
 		EmployeeService employeeService = new EmployeeService();
 		Employee loggedInEmployee = employeeService.getLoggedInEmployee();
-		int itemID = reimbursementDAO.getNumReimbursements();
-		reimbursement.setEmployeeID(loggedInEmployee.getEmployeeID());
-		reimbursement.setItemID(itemID);
+		if (loggedInEmployee != null) {
+			int employeeID = loggedInEmployee.getEmployeeID();
+			reimbursement.setEmployeeID(employeeID);
+			int itemID = reimbursementDAO.getNumReimbursementsByEmployeeID(employeeID);
+			reimbursement.setItemID(itemID);
+			reimbursementDAO.addReimbursement(reimbursement);
+		}
 		System.out.println(reimbursement);
-		reimbursementDAO.addReimbursement(reimbursement);
 	}
 	
 	public void addImage() {
