@@ -53,10 +53,6 @@ public class EmployeeServlet extends HttpServlet {
 		} else {
 			response.sendRedirect("http://localhost:8080/Reimbursements/EmployeeServlet");
 		}
-		//request.getRequestDispatcher("http://localhost:8080/Reimbursements/employee_view.html").forward(request, response);
-		
-		//Employee newEmployee = new Employee(1, "Jayson", "skjdcn", "jay", "casper", 0);
-		//new EmployeeDAO().addEmployee(newEmployee);
 	}
 
 }

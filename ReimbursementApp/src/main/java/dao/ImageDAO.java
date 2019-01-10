@@ -14,9 +14,8 @@ public class ImageDAO {
 	
 	public void addImage(int item_id, File image) {
 		String tableName = "images";
-		String sql = "INSER INTO " + tableName + " VALES(?, ?)";
+		String sql = "INSERT INTO " + tableName + " VALES(?, ?)";
 		try {
-			
 			connection = DBConnection.getConnection();
 			PreparedStatement ps = connection.prepareStatement(sql);
 			

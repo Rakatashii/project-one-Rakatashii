@@ -19,6 +19,7 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
 import employees.Employee;
+import images.Image;
 import reimbursements.Reimbursement;
 import services.EmployeeService;
 import services.ReimbursementService;
@@ -34,7 +35,7 @@ public class ReimbursementServlet extends HttpServlet {
     }
     
     private static String getTheSubmittedFileName(Part part) {
-    	System.out.println("part.getHeader(\"content-disposition\"): " + part.getHeader("content-disposition").join(""));
+    	//System.out.println("part.getHeader(\"content-disposition\"): " + part.getHeader("content-disposition").join(""));
         for (String cd : part.getHeader("content-disposition").split(";")) {
             if (cd.trim().startsWith("filename")) {
                 String fileName = cd.substring(cd.indexOf('=') + 1).trim().replace("\"", "");
@@ -56,9 +57,9 @@ public class ReimbursementServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html;charset=UTF-8");
+		request.setCharacterEncoding("UTF-8");
 		PrintWriter output = response.getWriter();
-		
-		//EmployeeService employeeService = new EmployeeService();
+
 		ReimbursementService reimbursementService = new ReimbursementService();
 		
 		String rItem = request.getParameter("item");
@@ -71,23 +72,24 @@ public class ReimbursementServlet extends HttpServlet {
 		if (comments == null || comments.length() == 0) {
 			comments = "null";
 		}
-		//Employee loggedInEmployee = employeeService.getLoggedInEmployee();
-		
+
 		Reimbursement reimbursement = new Reimbursement(rItem, description, amount, comments);
 		reimbursementService.addReimbursement(reimbursement);
-		
-		//String description = request.getParameter("description"); // Retrieves <input type="text" name="description">
-	    Part filePart = request.getPart("image"); // Retrieves <input type="file" name="file">
+
+	    Part filePart = request.getPart("image");
 	    String fileName = null;
 	    InputStream fileContent = null;
 	    if (filePart != null) {
-	    	System.out.println("File is not empty!");
+	    	System.out.println("Response Contain Image File!");
 	    	fileContent = filePart.getInputStream();
-	    	fileName = Paths.get(getTheSubmittedFileName(filePart)).toString(); // MSIE fix.
-	    	//fileName = filePart.getSubmittedFileName();
-	    	System.out.println("File name: " + fileName);
+	    	fileName = Paths.get(getTheSubmittedFileName(filePart)).toString();
+	    	
+	    	System.out.println("File Name: " + fileName);
 	    	System.out.println(fileContent.toString());
-	    } else System.out.println("File IS empty.");
+	    	
+	    	Image image = new Image(fileName, fileContent);
+	    	reimbursementService.addImage(image);
+	    } else System.out.println("File Does NOT Contain Image File!");
 
 		response.sendRedirect("http://localhost:8080/Reimbursements/ReimbursementServlet");
 	}
