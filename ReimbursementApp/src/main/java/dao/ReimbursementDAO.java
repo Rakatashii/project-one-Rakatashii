@@ -14,7 +14,6 @@ import employees.Employee;
 import reimbursements.Reimbursement;
 
 public class ReimbursementDAO {
-	/*
 	private Connection connection;
 	private PreparedStatement ps;
 	//final Logger log = Logger.getLogger(EmployeeDAO.class);
@@ -29,9 +28,9 @@ public class ReimbursementDAO {
 			ps.setInt(2,  reimbursement.getItemID());
 			ps.setString(3, reimbursement.getItem());
 			ps.setString(4, reimbursement.getDescription());
-			ps.setString(5, reimbursement.getComments());
-			ps.setBlob;
-		
+			ps.setDouble(5, reimbursement.getAmount());
+			ps.setString(6, reimbursement.getComments());
+			
 			if (ps.executeUpdate() != 0) {
 				//log.debug("Inserted Into " + tableName + " Values(" + employee.getEmployeeID() + ", " + employee.getUsername() + ", ... )");
 				ps.close();
@@ -46,25 +45,20 @@ public class ReimbursementDAO {
 		} catch (PSQLException e) {
 			//log.debug("Failed To Insert Into " + tableName + " Employee With " + employee.getEmployeeID() + ", username = " + employee.getUsername() + ", ... ");
 			//log.debug("\t" + e.getLocalizedMessage());
-			//e.printStackTrace(); System.out.println();
+			e.printStackTrace(); System.out.println();
 			return false;
 		}
 		catch (SQLException e) {
 			//log.debug("Failed To Insert Into " + tableName + " Employee With " + employee.getEmployeeID() + ", username = " + employee.getUsername() + ", ... ");
 			//log.debug("\t" + e.getLocalizedMessage());
-			//e.printStackTrace(); System.out.println();
+			e.printStackTrace(); System.out.println();
 			return false;
 		}
 	}
-	public int getNumEmployees() {
-		String tableName = "employees";
+	public int getNumReimbursements() {
+		String tableName = "reimbursements";
 		try {
-			
 			connection = DBConnection.getConnection();
-			if (connection == null) {
-				System.out.println("Connection is Null!");
-				Thread.sleep(2000);
-			}
 			String sql = "SELECT COUNT(*) AS count FROM " + tableName + ";";
 			Statement statement = connection.createStatement();
 			ResultSet rs = statement.executeQuery(sql);
@@ -76,18 +70,15 @@ public class ReimbursementDAO {
 		} catch (SQLException e) {
 			//log.debug("Could Not Get Count For Table " + tableName);
 			e.printStackTrace(); System.out.println();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 		return 0;
 	}
-	public int getMaxEmployeeID() {
-		String tableName = "employees";
+	public int getNumReimbursementsByEmployeeID(int employee_id) {
+		String tableName = "reimbursements";
 		int maxID = 0;
 		try {
 			connection = DBConnection.getConnection();
-			String sql = "SELECT MAX(employee_id) FROM " + tableName + ";";
+			String sql = "SELECT MAX(employee_id) FROM " + tableName + " WHERE employee_id = " + employee_id;
 		
 			Statement statement = connection.createStatement(
 					ResultSet.TYPE_SCROLL_INSENSITIVE, 
@@ -106,34 +97,34 @@ public class ReimbursementDAO {
 		}
 		return maxID;
 	}
-	public ArrayList<Employee> getAllEmployees() {
-		String tableName = "employees";
-		ArrayList<Employee> employees = new ArrayList<>();
+	public ArrayList<Reimbursement> getReimbursementsByEmployeeID(int employee_id) {
+		String tableName = "reimbursements";
+		ArrayList<Reimbursement> reimbursements = new ArrayList<>();
 		try {
 			connection = DBConnection.getConnection();
-			String sql = "SELECT * FROM " + tableName + " ORDER BY employee_id;";
+			String sql = "SELECT * FROM " + tableName + " WHERE employee_id = " + employee_id + " ORDER BY employee_id;";
 			Statement statement = connection.createStatement();
 			ResultSet rs = statement.executeQuery(sql);
 
 			while (rs.next()) {
-				Employee employee = new Employee(rs.getInt(1), rs.getString(2), 
-						rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6));
-				employees.add(employee);
-				System.out.println(employee);
+				Reimbursement reimbursement = new Reimbursement(rs.getInt(1), rs.getInt(2), 
+						rs.getString(3), rs.getString(4), rs.getDouble(5), rs.getString(6));
+				reimbursements.add(reimbursement);
+				System.out.println(reimbursement);
 			}
 			statement.close(); rs.close();
 			//log.debug("Got employees ArraLiys With Size = " + employees.size());
-			return employees;
+			return reimbursements;
 		} catch (SQLException e) {
 			e.printStackTrace(); System.out.println();
 		}
-		return employees;
+		return reimbursements;
 	}
-	public Employee findEmployeeByID(int employee_id) {
-		String tableName = "employees";
+	public Employee getReimbursementByItemID(int employee_id) {
+		String tableName = "reimbursements";
 		try {
 			connection = DBConnection.getConnection();
-			String sql = "SELECT * FROM " + tableName + " WHERE employee_id = " + employee_id + ";";
+			String sql = "SELECT * FROM " + tableName + " WHERE employee_id = " + employee_id + " ORDER BY item_id";
 			Statement statement = connection.createStatement();
 			ResultSet rs = statement.executeQuery(sql);
 			
@@ -147,16 +138,18 @@ public class ReimbursementDAO {
 		} catch (SQLException e) {
 			//log.debug("Employee Not Found In " + tableName + " With employee_id = " + employee_id);
 			//log.debug("\t" + e.getLocalizedMessage()); 
+			e.printStackTrace(); System.out.println();
 		}
 		return null;
 	}
-	public boolean checkIfEmployeeExists(int id, boolean fromSampleTable) {
+	public boolean checkIfReimbursementExists(int employee_id, int item_id) {
 		String tableName = "employees";
 		try {
 			connection = DBConnection.getConnection();
-			String sql = "SELECT * FROM " + tableName + " WHERE employee_id = ?";
+			String sql = "SELECT * FROM " + tableName + " WHERE employee_id = ? AND item_id = ?";
 			PreparedStatement ps = connection.prepareStatement(sql);
-			ps.setInt(1, id);
+			ps.setInt(1, employee_id);
+			ps.setInt(2, item_id);
 			ResultSet rs = ps.executeQuery();
 			
 			if (rs.next()) {
@@ -173,7 +166,4 @@ public class ReimbursementDAO {
 		}
 		return false;
 	}
-}
-*/
-
 }

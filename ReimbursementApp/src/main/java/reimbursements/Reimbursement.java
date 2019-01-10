@@ -1,5 +1,7 @@
 package reimbursements;
 
+import java.io.File;
+
 import employees.Employee;
 
 public class Reimbursement {
@@ -8,7 +10,14 @@ public class Reimbursement {
 	private double amount;
 	private Employee employee;
 	
-	public Reimbursement(int itemID, String item, String description, String comments, double amount) {
+	public Reimbursement(int customerID, int itemID, String item, String description, double amount, String comments) {
+		super();
+		this.item = item;
+		this.description = description;
+		this.comments = comments;
+		this.amount = amount;
+	}
+	public Reimbursement(int itemID, String item, String description, double amount, String comments) {
 		super();
 		this.itemID = itemID;
 		this.item = item;
@@ -16,8 +25,7 @@ public class Reimbursement {
 		this.comments = comments;
 		this.amount = amount;
 	}
-	
-	public Reimbursement(String item, String description, String comments, double amount) {
+	public Reimbursement(String item, String description, double amount, String comments) {
 		super();
 		this.item = item;
 		this.description = description;
@@ -80,6 +88,9 @@ public class Reimbursement {
 	public void setEmployee(Employee employee) {
 		this.employee = employee;
 	}
-	
-	
+	@Override
+	public String toString() {
+		return "Reimbursement [employeeID=" + employeeID + ", itemID=" + itemID + ", item=" + item + ", description="
+				+ description + ", comments=" + comments + ", amount=" + amount + ", employee=" + employee + "]";
+	}
 }
