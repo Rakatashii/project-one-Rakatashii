@@ -44,15 +44,14 @@ public class EmployeeServlet extends HttpServlet {
 		if (employeeService.verifyLoginInfo(username, password)) {
 			loggedInEmployee = employeeService.getLoggedInEmployee();
 			
-			request.getRequestDispatcher("ReimbursementServlet").forward(request,  response);
-			
-			//response.sendRedirect("http://localhost:8080/Reimbursements/employee_view.html");
+			//request.getRequestDispatcher("ReimbursementServlet").forward(request,  response);
+			response.sendRedirect("http://localhost:8080/Reimbursements/employee_view.html");
 			if (loggedInEmployee != null) {
 				//System.out.println("employee's username is " + loggedInEmployee.getUsername());
 				//System.out.println("employee's password is " + loggedInEmployee.getPassword());
 			}
 		} else {
-			//response.sendRedirect("http://localhost:8080/Reimbursements/EmployeeServlet");
+			response.sendRedirect("http://localhost:8080/Reimbursements/EmployeeServlet");
 		}
 		//request.getRequestDispatcher("http://localhost:8080/Reimbursements/employee_view.html").forward(request, response);
 		

@@ -18,26 +18,16 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileItemIterator;
-import org.apache.commons.fileupload.FileItemStream;
-import org.apache.commons.fileupload.FileUploadException;
-import org.apache.commons.fileupload.RequestContext;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
-import org.apache.commons.fileupload.util.Streams;
-
 import employees.Employee;
 import reimbursements.Reimbursement;
 import services.EmployeeService;
 import services.ReimbursementService;
 
-@WebServlet("/reimbursements")
+@WebServlet("/expenses")
 @MultipartConfig
 public class ReimbursementServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	// location to store file uploaded
-    private static final String UPLOAD_DIRECTORY = "uploads";
 	
     public ReimbursementServlet() {
         super();
@@ -65,6 +55,7 @@ public class ReimbursementServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		response.setContentType("text/html;charset=UTF-8");
 		PrintWriter output = response.getWriter();
 		
 		//EmployeeService employeeService = new EmployeeService();
@@ -88,13 +79,12 @@ public class ReimbursementServlet extends HttpServlet {
 		//String description = request.getParameter("description"); // Retrieves <input type="text" name="description">
 	    Part filePart = request.getPart("image"); // Retrieves <input type="file" name="file">
 	    String fileName = null;
-	    System.out.println("File name: " + fileName);
 	    InputStream fileContent = null;
 	    if (filePart != null) {
 	    	System.out.println("File is not empty!");
 	    	fileContent = filePart.getInputStream();
-	    	//fileName = Paths.get(getTheSubmittedFileName(filePart)).getFileName().toString(); // MSIE fix.
-	    	fileName = getTheSubmittedFileName(filePart);
+	    	fileName = Paths.get(getTheSubmittedFileName(filePart)).toString(); // MSIE fix.
+	    	//fileName = filePart.getSubmittedFileName();
 	    	System.out.println("File name: " + fileName);
 	    	System.out.println(fileContent.toString());
 	    } else System.out.println("File IS empty.");

@@ -104,23 +104,16 @@
                     
                     <img src="" class="img-fluid ${3|rounded-top,rounded-right,rounded-bottom,rounded-left,rounded-circle,|}" alt="">
 
-					<!-- 
-					<form method="POST" enctype="multipart/form-data" action="fup.cgi">
-						<input type="file" name="upfile"><br /> <input type="text"
-							name="note"><br /> <br /> <input type="submit"
-							value="Press"> to upload the file!
-					</form>
-					-->
 					
 					<div class="form-group">
                         <label>Upload Image</label>
                         <div class="input-group">
                             <span class="input-group-btn">
                                 <span class="btn btn-default btn-file">
-                                    Browse… <input type="file" id="imgInp">
+                                    Browse… <input type="file" name="image" id="imgInp">
                                 </span>
                             </span>
-                            <input type="file" name="image" class="form-control" >
+                            <input type="file" class="form-control" >
                             <!--readonly-->
                         </div>
                         <img id='img-upload' />

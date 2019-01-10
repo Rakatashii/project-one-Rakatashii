@@ -23,9 +23,6 @@ $(document).ready(function () {
         var input = $(this)
         var label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
         input.trigger('fileselect', [label]);
-        
-        let extraSpace = document.createElement('br');
-        document.getElementById('img_upload').innerHTML.appendChild(extraSpace);
     });
 
     $('.btn-file :file').on('fileselect', function (event, label) {

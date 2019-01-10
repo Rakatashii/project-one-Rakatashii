@@ -75,27 +75,22 @@ public class ReimbursementDAO {
 	}
 	public int getNumReimbursementsByEmployeeID(int employee_id) {
 		String tableName = "reimbursements";
-		int maxID = 0;
 		try {
 			connection = DBConnection.getConnection();
-			String sql = "SELECT MAX(employee_id) FROM " + tableName + " WHERE employee_id = " + employee_id;
+			String sql = "SELECT COUNT(*) as count FROM " + tableName + " WHERE employee_id = " + employee_id;
 		
-			Statement statement = connection.createStatement(
-					ResultSet.TYPE_SCROLL_INSENSITIVE, 
-				    ResultSet.CONCUR_READ_ONLY );
+			Statement statement = connection.createStatement();
 			ResultSet rs = statement.executeQuery(sql);
-			
-			if (rs.next() == true) maxID = rs.getInt(1);
-			else return 0;
-			
+			rs.next();
+			int count = rs.getInt("count");
 			statement.close(); rs.close();
-			//log.debug("MaxID in table " + tableName + " = " + maxID);
-			return maxID;
+			//log.debug("Current Count For " + tableName + " Is " + count);
+			return count;
 		} catch (SQLException e) {
 			//log.debug("Could not get maxID from table " + tableName);
 			e.printStackTrace(); System.out.println();
 		}
-		return maxID;
+		return 0;
 	}
 	public ArrayList<Reimbursement> getReimbursementsByEmployeeID(int employee_id) {
 		String tableName = "reimbursements";
