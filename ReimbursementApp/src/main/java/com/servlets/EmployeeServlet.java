@@ -25,6 +25,7 @@ public class EmployeeServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		PrintWriter output = response.getWriter();
 		output.write("GET");
+		
 		response.sendRedirect("http://localhost:8080/Reimbursements/home.html");
 	}
 
@@ -33,11 +34,11 @@ public class EmployeeServlet extends HttpServlet {
 		PrintWriter output = response.getWriter();
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
-		output.write("[ username: " + username + ", ");
-		output.write("password: " + password + " ]");
-		HttpSession session = request.getSession();
+		
+		HttpSession session = request.getSession(true);
 		session.setAttribute("username", username);
 		session.setAttribute("password", password);
+		
 		if (employeeService.verifyLoginInfo(username, password)) {
 			loggedInEmployee = employeeService.getLoggedInEmployee();
 			
@@ -49,7 +50,7 @@ public class EmployeeServlet extends HttpServlet {
 				//System.out.println("employee's password is " + loggedInEmployee.getPassword());
 			}
 		} else {
-			response.sendRedirect("http://localhost:8080/Reimbursements/EmployeeServlet");
+			//response.sendRedirect("http://localhost:8080/Reimbursements/EmployeeServlet");
 		}
 		//request.getRequestDispatcher("http://localhost:8080/Reimbursements/employee_view.html").forward(request, response);
 		

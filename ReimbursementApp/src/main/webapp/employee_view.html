@@ -87,7 +87,7 @@
         <div class="jumbotron-fluid text-center reimbursement-view">
             <div class="container reimbursement-view">
 
-                <form class="form-reimbursement" action="ReimbursementServlet" method="POST">
+                <form class="form-reimbursement" action="ReimbursementServlet" enctype="multipart/form-data" method="POST">
                     <h1 class="h3 mb-3 font-weight-normal">New Reimbursement</h1>
 
                     <label for="inputItem" class="sr-only">Item: </label>
@@ -103,8 +103,16 @@
                     <textarea name="comments" id="comments" class="form-control" placeholder="Comments"></textarea>
                     
                     <img src="" class="img-fluid ${3|rounded-top,rounded-right,rounded-bottom,rounded-left,rounded-circle,|}" alt="">
-                    
-                    <div class="form-group">
+
+					<!-- 
+					<form method="POST" enctype="multipart/form-data" action="fup.cgi">
+						<input type="file" name="upfile"><br /> <input type="text"
+							name="note"><br /> <br /> <input type="submit"
+							value="Press"> to upload the file!
+					</form>
+					-->
+					
+					<div class="form-group">
                         <label>Upload Image</label>
                         <div class="input-group">
                             <span class="input-group-btn">
@@ -112,7 +120,8 @@
                                     Browse… <input type="file" id="imgInp">
                                 </span>
                             </span>
-                            <input type="text" class="form-control" readonly>
+                            <input type="file" name="image" class="form-control" >
+                            <!--readonly-->
                         </div>
                         <img id='img-upload' />
                     </div>

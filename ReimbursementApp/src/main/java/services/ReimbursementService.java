@@ -17,4 +17,7 @@ public class ReimbursementService {
 		reimbursementDAO.addReimbursement(reimbursement);
 	}
 	
+	public void addImage() {
+		
+	}
 }
