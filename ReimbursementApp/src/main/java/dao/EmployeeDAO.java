@@ -54,6 +54,46 @@ public class EmployeeDAO {
 			return false;
 		}
 	}
+	public boolean updateEmployee(Employee employee) {
+		String tableName = "employees";
+		try {
+			connection = DBConnection.getConnection();
+			String sql = "UPDATE " + tableName + " SET "
+				+ "employee_id=?, username=?, password=?, firstname=?, "
+				+ "lastname=?, num_reimbursements=? WHERE employee_id=?";
+			ps = connection.prepareStatement(sql);
+			ps.setInt(1,  employee.getEmployeeID());
+			ps.setString(2, employee.getUsername());
+			ps.setString(3, employee.getPassword());
+			ps.setString(4, employee.getFirstname());
+			ps.setString(5,  employee.getLastname());
+			ps.setInt(6, employee.getNumReimbursements());
+			ps.setInt(7, employee.getEmployeeID());
+		
+			if (ps.executeUpdate() != 0) {
+				//log.debug("Inserted Into " + tableName + " Values(" + employee.getEmployeeID() + ", " + employee.getUsername() + ", ... )");
+				ps.close();
+				return true;
+			} else {
+				ps.close();
+				//log.debug("Failed To Insert Into " + tableName + " Employee With " + employee.getEmployeeID() + ", username = " + employee.getUsername() + ", ... ");
+				//log.debug("\t" + "ps was closed.");
+				//e.printStackTrace(); System.out.println();
+				return false;
+			} 
+		} catch (PSQLException e) {
+			//log.debug("Failed To Insert Into " + tableName + " Employee With " + employee.getEmployeeID() + ", username = " + employee.getUsername() + ", ... ");
+			//log.debug("\t" + e.getLocalizedMessage());
+			//e.printStackTrace(); System.out.println();
+			return false;
+		}
+		catch (SQLException e) {
+			//log.debug("Failed To Insert Into " + tableName + " Employee With " + employee.getEmployeeID() + ", username = " + employee.getUsername() + ", ... ");
+			//log.debug("\t" + e.getLocalizedMessage());
+			//e.printStackTrace(); System.out.println();
+			return false;
+		}
+	}
 	public int getNumEmployees() {
 		String tableName = "employees";
 		try {
@@ -127,7 +167,7 @@ public class EmployeeDAO {
 		}
 		return employees;
 	}
-	public Employee findEmployeeByID(int employee_id) {
+	public Employee getEmployeeByID(int employee_id) {
 		String tableName = "employees";
 		try {
 			connection = DBConnection.getConnection();

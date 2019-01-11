@@ -1,5 +1,6 @@
-DROP IF EXISTS TABLE images;
+DROP TABLE IF EXISTS images;
 CREATE TABLE images (
-	item_id INTEGER PRIMARY KEY REFERENCES reimbursements.item_id CHECK (item_id >= 0),
-	img_byes BYTEA NOT NULL
+	image_id INTEGER PRIMARY KEY UNIQUE CHECK (image_id >= 0) REFERENCES reimbursements(reimbursement_id),
+	image_name VARCHAR(255) UNIQUE NOT NULL,
+	bytestream BYTEA NOT NULL
 );

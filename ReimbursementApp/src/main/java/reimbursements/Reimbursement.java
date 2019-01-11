@@ -5,21 +5,22 @@ import java.io.File;
 import employees.Employee;
 
 public class Reimbursement {
-	private int employeeID, itemID;
+	private int employeeID, reimbursementID;
 	private String item, description, comments;
 	private double amount;
 	private Employee employee;
 	
-	public Reimbursement(int customerID, int itemID, String item, String description, double amount, String comments) {
+	public Reimbursement(int customerID, int reimbursementID, String item, String description, double amount, String comments) {
 		super();
+		this.reimbursementID = -1;
 		this.item = item;
 		this.description = description;
 		this.comments = comments;
 		this.amount = amount;
 	}
-	public Reimbursement(int itemID, String item, String description, double amount, String comments) {
+	public Reimbursement(int reimbursementID, String item, String description, double amount, String comments) {
 		super();
-		this.itemID = itemID;
+		this.reimbursementID = reimbursementID;
 		this.item = item;
 		this.description = description;
 		this.comments = comments;
@@ -27,6 +28,7 @@ public class Reimbursement {
 	}
 	public Reimbursement(String item, String description, double amount, String comments) {
 		super();
+		this.reimbursementID = -1;
 		this.item = item;
 		this.description = description;
 		this.comments = comments;
@@ -41,12 +43,12 @@ public class Reimbursement {
 		this.employeeID = employeeID;
 	}
 
-	public int getItemID() {
-		return itemID;
+	public int getReimbursementID() {
+		return reimbursementID;
 	}
 
-	public void setItemID(int itemID) {
-		this.itemID = itemID;
+	public void setReimbursementID(int reimbursementID) {
+		this.reimbursementID = reimbursementID;
 	}
 
 	public String getItem() {
@@ -90,7 +92,7 @@ public class Reimbursement {
 	}
 	@Override
 	public String toString() {
-		return "Reimbursement [employeeID=" + employeeID + ", itemID=" + itemID + ", item=" + item + ", description="
-				+ description + ", comments=" + comments + ", amount=" + amount + ", employee=" + employee + "]";
+		return "Reimbursement [employeeID=" + employeeID + ", reimbursementID=" + reimbursementID + ", item=" + item + ", description="
+				+ description + ", amount=" + amount + ", comments=" + comments + "]";
 	}
 }

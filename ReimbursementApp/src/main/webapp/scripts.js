@@ -26,7 +26,7 @@ $(document).ready(function () {
     });
 
     $('.btn-file :file').on('fileselect', function (event, label) {
-        var input = $(this).parents('.input-group').find(':text'),
+        var input = $(this).parents('.input-group').find(':file'),
             log = label;
 
         if (input.length) {

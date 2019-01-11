@@ -14,9 +14,6 @@
   	<maven.compiler.source>1.8</maven.compiler.source>
    	<maven.compiler.target>1.8</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <!-- 
-    <tomcat.version>8.</tomcat.version>
-    -->
   </properties>
 
   <dependencies>
@@ -61,7 +58,5 @@
 	    <version>8.5.37</version>
 	  </dependency>
   </dependencies>
-  
-
   
 </project>

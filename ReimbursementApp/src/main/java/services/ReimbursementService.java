@@ -21,12 +21,12 @@ public class ReimbursementService {
 		if (loggedInEmployee != null) {
 			int employeeID = this.loggedInEmployee.getEmployeeID();
 			this.reimbursement.setEmployeeID(employeeID);
-			int itemID = reimbursementDAO.getNumReimbursementsByEmployeeID(employeeID);
-			this.reimbursement.setItemID(itemID);
+			int expenseID = reimbursementDAO.getNumReimbursementsByEmployeeID(employeeID);
+			this.reimbursement.setReimbursementID(expenseID);
 			
 			reimbursementDAO.addReimbursement(this.reimbursement);
 			loggedInEmployee.setNumReimbursements(reimbursementDAO.getNumReimbursementsByEmployeeID(employeeID));
-			// TODO create update meth in employee DAO and update loggedInEmployee
+			employeeDAO.updateEmployee(loggedInEmployee);
 		} else {
 			reimbursement = null;
 		}
@@ -37,7 +37,7 @@ public class ReimbursementService {
 	public void addImage(Image image) {
 		if (this.reimbursement != null) {
 			this.image = image;
-			if (this.image.getItemID() == -1) this.image.setItemID(reimbursement.getItemID());
+			if (this.image.getImageID() == -1) this.image.setImageID(reimbursement.getReimbursementID());
 			image.uploadImageLocally();
 		}
 	}

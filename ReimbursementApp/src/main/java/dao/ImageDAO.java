@@ -12,9 +12,9 @@ import database.DBConnection;
 public class ImageDAO {
 	Connection connection;
 	
-	public void addImage(int item_id, File image) {
+	public void addImage(int item_id, String fileName, File image) {
 		String tableName = "images";
-		String sql = "INSERT INTO " + tableName + " VALES(?, ?)";
+		String sql = "INSERT INTO " + tableName + " VALES(?, ?, ?)";
 		try {
 			connection = DBConnection.getConnection();
 			PreparedStatement ps = connection.prepareStatement(sql);
@@ -23,7 +23,8 @@ public class ImageDAO {
 				FileInputStream fin = new FileInputStream(image);
 				
 				ps.setInt(1, item_id);
-				ps.setBinaryStream(2,  fin, (int) image.length());
+				ps.setString(2, fileName);
+				ps.setBinaryStream(3,  fin, (int) image.length());
 				ps.executeUpdate();
 				
 			} catch (IOException e) {

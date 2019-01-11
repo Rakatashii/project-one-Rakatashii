@@ -28,14 +28,12 @@ import services.ReimbursementService;
 @MultipartConfig
 public class ReimbursementServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	// location to store file uploaded
 	
     public ReimbursementServlet() {
         super();
     }
     
     private static String getTheSubmittedFileName(Part part) {
-    	//System.out.println("part.getHeader(\"content-disposition\"): " + part.getHeader("content-disposition").join(""));
         for (String cd : part.getHeader("content-disposition").split(";")) {
             if (cd.trim().startsWith("filename")) {
                 String fileName = cd.substring(cd.indexOf('=') + 1).trim().replace("\"", "");
@@ -51,12 +49,14 @@ public class ReimbursementServlet extends HttpServlet {
 		if (session != null) {
 			System.out.println("ReimbursementServlet: " + (String) session.getAttribute("username"));
 			System.out.println("ReimbursementServlet: " + (String) session.getAttribute("password"));
-		} 
+		} else {
+			System.out.println("Session is null");
+		}
 		response.sendRedirect("http://localhost:8080/Reimbursements/employee_view.html");
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.setContentType("text/html;charset=UTF-8");
+		response.setContentType("text/html");
 		request.setCharacterEncoding("UTF-8");
 		PrintWriter output = response.getWriter();
 
@@ -85,7 +85,7 @@ public class ReimbursementServlet extends HttpServlet {
 	    	fileName = Paths.get(getTheSubmittedFileName(filePart)).toString();
 	    	
 	    	System.out.println("File Name: " + fileName);
-	    	System.out.println(fileContent.toString());
+	    	//System.out.println(fileContent.toString());
 	    	
 	    	Image image = new Image(fileName, fileContent);
 	    	reimbursementService.addImage(image);

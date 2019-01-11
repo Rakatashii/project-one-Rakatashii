@@ -7,29 +7,49 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 public class Image {
-	private int itemID;
+	public static final String UPLOAD_DIRECTORY = "C:\\Users\\Associate\\java\\project-one-Rakatashii\\ReimbursementApp\\src\\main\\webapp\\uploads\\";
+	private int imageID;
 	private String imageName;
+	
 	InputStream fileContent;
+	private boolean localFileHasContent;
+	File imageFile;
+	int imageLength;
+	byte[] bytestream;
 
 	public Image(String imageName, InputStream fileContent) {
 		super();
-		this.itemID = -1;
+		this.imageID = -1;
 		this.imageName = imageName;
 		this.fileContent = fileContent;
+		localFileHasContent = false;
+		imageFile = null;
+		imageLength = 0;
+		bytestream = null;
 	}
-	public Image(int itemID, String imageName, InputStream fileContent) {
+	public Image(int imageID, String imageName, InputStream fileContent) {
 		super();
-		this.itemID = itemID;
+		this.imageID = imageID;
 		this.imageName = imageName;
 		this.fileContent = fileContent;
+		localFileHasContent = false;
+		imageFile = null;
+		imageLength = 0;
+		bytestream = null;
 	}
 
-	public int getItemID() {
-		return itemID;
+	public byte[] getBytestream() {
+		return bytestream;
+	}
+	public void setBytestream(byte[] bytestream) {
+		this.bytestream = bytestream;
+	}
+	public int getImageID() {
+		return imageID;
 	}
 
-	public void setItemID(int itemID) {
-		this.itemID = itemID;
+	public void setImageID(int imageID) {
+		this.imageID = imageID;
 	}
 
 	public String getImageName() {
@@ -49,31 +69,37 @@ public class Image {
 	}
 
 	public void uploadImageLocally() {
-		String filePath = "C:\\Users\\Associate\\java\\project-one-Rakatashii\\ReimbursementApp\\src\\main\\webapp\\uploads\\" 
-				+ this.imageName.replaceAll("[ ]+", "");
-		File imageFile = new File(filePath);
-		System.out.println(imageFile.getAbsolutePath());
+		String filePath = UPLOAD_DIRECTORY + this.imageName.replaceAll("[ ]+", "");
+		imageFile = new File(filePath);
+		//System.out.println(imageFile.getAbsolutePath());
 		if (imageFile.exists() == false) {
 			try {
 				imageFile.createNewFile();
+				System.out.println("Image File Did Not Exist.\nImage File Was Created.");
 			} catch (IOException e) {
 				e.printStackTrace(); System.out.println();
 			}
+		} else {
+			System.out.println("Image File Already Exists.");
 		}
 		if (imageFile.exists()) {
-			System.out.println("imageFile Path: " + imageFile.getAbsolutePath());
-			System.out.println("Image File Exists.");
+			System.out.println("- Path: " + imageFile.getAbsolutePath());
 			try {
-				byte[] buffer = new byte[fileContent.available()];
-				fileContent.read(buffer);
+				imageLength = fileContent.available();
+				bytestream = new byte[fileContent.available()];
+				fileContent.read(bytestream);
 				OutputStream os = new FileOutputStream(imageFile);
-			    os.write(buffer);
+			    os.write(bytestream);
+			    localFileHasContent = true;
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				e.printStackTrace(); System.out.println();
 			}
-		} else {
-			System.out.println("Image File Still Does Not Exist.");
-		}
+		} 
+	}
+	public boolean hasLocalImageFile() {
+		return (this.localFileHasContent) ? true : false;
+	}
+	public File getLocalImageFile() {
+		return (hasLocalImageFile()) ? imageFile : null;
 	}
 }

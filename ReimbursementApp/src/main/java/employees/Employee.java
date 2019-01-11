@@ -30,9 +30,9 @@ public class Employee {
 
 	@Override
 	public String toString() {
-		return "Employee [username=" + username + ", password=" + password + ", firstname=" + firstname + ", lastname="
-				+ lastname + ", employeeID=" + employeeID + ", numReimbursements=" + numReimbursements
-				+ ", employeeDAO=" + employeeDAO + "]";
+		return "Employee [employeeID=" + employeeID + ", username=" + username + ", password=" + password 
+				+ ", firstname=" + firstname + ", lastname=" + lastname + ", numReimbursements=" + numReimbursements
+				+ "]";
 	}
 	
 	public String getUsername() {
@@ -80,6 +80,6 @@ public class Employee {
 	}
 
 	public void setNumReimbursements(int numReimbursements) {
-		this.numReimbursements = numReimbursements;
+		this.numReimbursements= numReimbursements;
 	}
 }

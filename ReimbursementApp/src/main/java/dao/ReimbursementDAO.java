@@ -25,7 +25,7 @@ public class ReimbursementDAO {
 			String sql = "INSERT INTO " + tableName + " VALUES(?,?,?,?,?,?);";
 			ps = connection.prepareStatement(sql);
 			ps.setInt(1,  reimbursement.getEmployeeID());
-			ps.setInt(2,  reimbursement.getItemID());
+			ps.setInt(2,  reimbursement.getReimbursementID());
 			ps.setString(3, reimbursement.getItem());
 			ps.setString(4, reimbursement.getDescription());
 			ps.setDouble(5, reimbursement.getAmount());
@@ -92,7 +92,7 @@ public class ReimbursementDAO {
 		}
 		return 0;
 	}
-	public ArrayList<Reimbursement> getReimbursementsByEmployeeID(int employee_id) {
+	public ArrayList<Reimbursement> getExpensesByEmployeeID(int employee_id) {
 		String tableName = "reimbursements";
 		ArrayList<Reimbursement> reimbursements = new ArrayList<>();
 		try {
@@ -119,7 +119,7 @@ public class ReimbursementDAO {
 		String tableName = "reimbursements";
 		try {
 			connection = DBConnection.getConnection();
-			String sql = "SELECT * FROM " + tableName + " WHERE employee_id = " + employee_id + " ORDER BY item_id";
+			String sql = "SELECT * FROM " + tableName + " WHERE employee_id = " + employee_id + " ORDER BY expense_id";
 			Statement statement = connection.createStatement();
 			ResultSet rs = statement.executeQuery(sql);
 			
@@ -137,14 +137,14 @@ public class ReimbursementDAO {
 		}
 		return null;
 	}
-	public boolean checkIfReimbursementExists(int employee_id, int item_id) {
+	public boolean checkIfReimbursementExists(int employee_id, int expense_id) {
 		String tableName = "employees";
 		try {
 			connection = DBConnection.getConnection();
-			String sql = "SELECT * FROM " + tableName + " WHERE employee_id = ? AND item_id = ?";
+			String sql = "SELECT * FROM " + tableName + " WHERE employee_id = ? AND expense_id = ?";
 			PreparedStatement ps = connection.prepareStatement(sql);
 			ps.setInt(1, employee_id);
-			ps.setInt(2, item_id);
+			ps.setInt(2, expense_id);
 			ResultSet rs = ps.executeQuery();
 			
 			if (rs.next()) {
