@@ -12,7 +12,7 @@ public class Employee {
 	EmployeeDAO employeeDAO = new EmployeeDAO();
 	
 	public Employee(String username, String password, String firstname, String lastname, int numReimbursements) {
-		this.employeeID = employeeDAO.getMaxEmployeeID() + 1;
+		this.employeeID = employeeDAO.getMaxEmployeeID()+1;
 		this.username = username;
 		this.password = password;
 		this.firstname = firstname;

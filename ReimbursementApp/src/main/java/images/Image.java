@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Arrays;
 
 public class Image {
 	public static final String UPLOAD_DIRECTORY = "C:\\Users\\Associate\\java\\project-one-Rakatashii\\ReimbursementApp\\src\\main\\webapp\\uploads\\";
@@ -12,9 +13,9 @@ public class Image {
 	private String imageName;
 	
 	InputStream fileContent;
-	private boolean localFileHasContent;
+	private boolean fileNotEmpty;
 	File imageFile;
-	int imageLength;
+	int imageSize;
 	byte[] bytestream;
 
 	public Image(String imageName, InputStream fileContent) {
@@ -22,22 +23,31 @@ public class Image {
 		this.imageID = -1;
 		this.imageName = imageName;
 		this.fileContent = fileContent;
-		localFileHasContent = false;
+		fileNotEmpty = false;
 		imageFile = null;
-		imageLength = 0;
+		imageSize = -1;
 		bytestream = null;
 	}
+
 	public Image(int imageID, String imageName, InputStream fileContent) {
 		super();
 		this.imageID = imageID;
 		this.imageName = imageName;
 		this.fileContent = fileContent;
-		localFileHasContent = false;
+		fileNotEmpty = false;
 		imageFile = null;
-		imageLength = 0;
+		imageSize = -1;
 		bytestream = null;
 	}
 
+	@Override
+	public String toString() {
+		return "Image [imageID=" + imageID + ", fileNotEmpty=" + fileNotEmpty + ", \n"
+				+ "\t" + "imageName=" + (imageName != null ? imageName + ", " : "null")
+				+ "imageFile=" + (imageFile != null ? imageFile + ", " : "null") 
+				+ "imageSize=" + imageSize + "]";
+	}
+	
 	public byte[] getBytestream() {
 		return bytestream;
 	}
@@ -67,6 +77,12 @@ public class Image {
 	public void setFileContent(InputStream fileContent) {
 		this.fileContent = fileContent;
 	}
+	public int getImageSize() {
+		return imageSize;
+	}
+	public void setImageSize(int imageSize) {
+		this.imageSize = imageSize;
+	}
 
 	public void uploadImageLocally() {
 		String filePath = UPLOAD_DIRECTORY + this.imageName.replaceAll("[ ]+", "");
@@ -85,21 +101,21 @@ public class Image {
 		if (imageFile.exists()) {
 			System.out.println("- Path: " + imageFile.getAbsolutePath());
 			try {
-				imageLength = fileContent.available();
-				bytestream = new byte[fileContent.available()];
+				imageSize = fileContent.available();
+				bytestream = new byte[imageSize];
 				fileContent.read(bytestream);
 				OutputStream os = new FileOutputStream(imageFile);
 			    os.write(bytestream);
-			    localFileHasContent = true;
+			    fileNotEmpty = true;
 			} catch (IOException e) {
 				e.printStackTrace(); System.out.println();
 			}
 		} 
 	}
-	public boolean hasLocalImageFile() {
-		return (this.localFileHasContent) ? true : false;
+	public boolean hasImageFile() {
+		return (this.fileNotEmpty) ? true : false;
 	}
-	public File getLocalImageFile() {
-		return (hasLocalImageFile()) ? imageFile : null;
+	public File getImageFile() {
+		return (hasImageFile()) ? imageFile : null;
 	}
 }

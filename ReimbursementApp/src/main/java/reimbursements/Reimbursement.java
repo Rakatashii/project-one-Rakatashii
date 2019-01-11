@@ -2,6 +2,7 @@ package reimbursements;
 
 import java.io.File;
 
+import dao.ReimbursementDAO;
 import employees.Employee;
 
 public class Reimbursement {
@@ -10,29 +11,34 @@ public class Reimbursement {
 	private double amount;
 	private Employee employee;
 	
-	public Reimbursement(int customerID, int reimbursementID, String item, String description, double amount, String comments) {
+	ReimbursementDAO reimbursementDAO = new ReimbursementDAO();
+	
+	public Reimbursement(int employeeID, int reimbursementID, String item, String description, double amount, String comments) {
 		super();
-		this.reimbursementID = -1;
-		this.item = item;
-		this.description = description;
-		this.comments = comments;
-		this.amount = amount;
-	}
-	public Reimbursement(int reimbursementID, String item, String description, double amount, String comments) {
-		super();
+		this.employeeID = employeeID;
 		this.reimbursementID = reimbursementID;
 		this.item = item;
 		this.description = description;
-		this.comments = comments;
 		this.amount = amount;
+		this.comments = (comments != null) ? comments : "NONE";
+	}
+	public Reimbursement(int employeeID, String item, String description, double amount, String comments) {
+		super();
+		this.employeeID = employeeID;
+		this.reimbursementID = reimbursementDAO.getNumReimbursementsByEmployeeID(employeeID);
+		this.item = item;
+		this.description = description;
+		this.amount = amount;
+		this.comments = (comments != null) ? comments : "NONE";
 	}
 	public Reimbursement(String item, String description, double amount, String comments) {
 		super();
+		this.employeeID = -1;
 		this.reimbursementID = -1;
 		this.item = item;
 		this.description = description;
-		this.comments = comments;
 		this.amount = amount;
+		this.comments = (comments != null) ? comments : "NONE";
 	}
 
 	public int getEmployeeID() {
@@ -92,7 +98,11 @@ public class Reimbursement {
 	}
 	@Override
 	public String toString() {
-		return "Reimbursement [employeeID=" + employeeID + ", reimbursementID=" + reimbursementID + ", item=" + item + ", description="
-				+ description + ", amount=" + amount + ", comments=" + comments + "]";
+		return "Reimbursement [employeeID=" + employeeID + ", reimbursementID=" + reimbursementID + ", "
+				+ "item=" + (item != null ? item + ", " : "null")
+				+ "description=" + (description != null ? description + ", " : "null") 
+				+ "amount=" + amount + ", "
+				+ "comments=" + (comments != null ? comments : "null") + "]";
 	}
+	
 }
