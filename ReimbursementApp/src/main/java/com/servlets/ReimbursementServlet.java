@@ -66,8 +66,13 @@ public class ReimbursementServlet extends HttpServlet {
 		String description = request.getParameter("description");
 		String amountString = request.getParameter("amount");
 		double amount = 0.0;
-		if (amountString != null && amountString.length() > 0 && amountString.matches("[//d]+")) 
+		if (amountString != null && amountString.length() > 0 && amountString.length() <= 14) {
+			if (amountString.matches("[ \\d]+\\.?[ \\d]+")){
+				amount = Double.parseDouble(amountString);
+			}
+		}
 			amount = Double.parseDouble(amountString);
+		
 		String comments = request.getParameter("comments");
 		if (comments == null || comments.length() == 0) {
 			comments = "null";
@@ -88,6 +93,8 @@ public class ReimbursementServlet extends HttpServlet {
 	    	//System.out.println(fileContent.toString());
 	    	
 	    	Image image = new Image(fileName, fileContent);
+	    	image.setImageSize(fileContent.available());
+	    	
 	    	reimbursementService.addImage(image);
 	    } else System.out.println("File Does NOT Contain Image File!");
 

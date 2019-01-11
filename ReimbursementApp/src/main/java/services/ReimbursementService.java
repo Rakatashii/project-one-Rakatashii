@@ -33,7 +33,6 @@ public class ReimbursementService {
 			
 			System.out.println(this.reimbursement);
 		} else {
-			reimbursement = null;
 			System.out.println(this.reimbursement);
 		}
 	}
@@ -41,10 +40,22 @@ public class ReimbursementService {
 	public void addImage(Image image) {
 		if (this.reimbursement != null && image != null) {
 			this.image = image;
-			this.image.setImageID(reimbursement.getReimbursementID());
-			this.image.uploadImageLocally();
+			
+			this.image.setEmployeeID(reimbursement.getEmployeeID());
+			this.image.setReimbursementID(reimbursement.getReimbursementID());
+			
+			/* NEED THIS IN EITHER CASE... */
 			imageDAO.addImage(this.image);
+			
+			/* KEEP THIS TO TEST DAO#addImage AND FILE UPLOAD W THAT INFORMATION */
+			this.image.uploadLocalFile();
 			System.out.println(this.image);
+			
+			/* KEEP THIS TO TEST DAO#getImage AND FILE UPLOAD W THAT INFORMATION */
+			/* Image newImage = imageDAO.getImage(reimbursement.getEmployeeID(), reimbursement.getReimbursementID());
+			newImage.uploadLocalFile();
+			System.out.println(this.image);
+			*/
 		}
 	}
 }

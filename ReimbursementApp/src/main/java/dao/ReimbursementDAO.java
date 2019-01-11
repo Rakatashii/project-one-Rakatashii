@@ -55,6 +55,18 @@ public class ReimbursementDAO {
 			return false;
 		}
 	}
+	public void deleteReimbursement(int reimbursementID) {
+		String tableName = "reimbursements";
+		try {
+			connection = DBConnection.getConnection();
+			String sql = "DELETE FROM " + tableName + " WHERE reimbursement_id = ?";
+			ps = connection.prepareStatement(sql);
+			ps.setInt(1,  reimbursementID);
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace(); System.out.println();
+		}
+	}
 	public int getNumReimbursements() {
 		String tableName = "reimbursements";
 		try {

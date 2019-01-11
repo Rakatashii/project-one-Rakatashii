@@ -9,57 +9,108 @@ import java.util.Arrays;
 
 public class Image {
 	public static final String UPLOAD_DIRECTORY = "C:\\Users\\Associate\\java\\project-one-Rakatashii\\ReimbursementApp\\src\\main\\webapp\\uploads\\";
-	private int imageID;
+	private int employeeID, reimbursementID;
 	private String imageName;
 	
-	InputStream fileContent;
+	InputStream imageInput;
+	OutputStream imageOutput;
+	
 	private boolean fileNotEmpty;
 	File imageFile;
 	int imageSize;
 	byte[] bytestream;
 
-	public Image(String imageName, InputStream fileContent) {
+	public Image(String imageName, InputStream imageInput) {
 		super();
-		this.imageID = -1;
+		this.employeeID = -1;
+		this.reimbursementID = -1;
 		this.imageName = imageName;
-		this.fileContent = fileContent;
-		fileNotEmpty = false;
-		imageFile = null;
-		imageSize = -1;
-		bytestream = null;
+		this.imageInput = imageInput;
+		if (imageSize == 0){
+			try {			
+				imageSize = imageInput.available();
+			} catch (IOException e) {
+				e.printStackTrace(); System.out.println();
+			}
+		}
+		if (imageSize > 0) {
+			fileNotEmpty = true;
+			setFieldsWithInputStream();
+		}
 	}
-
-	public Image(int imageID, String imageName, InputStream fileContent) {
+	public Image(String imageName, File imageFile, int imageSize) {
 		super();
-		this.imageID = imageID;
+		this.employeeID = -1;
+		this.reimbursementID = -1;
 		this.imageName = imageName;
-		this.fileContent = fileContent;
-		fileNotEmpty = false;
-		imageFile = null;
-		imageSize = -1;
-		bytestream = null;
+		this.imageFile = imageFile;
+		this.imageSize = imageSize;
+		if (imageSize > 0) {
+			fileNotEmpty = true;
+			//uploadLocalFile();
+		}
+	}
+	public Image(int employeeID, int reimbursementID, String imageName, InputStream imageInput) {
+		super();
+		this.employeeID = employeeID;
+		this.reimbursementID = reimbursementID;
+		this.imageName = imageName;
+		this.imageInput = imageInput;
+		if (imageSize == 0){
+			try {			
+				this.imageSize = imageInput.available();
+			} catch (IOException e) {
+				e.printStackTrace(); System.out.println();
+			}
+		}
+		if (this.imageSize > 0) {
+			fileNotEmpty = true;
+			setFieldsWithInputStream();
+		}
+	}
+	public Image(int employeeID, int reimbursementID, String imageName, File imageFile, int imageSize) {
+		super();
+		this.employeeID = employeeID;
+		this.reimbursementID = reimbursementID;
+		this.imageName = imageName;
+		this.imageFile = imageFile;
+		this.imageSize = imageSize;
+		if (this.imageSize > 0) {
+			fileNotEmpty = true;
+			uploadLocalFile();
+		}
 	}
 
 	@Override
 	public String toString() {
-		return "Image [imageID=" + imageID + ", fileNotEmpty=" + fileNotEmpty + ", \n"
-				+ "\t" + "imageName=" + (imageName != null ? imageName + ", " : "null")
-				+ "imageFile=" + (imageFile != null ? imageFile + ", " : "null") 
-				+ "imageSize=" + imageSize + "]";
+		return "Image [\nemployeeID = " + employeeID + ", reimbursementID=" + reimbursementID 
+				+ ", fileNotEmpty=" + fileNotEmpty + ", \n"
+				+ "\t" + "imageName=" + (imageName != null ? imageName + ", \n" : "null\n")
+				+ "\t" + "imageFile=" + (imageFile != null ? imageFile + ", \n" : "null\n") 
+				+ "\t" + "imageSize=" + imageSize 
+				+ ", bytestream size = " 
+				+ (bytestream != null && Arrays.toString(bytestream) != null ? Arrays.toString(bytestream).length() : "null")
+				+ "\n]";
 	}
 	
+	public int getEmployeeID() {
+		return employeeID;
+	}
+	public void setEmployeeID(int employeeID) {
+		this.employeeID = employeeID;
+	}
 	public byte[] getBytestream() {
 		return bytestream;
 	}
 	public void setBytestream(byte[] bytestream) {
 		this.bytestream = bytestream;
 	}
-	public int getImageID() {
-		return imageID;
+	public int getReimbursementID() {
+		return reimbursementID;
 	}
 
-	public void setImageID(int imageID) {
-		this.imageID = imageID;
+	public void setReimbursementID(int reimbursementID) {
+		this.reimbursementID = reimbursementID;
 	}
 
 	public String getImageName() {
@@ -70,12 +121,26 @@ public class Image {
 		this.imageName = imageName;
 	}
 
-	public InputStream getFileContent() {
-		return fileContent;
+	public InputStream getInputStream() {
+		return imageInput;
 	}
 
-	public void setFileContent(InputStream fileContent) {
-		this.fileContent = fileContent;
+	public void setInputStream(InputStream imageInput) {
+		this.imageInput = imageInput;
+	}
+	public OutputStream getOutputStream() {
+		return imageOutput;
+	}
+
+	public void setOutputStream(OutputStream imageOutput) {
+		this.imageOutput = imageOutput;
+	}
+	
+	public boolean hasImageFile() {
+		return (this.fileNotEmpty) ? true : false;
+	}
+	public File getImageFile() {
+		return (hasImageFile()) ? imageFile : null;
 	}
 	public int getImageSize() {
 		return imageSize;
@@ -84,38 +149,60 @@ public class Image {
 		this.imageSize = imageSize;
 	}
 
-	public void uploadImageLocally() {
-		String filePath = UPLOAD_DIRECTORY + this.imageName.replaceAll("[ ]+", "");
-		imageFile = new File(filePath);
-		//System.out.println(imageFile.getAbsolutePath());
+	public void uploadLocalFile() {
 		if (imageFile.exists() == false) {
 			try {
 				imageFile.createNewFile();
-				System.out.println("Image File Did Not Exist.\nImage File Was Created.");
+				System.out.println("Image File Was Created.");
 			} catch (IOException e) {
+				System.out.println("Unable To Create New File With Path Specified: " + imageName);
 				e.printStackTrace(); System.out.println();
 			}
 		} else {
 			System.out.println("Image File Already Exists.");
 		}
-		if (imageFile.exists()) {
-			System.out.println("- Path: " + imageFile.getAbsolutePath());
+	}
+	public void setFieldsWithInputStream() {
+		if (imageName == null || imageName.length() == 0 || !imageName.contains(UPLOAD_DIRECTORY)) {
+			imageName = UPLOAD_DIRECTORY + this.imageName.replaceAll("[ ]+", "");
+			imageFile = new File(imageName);
+		}
+		if (imageFile != null) {
 			try {
-				imageSize = fileContent.available();
+				if (imageSize == 0) {
+					System.out.println("imageSize == 0 In #setFieldsWithInputStream!");
+					imageSize = imageInput.available();
+					System.out.println("\tNew imageSize = " + imageSize);
+				}
+
 				bytestream = new byte[imageSize];
-				fileContent.read(bytestream);
-				OutputStream os = new FileOutputStream(imageFile);
-			    os.write(bytestream);
+				imageInput.read(bytestream);
+				imageOutput = new FileOutputStream(imageFile);
+			    imageOutput.write(bytestream);
 			    fileNotEmpty = true;
+			    
 			} catch (IOException e) {
 				e.printStackTrace(); System.out.println();
 			}
-		} 
+		}
 	}
-	public boolean hasImageFile() {
-		return (this.fileNotEmpty) ? true : false;
+	/*
+	public void setFieldsWithImageFile() {
+		if (imageFile != null) {
+			System.out.println("--Path: " + imageFile.getAbsolutePath());
+			if (imageSize > 0){
+				try {
+					if (bytestream.length == 0) {
+						bytestream = new byte[imageSize];
+						imageOutput = new FileOutputStream(imageFile);
+					    imageOutput.write(bytestream);
+					    fileNotEmpty = true;
+					}
+				} catch (IOException e) {
+					e.printStackTrace(); System.out.println();
+				}
+			}
+		}
 	}
-	public File getImageFile() {
-		return (hasImageFile()) ? imageFile : null;
-	}
+	*/
 }
