@@ -20,13 +20,21 @@ body {
 }
 
 @media (max-width : 577px) {
-    .navbar-collapse li a {
-
+    .navbar-collapse .li-even {
+        padding:0px 0px 10px 10px;
+        margin:5px 10px 0px 0px;
+        background: rgba(23, 153, 204, 0.966);
+    }
+    .navbar-collapse .li-odd {
+        padding:0px 0px 10px 10px;
+        margin:5px 10px 0px 0px;
         background: rgba(62, 186, 235, 0.966);
     }
-
-    .navbar-collapse last-child {
-        padding-bottom: 5px;
+    .navbar-collapse .search-form {
+        margin: 5px -16px 5px 1px;
+    }
+    .navbar-collapse .search-btn {
+        background: rgba(62, 186, 235, 0.966);
     }
 }
 
@@ -43,7 +51,7 @@ body {
     background-color: rgba(52, 129, 230, 0.966);
 }
 
-.submit-btn:active {
+.search-btn:active {
     background-color: rgba(52, 129, 230, 0.966);
 }
 
@@ -110,7 +118,7 @@ body {
 }
 
 .submit-btn:active {
-    background-color: rgba(52, 129, 230, 0.966);
+    background-color: rgba(47, 133, 167, 0.966);
 }
 
 /* CUSTOMER LOGIN */
@@ -162,13 +170,33 @@ body {
     padding-top: 50px;
     padding-bottom: 50px;
 
-    width: 80%;
+    width: 70%;
     min-width: 425px;
 
     background-color: rgba(47, 133, 167, 0.6);
 }
 
+.reimbursement-form.form-control {
+    margin: 8px;
+}
+.reimbursement-form.last-child {
+    margin: 100px;
+}
+
 #img-upload {
     width: 100%;
     height: auto;
+}
+input[type="file"]{
+    display: none;
+}
+.custom-file-upload {
+    border: 2px solid #ccc;
+    display: inline-block;
+    padding: 6px 12px;
+    margin-top: -10px;
+    margin-bottom: 17.5px;
+    cursor: pointer;
+    
+    transform: scale(1.1);
 }

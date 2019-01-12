@@ -51,7 +51,6 @@ public class ImageDAO {
 				ps.close();
 			} catch (IOException e) {
 				e.printStackTrace(); System.out.println();
-				/*
 				if (reimbursementID >= 0) {
 					try {
 						reimbursementDAO.deleteReimbursement(reimbursementID);
@@ -59,11 +58,9 @@ public class ImageDAO {
 						ex.printStackTrace(); System.out.println();
 					}
 				}
-				*/
 			}
 		} catch (SQLException e) {
 			e.printStackTrace(); System.out.println();
-			/*
 			if (reimbursementID >= 0) {
 				try {
 					reimbursementDAO.deleteReimbursement(reimbursementID);
@@ -71,7 +68,6 @@ public class ImageDAO {
 					ex.printStackTrace(); System.out.println();
 				}
 			}
-			*/
 		}
 	}
 	public Image getImage(int employeeID, int reimbursementID) {
@@ -90,7 +86,8 @@ public class ImageDAO {
 			ResultSet rs = ps.executeQuery();
 			
 			while (rs.next()) {
-				name = Image.UPLOAD_DIRECTORY + rs.getString(1).replaceAll("[ ]+", "");
+				name = rs.getString(1);
+				if (!name.contains(Image.UPLOAD_DIRECTORY)) name = Image.UPLOAD_DIRECTORY + name.replaceAll("[ ]+", "");
 				length = rs.getInt(2);
 				File file = new File(name);
 				buffer = rs.getBytes("bytestream");

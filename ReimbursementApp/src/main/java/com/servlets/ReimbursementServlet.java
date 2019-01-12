@@ -25,7 +25,9 @@ import services.EmployeeService;
 import services.ReimbursementService;
 
 @WebServlet("/expenses")
-@MultipartConfig
+@MultipartConfig(fileSizeThreshold=1024*1024*2, // 2MB 
+				 maxFileSize=1024*1024*5, //4MB
+				 maxRequestSize=1024*1024*50) // 10MB
 public class ReimbursementServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
@@ -51,6 +53,7 @@ public class ReimbursementServlet extends HttpServlet {
 			System.out.println("ReimbursementServlet: " + (String) session.getAttribute("password"));
 		} else {
 			System.out.println("Session is null");
+			response.sendRedirect("http://localhost:8080/Reimbursements/EmployeeServlet");
 		}
 		response.sendRedirect("http://localhost:8080/Reimbursements/employee_view.html");
 	}
@@ -65,13 +68,11 @@ public class ReimbursementServlet extends HttpServlet {
 		String rItem = request.getParameter("item");
 		String description = request.getParameter("description");
 		String amountString = request.getParameter("amount");
-		double amount = 0.0;
-		if (amountString != null && amountString.length() > 0 && amountString.length() <= 14) {
-			if (amountString.matches("[ \\d]+\\.?[ \\d]+")){
-				amount = Double.parseDouble(amountString);
-			}
-		}
+		
+		double amount;
+		if (amountString != null && amountString.matches("[ \\d]+\\.?[ \\d]+")){
 			amount = Double.parseDouble(amountString);
+		} else amount = 0.0;
 		
 		String comments = request.getParameter("comments");
 		if (comments == null || comments.length() == 0) {
@@ -79,26 +80,30 @@ public class ReimbursementServlet extends HttpServlet {
 		}
 
 		Reimbursement reimbursement = new Reimbursement(rItem, description, amount, comments);
-		reimbursementService.addReimbursement(reimbursement);
+		//reimbursementService.addReimbursement(reimbursement);
 
 	    Part filePart = request.getPart("image");
+	    if (filePart != null) System.out.println("SUBMITTED NAME: " + filePart.getSubmittedFileName());
 	    String fileName = null;
 	    InputStream fileContent = null;
 	    if (filePart != null) {
 	    	System.out.println("Response Contain Image File!");
 	    	fileContent = filePart.getInputStream();
 	    	fileName = Paths.get(getTheSubmittedFileName(filePart)).toString();
-	    	
 	    	System.out.println("File Name: " + fileName);
-	    	//System.out.println(fileContent.toString());
 	    	
 	    	Image image = new Image(fileName, fileContent);
-	    	image.setImageSize(fileContent.available());
+	    	System.out.println("IN ReimbursementServlet: " + image);
 	    	
+	    	reimbursementService.addReimbursement(reimbursement);
 	    	reimbursementService.addImage(image);
-	    } else System.out.println("File Does NOT Contain Image File!");
+	    } else {
+	    	reimbursementService.addReimbursement(reimbursement);
+	    	System.out.println("File Does NOT Contain Image File!");
+	    }
 
-		response.sendRedirect("http://localhost:8080/Reimbursements/ReimbursementServlet");
+	    doGet(request, response);
+		//response.sendRedirect("http://localhost:8080/Reimbursements/ReimbursementServlet");
 	}
 
 }

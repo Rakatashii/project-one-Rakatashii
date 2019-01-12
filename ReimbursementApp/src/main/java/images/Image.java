@@ -77,7 +77,7 @@ public class Image {
 		this.imageSize = imageSize;
 		if (this.imageSize > 0) {
 			fileNotEmpty = true;
-			uploadLocalFile();
+			//uploadLocalFile();
 		}
 	}
 
@@ -150,7 +150,7 @@ public class Image {
 	}
 
 	public void uploadLocalFile() {
-		if (imageFile.exists() == false) {
+		if (!imageFile.exists() || imageFile.isDirectory()) {
 			try {
 				imageFile.createNewFile();
 				System.out.println("Image File Was Created.");
@@ -160,7 +160,7 @@ public class Image {
 			}
 		} else {
 			System.out.println("Image File Already Exists.");
-		}
+		} 
 	}
 	public void setFieldsWithInputStream() {
 		if (imageName == null || imageName.length() == 0 || !imageName.contains(UPLOAD_DIRECTORY)) {

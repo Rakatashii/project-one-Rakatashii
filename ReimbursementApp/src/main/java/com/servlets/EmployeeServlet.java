@@ -41,7 +41,8 @@ public class EmployeeServlet extends HttpServlet {
 			session.setAttribute("username", username);
 			session.setAttribute("password", password);
 			//request.getRequestDispatcher("ReimbursementServlet").forward(request,  response);
-			response.sendRedirect("http://localhost:8080/Reimbursements/employee_view.html");
+			//response.sendRedirect("http://localhost:8080/Reimbursements/employee_view.html");
+			new ReimbursementServlet().doGet(request, response);
 		} else {
 			response.sendRedirect("http://localhost:8080/Reimbursements/EmployeeServlet");
 		}
