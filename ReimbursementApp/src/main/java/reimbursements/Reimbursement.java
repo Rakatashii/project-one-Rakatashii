@@ -7,36 +7,36 @@ import employees.Employee;
 
 public class Reimbursement {
 	private int employeeID, reimbursementID;
-	private String item, description, comments;
+	private String expense, source, comments;
 	private double amount;
 	private Employee employee;
 	
 	ReimbursementDAO reimbursementDAO = new ReimbursementDAO();
 	
-	public Reimbursement(int employeeID, int reimbursementID, String item, String description, double amount, String comments) {
+	public Reimbursement(int employeeID, int reimbursementID, String expense, String source, double amount, String comments) {
 		super();
 		this.employeeID = employeeID;
 		this.reimbursementID = reimbursementID;
-		this.item = item;
-		this.description = description;
+		this.expense = expense;
+		this.source = source;
 		this.amount = amount;
 		this.comments = (comments != null) ? comments : "NONE";
 	}
-	public Reimbursement(int employeeID, String item, String description, double amount, String comments) {
+	public Reimbursement(int employeeID, String expense, String source, double amount, String comments) {
 		super();
 		this.employeeID = employeeID;
 		this.reimbursementID = reimbursementDAO.getNumReimbursementsByEmployeeID(employeeID);
-		this.item = item;
-		this.description = description;
+		this.expense = expense;
+		this.source = source;
 		this.amount = amount;
 		this.comments = (comments != null) ? comments : "NONE";
 	}
-	public Reimbursement(String item, String description, double amount, String comments) {
+	public Reimbursement(String expense, String source, double amount, String comments) {
 		super();
 		this.employeeID = -1;
 		this.reimbursementID = -1;
-		this.item = item;
-		this.description = description;
+		this.expense = expense;
+		this.source = source;
 		this.amount = amount;
 		this.comments = (comments != null) ? comments : "NONE";
 	}
@@ -57,20 +57,20 @@ public class Reimbursement {
 		this.reimbursementID = reimbursementID;
 	}
 
-	public String getItem() {
-		return item;
+	public String getExpense() {
+		return expense;
 	}
 
-	public void setItem(String item) {
-		this.item = item;
+	public void setExpense(String expense) {
+		this.expense = expense;
 	}
 
-	public String getDescription() {
-		return description;
+	public String getSource() {
+		return source;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setSource(String source) {
+		this.source = source;
 	}
 
 	public String getComments() {
@@ -99,8 +99,8 @@ public class Reimbursement {
 	@Override
 	public String toString() {
 		return "Reimbursement [employeeID=" + employeeID + ", reimbursementID=" + reimbursementID + ", "
-				+ "item=" + (item != null ? item + ", " : "null")
-				+ "description=" + (description != null ? description + ", " : "null") 
+				+ "expense=" + (expense != null ? expense + ", " : "null")
+				+ "source=" + (source != null ? source + ", " : "null") 
 				+ "amount=" + amount + ", "
 				+ "comments=" + (comments != null ? comments : "null") + "]";
 	}

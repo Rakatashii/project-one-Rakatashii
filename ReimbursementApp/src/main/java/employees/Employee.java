@@ -8,6 +8,7 @@ public class Employee {
 	private String firstname, lastname;
 	private int employeeID;
 	public int numReimbursements;
+	boolean rememberLoginInfo;
 	
 	EmployeeDAO employeeDAO = new EmployeeDAO();
 	
@@ -18,6 +19,7 @@ public class Employee {
 		this.firstname = firstname;
 		this.lastname = lastname;
 		this.numReimbursements = numReimbursements;
+		rememberLoginInfo = false;
 	}
 	public Employee(int employeeID, String username, String password, String firstname, String lastname, int numReimbursements) {
 		this.employeeID = employeeID;
@@ -26,6 +28,7 @@ public class Employee {
 		this.firstname = firstname;
 		this.lastname = lastname;
 		this.numReimbursements = numReimbursements;
+		rememberLoginInfo = false;
 	}
 
 	@Override
@@ -81,5 +84,11 @@ public class Employee {
 
 	public void setNumReimbursements(int numReimbursements) {
 		this.numReimbursements= numReimbursements;
+	}
+	public boolean isRememberLoginInfo() {
+		return rememberLoginInfo;
+	}
+	public void setRememberLoginInfo(boolean rememberLoginInfo) {
+		this.rememberLoginInfo = rememberLoginInfo;
 	}
 }

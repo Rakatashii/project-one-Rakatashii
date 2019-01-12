@@ -53,9 +53,9 @@ public class ReimbursementServlet extends HttpServlet {
 			System.out.println("ReimbursementServlet: " + (String) session.getAttribute("password"));
 		} else {
 			System.out.println("Session is null");
-			response.sendRedirect("http://localhost:8080/Reimbursements/EmployeeServlet");
+			response.sendRedirect("http://localhost:8080/Reimbursements/view/EmployeeServlet");
 		}
-		response.sendRedirect("http://localhost:8080/Reimbursements/employee_view.html");
+		response.sendRedirect("http://localhost:8080/Reimbursements/views/employee_view.html");
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -65,8 +65,8 @@ public class ReimbursementServlet extends HttpServlet {
 
 		ReimbursementService reimbursementService = new ReimbursementService();
 		
-		String rItem = request.getParameter("item");
-		String description = request.getParameter("description");
+		String expense = request.getParameter("expense");
+		String source = request.getParameter("source");
 		String amountString = request.getParameter("amount");
 		
 		double amount;
@@ -79,7 +79,7 @@ public class ReimbursementServlet extends HttpServlet {
 			comments = "null";
 		}
 
-		Reimbursement reimbursement = new Reimbursement(rItem, description, amount, comments);
+		Reimbursement reimbursement = new Reimbursement(expense, source, amount, comments);
 		//reimbursementService.addReimbursement(reimbursement);
 
 	    Part filePart = request.getPart("image");

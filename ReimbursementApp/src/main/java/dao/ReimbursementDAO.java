@@ -26,8 +26,8 @@ public class ReimbursementDAO {
 			ps = connection.prepareStatement(sql);
 			ps.setInt(1,  reimbursement.getEmployeeID());
 			ps.setInt(2,  reimbursement.getReimbursementID());
-			ps.setString(3, reimbursement.getItem());
-			ps.setString(4, reimbursement.getDescription());
+			ps.setString(3, reimbursement.getExpense());
+			ps.setString(4, reimbursement.getSource());
 			ps.setDouble(5, reimbursement.getAmount());
 			ps.setString(6, reimbursement.getComments());
 			
@@ -127,7 +127,7 @@ public class ReimbursementDAO {
 		}
 		return reimbursements;
 	}
-	public Employee getReimbursementByItemID(int employee_id) {
+	public Employee getReimbursementByExpenseID(int employee_id) {
 		String tableName = "reimbursements";
 		try {
 			connection = DBConnection.getConnection();

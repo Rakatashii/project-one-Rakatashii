@@ -12,19 +12,13 @@ for (let i = 0; i < buttons.length; i++) {
 }
 */
 
-/*
-(()=>{
-	window.location.reload(false);
-});
-*/
-
+/* LOADING IMAGE AFTER FILE SELECT */
 $(document).ready(function () {
     $(document).on('change', '.btn-file :file', function () {
         var input = $(this)
         var label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
         input.trigger('fileselect', [label]);
     });
-
     $('.btn-file :file').on('fileselect', function (event, label) {
         var input = $(this).parents('.input-group').find(':file'),
             log = label;
@@ -34,9 +28,7 @@ $(document).ready(function () {
         } else {
             if (log) alert(log);
         }
-
     });
-
     function readURL(input) {
         if (input.files && input.files[0]) {
             var reader = new FileReader();
@@ -48,12 +40,10 @@ $(document).ready(function () {
             reader.readAsDataURL(input.files[0]);
         }
     }
-
     $("#imgInp").change(function () {
         readURL(this);
     });
 });
-
 
 
 

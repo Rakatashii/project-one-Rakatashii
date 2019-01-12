@@ -1,7 +1,7 @@
 @import url('bootstrap.min.css');
 
 body {
-    background: url("images/explorer_mountains_cropped.jpg") no-repeat center center fixed;
+    background: url("/Reimbursements/images/explorer_mountains_cropped.jpg") no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -109,6 +109,7 @@ body {
 .submit-btn {
     /* will change button font */
     background-color: rgba(47, 133, 167, 0.966);
+    background-color: rgba(47, 133, 167, 0.966);
     color: white;
     /* color: blueviolet; */
 }
@@ -142,6 +143,7 @@ body {
     height: 425px;
     width: 50%;
     min-width: 425px;
+    max-width: 575px;
 
     background-color: rgba(47, 133, 167, 0.6);
 }
@@ -149,14 +151,14 @@ body {
 /* REIMBURSEMENT VIEW */
 .jumbotron-fluid.reimbursement-view {
     color: white;
-
-    margin-top: 60px;
+    margin-top: 40px;
     margin-bottom: 60px;
 
     padding-top: 30px;
     padding-bottom: 10px;
 
     height: 100%;
+    width: 100%;
     min-width: 425px;
 
     background-color: rgba(47, 133, 167, 0.0);
@@ -170,14 +172,15 @@ body {
     padding-top: 50px;
     padding-bottom: 50px;
 
-    width: 70%;
+    width: 60%;
     min-width: 425px;
+    max-width: 750px;
 
     background-color: rgba(47, 133, 167, 0.6);
 }
 
 .reimbursement-form.form-control {
-    margin: 8px;
+    margin-top: 12px;
 }
 .reimbursement-form.last-child {
     margin: 100px;
@@ -191,12 +194,15 @@ input[type="file"]{
     display: none;
 }
 .custom-file-upload {
-    border: 2px solid #ccc;
+    border: 1.8px solid white;
     display: inline-block;
-    padding: 6px 12px;
-    margin-top: -10px;
-    margin-bottom: 17.5px;
+    padding: 8.5px 26.5px;
+    margin-top: -8px;
+    margin-bottom: 16px;
     cursor: pointer;
     
-    transform: scale(1.1);
+    -webkit-user-select: none; /* Safari 3.1+ */
+    user-select: none; /* Standard syntax */
+    
+    transform: scale(1.0);
 }
