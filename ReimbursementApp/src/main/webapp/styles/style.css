@@ -1,7 +1,9 @@
 @import url('bootstrap.min.css');
 
 body {
-    background: url("/Reimbursements/images/explorer_mountains_cropped.jpg") no-repeat center center fixed;
+    /* background: url("/Reimbursements/images/explorer_mountains_cropped.jpg") no-repeat center center fixed; */
+    background: url("../images/explorer_mountains_cropped.jpg") no-repeat center center fixed;
+
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -55,7 +57,7 @@ body {
     background-color: rgba(52, 129, 230, 0.966);
 }
 
-.login {
+.employee-login-view {
     display: -ms-flexbox;
     display: -webkit-box;
     display: flex;
@@ -123,13 +125,13 @@ body {
 }
 
 /* CUSTOMER LOGIN */
-.jumbotron-fluid.customer-login {
+.jumbotron-fluid.employee-login {
     margin: 0;
     padding: 0;
     display: block;
 }
 
-.container.customer-login {
+.container.employee-login {
     display: inline-block;
 
     margin-top: 120px;

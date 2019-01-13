@@ -1,18 +1,3 @@
-/*
-function createParagraph() {
-    let para = document.createElement('p');
-    para.textContent = 'You clicked the button!';
-    document.body.appendChild(para);
-}
-
-const buttons = document.querySelectorAll('button');
-
-for (let i = 0; i < buttons.length; i++) {
-    buttons[i].addEventListener('click', createParagraph);
-}
-*/
-
-/* LOADING IMAGE AFTER FILE SELECT */
 $(document).ready(function () {
     $(document).on('change', '.btn-file :file', function () {
         var input = $(this)
@@ -29,6 +14,7 @@ $(document).ready(function () {
             if (log) alert(log);
         }
     });
+
     function readURL(input) {
         if (input.files && input.files[0]) {
             var reader = new FileReader();
@@ -44,11 +30,3 @@ $(document).ready(function () {
         readURL(this);
     });
 });
-
-
-
-
-
-
-
-
