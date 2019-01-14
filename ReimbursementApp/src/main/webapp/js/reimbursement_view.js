@@ -4,6 +4,7 @@ var remember_employee;
 var logout;
 var logged_in;
 var submission_response;
+var submission_response_type;
 
 set_vars();
 submission_response_alert()
@@ -60,14 +61,27 @@ function set_vars() {
     if (qmap.has('remember_employee')) remember_employee = qmap.get('remember_employee');
     if (qmap.has('logout')) logout = qmap.get('logout');
     if (qmap.has('logged_in')) logged_in = qmap.get('logged_in');
-    if (qmap.has('submission_response')) submission_response = decodeURI(qmap.get('submission_response'));
+    if (qmap.has('submission_response')) {
+        submission_response = decodeURI(qmap.get('submission_response'));
+        if (qmap.has('submission_response_type')) submission_response_type = decodeURI(qmap.get('submission_response_type'));
+    }
 };
 
 function submission_response_alert() {
     if (submission_response != undefined && submission_response != null){
-        swal(`${submission_response}`);
-        swal('heeyyy')
-        swal(submission_response);
+        //swal(`${submission_response}`);
+        if (submission_response_type != undefined && submission_response_type != null){
+            let alert_title = (submission_response_type == 'success') ? 'Completed' : submission_response_type.charAt(0).toUpperCase() + submission_response_type.slice(1);
+            swal({
+                type: submission_response_type,
+                title: alert_title,
+                text: submission_response
+            });
+        } else {
+            swal(submission_response);
+        }
+        
         submission_response = null;
+        submission_response_type = null;
     }
 }

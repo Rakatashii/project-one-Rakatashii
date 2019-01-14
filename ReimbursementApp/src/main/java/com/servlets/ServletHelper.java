@@ -2,6 +2,7 @@ package com.servlets;
 
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.List;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpSession;
@@ -9,7 +10,7 @@ import javax.servlet.http.HttpSession;
 public class ServletHelper {
 	String fullUrl;
 	
-	public void printAttributes(String methName, HttpSession hs) {
+	public synchronized void printAttributes(String methName, HttpSession hs) {
 		System.out.println(methName + " logged: " + (String) hs.getAttribute("logged_in"));
 		System.out.println(methName + " username: " + (String) hs.getAttribute("username"));
 		System.out.println(methName + " password: " + (String) hs.getAttribute("password"));
@@ -18,7 +19,7 @@ public class ServletHelper {
 		if (hs.getAttribute("logout") != null) System.out.println(methName + " logout: " + (String) hs.getAttribute("logout"));
 		if (hs.getAttribute("contact") != null) System.out.println(methName + " contact: " + (String) hs.getAttribute("contact"));
 	}
-	public <T extends ServletInterface> String getParams(T servlet, HttpSession session, boolean append) {
+	public synchronized <T extends ServletInterface> String getParams(T servlet, HttpSession session, boolean append) {
 		ArrayList<String> params = servlet.getParams();
 		String paramString = "";
 		if (servlet.getParams().size() > 0) {
@@ -32,7 +33,7 @@ public class ServletHelper {
 		}
 		return paramString;
 	}
-	public String getAttributes(HttpSession session) {
+	public synchronized String getAttributes(HttpSession session) {
 		String attrString = "";
 		Enumeration<String> attributeNames = session.getAttributeNames();
 		int i = 0;
@@ -50,7 +51,7 @@ public class ServletHelper {
 		}
 		return attrString;
 	}
-	public <T extends ServletInterface> String getFullUrl(T servlet, HttpSession session) {
+	public synchronized <T extends ServletInterface> String getFullUrl(T servlet, HttpSession session) {
 		ArrayList<String> params = servlet.getParams();
 		String url = servlet.getUrl();
 		fullUrl = url;
@@ -62,12 +63,30 @@ public class ServletHelper {
 		System.out.println("fullUrl(1) = " + fullUrl);
 		return fullUrl;
 	}
-	public <T extends ServletInterface> void clearSession(T servlet, HttpSession session) {
+	public synchronized <T extends ServletInterface> void clearSession(T servlet, HttpSession session) {
 		Enumeration<String> attributeNames = session.getAttributeNames();
 		int i = 0;
 		while (attributeNames.hasMoreElements()) {
 			String name = attributeNames.nextElement();
 			session.removeAttribute(name);
 		}
+	}
+	public synchronized void addParam(List<String> params, String key, String value) {
+		String new_param = key + "=" + value;
+		// Check For Duplicates And Update New To New KVString
+		boolean duplicateKV = false;
+		for (String p : params) {
+			if (key.equals(p.split("=")[0])) {
+				duplicateKV = true;
+				System.out.println("duplicate param!");
+				System.out.println("---old param = " + p);
+				System.out.println("-----new key = " + key);
+				System.out.println("-----new val = " + value);
+				params.remove(p);
+				params.add(new_param);
+				return;
+			}
+		}
+		if (!duplicateKV) params.add(new_param);
 	}
 }

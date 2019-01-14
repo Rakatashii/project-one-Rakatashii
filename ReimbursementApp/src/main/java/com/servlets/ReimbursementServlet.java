@@ -57,7 +57,7 @@ public class ReimbursementServlet extends HttpServlet implements ServletInterfac
 		PrintWriter output = response.getWriter();
 		HttpSession session = request.getSession(false);
 
-		fullUrl = url + ((servletHelper.getAttributes(session).length() <= 1) ? "" : "?" + servletHelper.getAttributes(session));
+		if (servletHelper.getAttributes(session) != null) fullUrl = url + ((servletHelper.getAttributes(session).length() <= 1) ? "" : "?" + servletHelper.getAttributes(session));
 		if (params.size() > 0) {
 			fullUrl += ((servletHelper.getAttributes(session).length() <= 1) ? "?" + servletHelper.getParams(this, session, true) : "&" + servletHelper.getParams(this, session, true));
 		}
@@ -131,7 +131,11 @@ public class ReimbursementServlet extends HttpServlet implements ServletInterfac
 	    }
 	    
 	    String submissionResponse = reimbursementService.getResponse();
-    	addParam("submission_response", submissionResponse);
+
+    	servletHelper.addParam(params, "submission_response", submissionResponse);
+
+    	String responseType = reimbursementService.getButtonType();
+    	servletHelper.addParam(params, "submission_response_type", responseType);
     	
 	    fullUrl = servletHelper.getFullUrl(this, session);
 	    System.out.println("fullUrl: " + fullUrl);
@@ -139,18 +143,12 @@ public class ReimbursementServlet extends HttpServlet implements ServletInterfac
 	}
 
 	@Override
-	public ArrayList<String> getParams() {
+	public synchronized ArrayList<String> getParams() {
 		return params;
 	}
 	@Override
-	public String getUrl() {
+	public synchronized String getUrl() {
 		return url;
-	}
-	public void addParam(String key, String value) {
-		if (!params.contains(key)) {
-			String param = key + "=" + value;
-			params.add(param);
-		}
 	}
 	
 }

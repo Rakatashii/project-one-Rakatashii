@@ -36,19 +36,13 @@ public class ReimbursementDAO {
 			ps.setString(7, reimbursement.getStatus());
 			
 			if (ps.executeUpdate() != 0) {
-				//log.debug("Inserted Into " + tableName + " Values(" + employee.getEmployeeID() + ", " + employee.getUsername() + ", ... )");
 				ps.close();
 				return "Your Request Has Been Submitted.";
 			} else {
 				ps.close();
-				//log.debug("Failed To Insert Into " + tableName + " Employee With " + employee.getEmployeeID() + ", username = " + employee.getUsername() + ", ... ");
-				//log.debug("\t" + "ps was closed.");
-				//e.printStackTrace(); System.out.println();
 				return "System Error. Please Contact An Administrator.";
 			} 
 		} catch (PSQLException e) {
-			//log.debug("Failed To Insert Into " + tableName + " Employee With " + employee.getEmployeeID() + ", username = " + employee.getUsername() + ", ... ");
-			//log.debug("\t" + e.getLocalizedMessage());
 			e.printStackTrace(); System.out.println();
 			String error = e.getLocalizedMessage();
 			Pattern pattern = Pattern.compile("(?<=ERROR:.{1}?)(.*)(?!.\\n|DETAIL:)");
@@ -59,8 +53,6 @@ public class ReimbursementDAO {
 	    	else return "Unable To Process Your Request.";
 		}
 		catch (SQLException e) {
-			//log.debug("Failed To Insert Into " + tableName + " Employee With " + employee.getEmployeeID() + ", username = " + employee.getUsername() + ", ... ");
-			//log.debug("\t" + e.getLocalizedMessage());
 			e.printStackTrace(); System.out.println();
 			return "Unable To Process Your Request.";
 		}

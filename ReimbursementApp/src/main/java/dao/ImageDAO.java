@@ -46,6 +46,8 @@ public class ImageDAO {
 						
 						ps.executeUpdate();
 						
+						ps.close();
+						return null;
 					} else {
 						System.out.println("Image File Or File Name Is NULL In DAO!");
 					}
@@ -53,7 +55,7 @@ public class ImageDAO {
 					System.out.println("No Image File In DAO!");
 				}
 				ps.close();
-				return null;
+				return "System Error";
 			} catch (IOException e) {
 				e.printStackTrace(); System.out.println();
 				if (reimbursementID >= 0) {

@@ -69,6 +69,7 @@ public class EmployeeServlet extends HttpServlet implements ServletInterface {
 			session = request.getSession(true);
 			servletHelper.printAttributes("ES#GET(Invald): ", session);
 			fullUrl = servletHelper.getFullUrl(this, session);
+			EmployeeService.logoutEmployee();
 			response.sendRedirect(fullUrl);
 			return;
 		} else if (session.getAttribute("remember_employee") == null || session.getAttribute("remember_employee").equals("false")) {
@@ -76,6 +77,7 @@ public class EmployeeServlet extends HttpServlet implements ServletInterface {
 			session = request.getSession(true);
 			servletHelper.printAttributes("ES#GET(Invalid): ", session);
 			fullUrl = servletHelper.getFullUrl(this, session);
+			EmployeeService.logoutEmployee();
 			response.sendRedirect(fullUrl);
 			return;
 		}

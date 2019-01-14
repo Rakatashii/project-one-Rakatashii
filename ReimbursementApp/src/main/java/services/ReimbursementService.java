@@ -21,12 +21,13 @@ public class ReimbursementService {
 	
 	private String reimbursementDAOResponse = null, imageDAOResponse = null;
 	boolean validReimbursement = true, validImage = true;
+	String buttonType = "success";
 	
 	public boolean addReimbursement(Reimbursement reimbursement) {
-		EmployeeService employeeService = new EmployeeService();
-		this.employee = employeeService.getLoggedInEmployee();
+		// EmployeeService employeeService = new EmployeeService();
+		this.employee = EmployeeService.getLoggedInEmployee();
 		
-		if (employee != null && reimbursement != null) {
+		if (this.employee != null && reimbursement != null) {
 			this.reimbursement = reimbursement;
 			int employeeID = employee.getEmployeeID();
 			this.reimbursement.setEmployeeID(employeeID);
@@ -34,8 +35,9 @@ public class ReimbursementService {
 			this.reimbursement.setReimbursementID(reimbursementID);
 			
 			if (this.reimbursement.getAmount() < 0.0) {
-				reimbursementDAOResponse = "Error: Amount Must Be Positive.";
+				reimbursementDAOResponse = "Amount Must Be Positive.";
 				validReimbursement = false;
+				buttonType = "error";
 				return false;
 			}
 			
@@ -45,10 +47,12 @@ public class ReimbursementService {
 			employeeDAO.updateEmployee(employee);
 			
 			System.out.println("IN ReimbursementService: " + this.reimbursement);
-			reimbursementDAOResponse = "Your Submission Was Successful";
+			reimbursementDAOResponse = "Your Submission Was Successful!";
+			
 			return true;
 		} else {
 			reimbursementDAOResponse = "Your Request Could Not Be Processed.";
+			buttonType = "error";
 			return false;
 		}
 	}
@@ -63,8 +67,10 @@ public class ReimbursementService {
 			
 			/* NEED THIS IN EITHER CASE... */
 			imageDAOResponse = imageDAO.addImage(this.image);
-			if (imageDAOResponse != null) System.out.println("imageDAOResponse: " + imageDAOResponse);
-			
+			if (imageDAOResponse != null) {
+				System.out.println("imageDAOResponse: " + imageDAOResponse);
+			}
+			else buttonType = "error";
 			/* KEEP THIS TO TEST DAO#addImage AND FILE UPLOAD W THAT INFORMATION */
 			this.image.uploadLocalFile();
 			System.out.println("IN ReimbursementService: " + this.image);
@@ -77,8 +83,22 @@ public class ReimbursementService {
 	}
 	
 	public String getResponse() {
-		if (imageDAOResponse != null) return imageDAOResponse;
-		else return reimbursementDAOResponse;
+		if (imageDAOResponse != null) {
+			buttonType = "error";
+			return imageDAOResponse;
+		}
+		else {
+			
+			if (reimbursementDAOResponse.toLowerCase().contains("success") == false && reimbursementDAOResponse.toLowerCase().contains("submit") == false) {
+				System.out.println("!response.contains(\"successful\"): " + reimbursementDAOResponse.toLowerCase());
+				buttonType = "error";
+			} else buttonType = "success";
+			return reimbursementDAOResponse;
+		}
+	}
+	
+	public String getButtonType() {
+		return buttonType;
 	}
 	
 	public double convertAmountToDouble(String amountString) {
