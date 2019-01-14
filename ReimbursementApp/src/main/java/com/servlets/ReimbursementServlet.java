@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
 
@@ -27,9 +29,15 @@ import services.ReimbursementService;
 @WebServlet("/expenses")
 @MultipartConfig(fileSizeThreshold=1024*1024*2, // 2MB 
 				 maxFileSize=1024*1024*5, //4MB
-				 maxRequestSize=1024*1024*50) // 10MB
-public class ReimbursementServlet extends HttpServlet {
+				 maxRequestSize=1024*1024*10) // 10MB
+public class ReimbursementServlet extends HttpServlet implements ServletInterface{
 	private static final long serialVersionUID = 1L;
+	EmployeeServlet employeeServlet;
+	
+	private final String url = "./views/employee_view.html";
+	private ArrayList<String> params = new ArrayList<>();
+	private String fullUrl;
+	ServletHelper servletHelper = new ServletHelper();
 	
     public ReimbursementServlet() {
         super();
@@ -48,31 +56,45 @@ public class ReimbursementServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		PrintWriter output = response.getWriter();
 		HttpSession session = request.getSession(false);
-		if (session != null) {
-			System.out.println("ReimbursementServlet: " + (String) session.getAttribute("username"));
-			System.out.println("ReimbursementServlet: " + (String) session.getAttribute("password"));
-		} else {
-			System.out.println("Session is null");
-			response.sendRedirect("http://localhost:8080/Reimbursements/view/EmployeeServlet");
+
+		fullUrl = url + ((servletHelper.getAttributes(session).length() <= 1) ? "" : "?" + servletHelper.getAttributes(session));
+		if (params.size() > 0) {
+			fullUrl += ((servletHelper.getAttributes(session).length() <= 1) ? "?" + servletHelper.getParams(this, session, true) : "&" + servletHelper.getParams(this, session, true));
 		}
-		response.sendRedirect("http://localhost:8080/Reimbursements/views/employee_view.html");
+		System.out.println("fullUrl = " + fullUrl);
+		
+		if (session.getAttribute("logged_in") != null) {
+			servletHelper.printAttributes("RS#GET: ", session);
+			response.sendRedirect(fullUrl);
+		} else {
+			System.out.println("Employee Is Not Logged In!");
+			System.out.println("--Redirecting to EmployeeServlet");
+			new EmployeeServlet().doGet(request, response);
+		}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html");
 		request.setCharacterEncoding("UTF-8");
 		PrintWriter output = response.getWriter();
+		
+		HttpSession session = request.getSession(false);
+
+		if (session.getAttribute("logged_in") != null) {
+			servletHelper.printAttributes("RS#POST: ", session);
+		} else {
+			System.out.println("Employee Is Not Logged In!");
+			System.out.println("--Redirecting to EmployeeServlet");
+			new EmployeeServlet().doGet(request, response);
+			return;
+		}
 
 		ReimbursementService reimbursementService = new ReimbursementService();
 		
 		String expense = request.getParameter("expense");
 		String source = request.getParameter("source");
 		String amountString = request.getParameter("amount");
-		
-		double amount;
-		if (amountString != null && amountString.matches("[ \\d]+\\.?[ \\d]+")){
-			amount = Double.parseDouble(amountString);
-		} else amount = 0.0;
+		double amount = reimbursementService.convertAmountToDouble(amountString);
 		
 		String comments = request.getParameter("comments");
 		if (comments == null || comments.length() == 0) {
@@ -80,30 +102,55 @@ public class ReimbursementServlet extends HttpServlet {
 		}
 
 		Reimbursement reimbursement = new Reimbursement(expense, source, amount, comments);
-		//reimbursementService.addReimbursement(reimbursement);
 
 	    Part filePart = request.getPart("image");
-	    if (filePart != null) System.out.println("SUBMITTED NAME: " + filePart.getSubmittedFileName());
+	    if (filePart != null) System.out.println("SUBMITTED NAME: " + "`" + filePart.getSubmittedFileName() + "`");
 	    String fileName = null;
 	    InputStream fileContent = null;
-	    if (filePart != null) {
-	    	System.out.println("Response Contain Image File!");
+	    if (filePart != null && (filePart.getContentType().contains("png") 
+	    		|| filePart.getContentType().contains("jpg") || filePart.getContentType().contains("jpeg"))) {
+	    	System.out.println("content type: " + filePart.getContentType());
+	    	System.out.println("size: " + filePart.getSize());
+	    	System.out.println("name: " + filePart.getName());
 	    	fileContent = filePart.getInputStream();
 	    	fileName = Paths.get(getTheSubmittedFileName(filePart)).toString();
 	    	System.out.println("File Name: " + fileName);
 	    	
 	    	Image image = new Image(fileName, fileContent);
+	    	System.out.println("IN ReimbursementServlet: " + reimbursement);
 	    	System.out.println("IN ReimbursementServlet: " + image);
 	    	
-	    	reimbursementService.addReimbursement(reimbursement);
-	    	reimbursementService.addImage(image);
-	    } else {
-	    	reimbursementService.addReimbursement(reimbursement);
-	    	System.out.println("File Does NOT Contain Image File!");
-	    }
+	    	if (reimbursementService.addReimbursement(reimbursement))
+	    		reimbursementService.addImage(image);
 
-	    doGet(request, response);
-		//response.sendRedirect("http://localhost:8080/Reimbursements/ReimbursementServlet");
+	    	System.out.println("The Request Contained An Image File.");
+	    } else {
+	    	System.out.println("IN ReimbursementServlet: " + reimbursement);
+	    	reimbursementService.addReimbursement(reimbursement);
+	    	System.out.println("The Request Does NOT Contain An Image File!");
+	    }
+	    
+	    String submissionResponse = reimbursementService.getResponse();
+    	addParam("submission_response", submissionResponse);
+    	
+	    fullUrl = servletHelper.getFullUrl(this, session);
+	    System.out.println("fullUrl: " + fullUrl);
+	    response.sendRedirect(fullUrl);
 	}
 
+	@Override
+	public ArrayList<String> getParams() {
+		return params;
+	}
+	@Override
+	public String getUrl() {
+		return url;
+	}
+	public void addParam(String key, String value) {
+		if (!params.contains(key)) {
+			String param = key + "=" + value;
+			params.add(param);
+		}
+	}
+	
 }

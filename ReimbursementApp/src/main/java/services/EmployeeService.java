@@ -24,10 +24,10 @@ public class EmployeeService {
 		return false;
 	}
 	
-	public Employee getLoggedInEmployee() {
+	public static Employee getLoggedInEmployee() {
 		return loggedInEmployee;
 	}
-	public void logoutEmployee() {
+	public static void logoutEmployee() {
 		loggedInEmployee = null;
 	}
 	

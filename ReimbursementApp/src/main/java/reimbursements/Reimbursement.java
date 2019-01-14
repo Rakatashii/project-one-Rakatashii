@@ -10,6 +10,7 @@ public class Reimbursement {
 	private String expense, source, comments;
 	private double amount;
 	private Employee employee;
+	private String status = "pending";
 	
 	ReimbursementDAO reimbursementDAO = new ReimbursementDAO();
 	
@@ -96,6 +97,15 @@ public class Reimbursement {
 	public void setEmployee(Employee employee) {
 		this.employee = employee;
 	}
+	
+	public String getStatus() {
+		return status;
+	}
+	
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	
 	@Override
 	public String toString() {
 		return "Reimbursement [employeeID=" + employeeID + ", reimbursementID=" + reimbursementID + ", "

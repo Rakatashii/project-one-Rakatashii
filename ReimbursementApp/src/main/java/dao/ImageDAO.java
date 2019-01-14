@@ -10,6 +10,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import org.postgresql.util.PSQLException;
 
 import database.DBConnection;
 import images.Image;
@@ -19,7 +23,7 @@ public class ImageDAO {
 	PreparedStatement ps;
 	ReimbursementDAO reimbursementDAO;
 	
-	public void addImage(Image image) {
+	public String addImage(Image image) {
 		String tableName = "images";
 		String sql = "INSERT INTO " + tableName + " VALUES(?, ?, ?, ?, ?)";
 		int reimbursementID = image.getReimbursementID();
@@ -49,26 +53,43 @@ public class ImageDAO {
 					System.out.println("No Image File In DAO!");
 				}
 				ps.close();
+				return null;
 			} catch (IOException e) {
 				e.printStackTrace(); System.out.println();
 				if (reimbursementID >= 0) {
 					try {
-						reimbursementDAO.deleteReimbursement(reimbursementID);
+						reimbursementDAO.deleteReimbursementByID(reimbursementID);
 					} catch (Exception ex) {
 						ex.printStackTrace(); System.out.println();
+						return "Error: Duplicate Image May Already Exist In The Database.";
 					}
+					return getErrorMessage(e.getLocalizedMessage());
 				}
 			}
+		} catch (PSQLException e) {
+			e.printStackTrace(); System.out.println();
+			if (reimbursementID >= 0) {
+				try {
+					reimbursementDAO.deleteReimbursementByID(reimbursementID);
+				} catch (Exception ex) {
+					ex.printStackTrace(); System.out.println();
+					return "System Error. Please Contact An Administrator.";
+				}
+			}
+	    	return getErrorMessage(e.getLocalizedMessage());
 		} catch (SQLException e) {
 			e.printStackTrace(); System.out.println();
 			if (reimbursementID >= 0) {
 				try {
-					reimbursementDAO.deleteReimbursement(reimbursementID);
+					reimbursementDAO.deleteReimbursementByID(reimbursementID);
 				} catch (Exception ex) {
 					ex.printStackTrace(); System.out.println();
+					return "System Error. Please Contact An Administrator.";
 				}
 			}
+			return "Error: Duplicate Image May Already Exist In The Database.";
 		}
+		return "Unable To Process Your Request.";
 	}
 	public Image getImage(int employeeID, int reimbursementID) {
 		String tableName = "images";
@@ -110,4 +131,15 @@ public class ImageDAO {
 		}
 		return image;
 	}
+	
+	private String getErrorMessage(String error) {
+		Pattern pattern = Pattern.compile("(?<=ERROR:.{1}?)(.*)(?!.\\n|DETAIL:)");
+    	Matcher match = pattern.matcher(error.replace("\\",  "#"));
+    	if (match.find()) {
+    		System.out.println(match.group(0)); 
+    		return match.group(0);
+    	}
+    	return "Unable To Process Your Request.";
+	}
 }
+

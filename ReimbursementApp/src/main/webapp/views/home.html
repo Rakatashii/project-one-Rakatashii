@@ -32,7 +32,7 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="collapsibleNavId">
-                    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                    <ul class="navbar-nav mr-auto mt-0 mt-lg-0">
                         <!--
                         <li class="nav-item active">
                             <a class="nav-link" href="../EmployeeServlet">
@@ -46,18 +46,28 @@
                         </li>
                         -->
 
+                        <li class="nav-item">
+                            <form action="../EmployeeServlet" method="post">
+                                <label for="home">Home</label>
+                                <button id="home" name="home" value="home" class="nav-link" type="submit">
+                            </form>
+                        </li>
+                        <li class="nav-item active last-child">
+                            <form action="../EmployeeServlet" method="post">
+                                <label for="contact">Contact Us!</label>
+                                <button id="contact" name="contact" value="contact" class="nav-link" type="submit">
+                            </form>
+                        </li>
+
                     </ul style="float:right">
                     <form class="search-form" action="https://google.com/search" method="get">
                         <div class="input-group">
-                            <!--<input type="text" class="form-control search-input" placeholder="Search" name="srch-term"
-                                id="srch-term"> -->
 
                             <input type="hidden" name="sitesearch" value="" />
                             <input type="text" class="form-control search-input" name="q">
 
                             <div class="input-group-btn">
                                 <button class="search-btn btn mr-sm-2" type="submit">Submit<i class="glyphicon glyphicon-search"></i></button>
-                                <!-- removed btn-outline-light -->
                             </div>
                         </div>
                     </form>
@@ -88,7 +98,7 @@
                     e.preventDefault();
                     $(this).tab('show');
                 });
-        </script> -->
+            </script> -->
 
         
             <div class="jumbotron-fluid text-center employee-login" id="employee-login-form-container">
@@ -130,6 +140,7 @@
             crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
             crossorigin="anonymous"></script>
+        <script src="sweetalert2.all.min.js"></script>
         <script src="../js/employee_login.js"></script>
         </body>
 

@@ -33,6 +33,7 @@
                 </button>
                 <div class="collapse navbar-collapse" id="collapsibleNavId">
                     <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                        <!--
                         <li class="nav-item active li-even">
                             <a class="nav-link" href="../EmployeeServlet">
                                 Home <span class="sr-only">(current)</span>
@@ -41,13 +42,31 @@
                         <li class="nav-item active li-odd">
                             <a class="nav-link" href="../EmployeeServlet">
                                 Logout
-                                <!-- <span class="sr-only">(current)</span> -->
                             </a>
                         </li>
                         <li class="nav-item active last-child li-even">
                             <a class="nav-link" href="#">
                                 Contact Us!
                             </a>
+                        </li>
+                        -->
+                        <li class="nav-item">
+                            <form action="../EmployeeServlet" method="post">
+                                <label for="home">Home</label>
+                                <button id="home" name="home" class="nav-link" type="submit">
+                            </form>
+                        </li>
+                        <li class="nav-item active li-odd">
+                            <form action="../EmployeeServlet" method="post">
+                                <label for="logout">Logout</label>
+                                <button id="logout" name="logout" class="nav-link" type="submit">
+                            </form>
+                        </li>
+                        <li class="nav-item active last-child">
+                            <form action="../EmployeeServlet" method="post">
+                                <label for="contact">Contact Us!</label>
+                                <button id="contact" name="contact" class="nav-link" type="submit">
+                            </form>
                         </li>
 
                     </ul style="float:right">
@@ -106,22 +125,22 @@
                     <h3 class="h4 mb-3 font-weight-normal" style="transform:scale(1.0)">Submit A New Request</h3>
 
                     <label for="inputExpense" class="sr-only">Expense</label>
-                    <input type="text" name="expense" id="expense" class="form-control reimbursement-form" placeholder="Expense"
+                    <input type="text" name="expense" id="expense" class="form-control reimbursement-form" placeholder="Expense" 
                         required autofocus>
 
                     <label for="inputSource" class="sr-only">Source</label>
-                    <input type="text" name="source" id="source" class="form-control reimbursement-form"
-                        placeholder="Source" required>
+                    <input type="text" name="source" id="source" class="form-control reimbursement-form" placeholder="Source" 
+                        required>
 
                     <label for="inputAmount" class="sr-only">Value</label>
-                    <input type="text" name="amount" id="amount" class="form-control reimbursement-form" placeholder="Value">
+                    <input type="text" name="amount" id="amount" class="form-control reimbursement-form" placeholder="Value" 
+                        required>
 
                     <label for="inputComments" class="sr-only">Comments</label>
                     <textarea name="comments" id="comments" class="form-control reimbursement-form" placeholder="Additional Comments"
                         style="margin-bottom:0px"></textarea>
                     <!--
                     <img src="" class="img-fluid ${3|rounded-top,rounded-right,rounded-bottom,rounded-left,rounded-circle,|}" alt="">
-
                     -->
 
                     <span class="form-group">
@@ -151,7 +170,7 @@
             crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
             crossorigin="anonymous"></script>
-        <script src="../js/scripts.js"></script>
+        <script src="../js/node_modules/sweetalert2/dist/sweetalert2.all.min.js"></script>
+        <script src="../js/reimbursement_view.js"></script>
     </body>
-
 </html>

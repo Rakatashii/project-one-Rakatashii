@@ -6,6 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.postgresql.util.PSQLException;
 
@@ -18,11 +21,11 @@ public class ReimbursementDAO {
 	private PreparedStatement ps;
 	//final Logger log = Logger.getLogger(EmployeeDAO.class);
 	
-	public boolean addReimbursement(Reimbursement reimbursement) {
+	public String addReimbursement(Reimbursement reimbursement) {
 		String tableName = "reimbursements";
 		try {
 			connection = DBConnection.getConnection();
-			String sql = "INSERT INTO " + tableName + " VALUES(?,?,?,?,?,?);";
+			String sql = "INSERT INTO " + tableName + " VALUES(?,?,?,?,?,?,?);";
 			ps = connection.prepareStatement(sql);
 			ps.setInt(1,  reimbursement.getEmployeeID());
 			ps.setInt(2,  reimbursement.getReimbursementID());
@@ -30,32 +33,39 @@ public class ReimbursementDAO {
 			ps.setString(4, reimbursement.getSource());
 			ps.setDouble(5, reimbursement.getAmount());
 			ps.setString(6, reimbursement.getComments());
+			ps.setString(7, reimbursement.getStatus());
 			
 			if (ps.executeUpdate() != 0) {
 				//log.debug("Inserted Into " + tableName + " Values(" + employee.getEmployeeID() + ", " + employee.getUsername() + ", ... )");
 				ps.close();
-				return true;
+				return "Your Request Has Been Submitted.";
 			} else {
 				ps.close();
 				//log.debug("Failed To Insert Into " + tableName + " Employee With " + employee.getEmployeeID() + ", username = " + employee.getUsername() + ", ... ");
 				//log.debug("\t" + "ps was closed.");
 				//e.printStackTrace(); System.out.println();
-				return false;
+				return "System Error. Please Contact An Administrator.";
 			} 
 		} catch (PSQLException e) {
 			//log.debug("Failed To Insert Into " + tableName + " Employee With " + employee.getEmployeeID() + ", username = " + employee.getUsername() + ", ... ");
 			//log.debug("\t" + e.getLocalizedMessage());
 			e.printStackTrace(); System.out.println();
-			return false;
+			String error = e.getLocalizedMessage();
+			Pattern pattern = Pattern.compile("(?<=ERROR:.{1}?)(.*)(?!.\\n|DETAIL:)");
+	    	Matcher match = pattern.matcher(error.replace("\\",  "#"));
+	    	if (match.find()) {
+	    		System.out.println(match.group(0)); return match.group(0);
+	    	}
+	    	else return "Unable To Process Your Request.";
 		}
 		catch (SQLException e) {
 			//log.debug("Failed To Insert Into " + tableName + " Employee With " + employee.getEmployeeID() + ", username = " + employee.getUsername() + ", ... ");
 			//log.debug("\t" + e.getLocalizedMessage());
 			e.printStackTrace(); System.out.println();
-			return false;
+			return "Unable To Process Your Request.";
 		}
 	}
-	public void deleteReimbursement(int reimbursementID) {
+	public void deleteReimbursementByID(int reimbursementID) {
 		String tableName = "reimbursements";
 		try {
 			connection = DBConnection.getConnection();
@@ -69,13 +79,14 @@ public class ReimbursementDAO {
 	}
 	public int getNumReimbursements() {
 		String tableName = "reimbursements";
+		int count = 0;
 		try {
 			connection = DBConnection.getConnection();
 			String sql = "SELECT COUNT(*) AS count FROM " + tableName + ";";
 			Statement statement = connection.createStatement();
 			ResultSet rs = statement.executeQuery(sql);
-			rs.next();
-			int count = rs.getInt("count");
+			if (rs.next())
+				count = rs.getInt("count");
 			statement.close(); rs.close();
 			//log.debug("Current Count For " + tableName + " Is " + count);
 			return count;
@@ -83,18 +94,19 @@ public class ReimbursementDAO {
 			//log.debug("Could Not Get Count For Table " + tableName);
 			e.printStackTrace(); System.out.println();
 		}
-		return 0;
+		return count;
 	}
 	public int getNumReimbursementsByEmployeeID(int employee_id) {
 		String tableName = "reimbursements";
+		int count = 0;
 		try {
 			connection = DBConnection.getConnection();
 			String sql = "SELECT COUNT(*) as count FROM " + tableName + " WHERE employee_id = " + employee_id;
 		
 			Statement statement = connection.createStatement();
 			ResultSet rs = statement.executeQuery(sql);
-			rs.next();
-			int count = rs.getInt("count");
+			if (rs.next()) 
+				count = rs.getInt("count");
 			statement.close(); rs.close();
 			//log.debug("Current Count For " + tableName + " Is " + count);
 			return count;
@@ -102,9 +114,9 @@ public class ReimbursementDAO {
 			//log.debug("Could not get maxID from table " + tableName);
 			e.printStackTrace(); System.out.println();
 		}
-		return 0;
+		return count;
 	}
-	public ArrayList<Reimbursement> getExpensesByEmployeeID(int employee_id) {
+	public List<Reimbursement> getExpensesByEmployeeID(int employee_id) {
 		String tableName = "reimbursements";
 		ArrayList<Reimbursement> reimbursements = new ArrayList<>();
 		try {
@@ -116,6 +128,7 @@ public class ReimbursementDAO {
 			while (rs.next()) {
 				Reimbursement reimbursement = new Reimbursement(rs.getInt(1), rs.getInt(2), 
 						rs.getString(3), rs.getString(4), rs.getDouble(5), rs.getString(6));
+				reimbursement.setStatus(rs.getString(7));
 				reimbursements.add(reimbursement);
 				System.out.println(reimbursement);
 			}
@@ -127,6 +140,7 @@ public class ReimbursementDAO {
 		}
 		return reimbursements;
 	}
+	/*
 	public Employee getReimbursementByExpenseID(int employee_id) {
 		String tableName = "reimbursements";
 		try {
@@ -149,6 +163,7 @@ public class ReimbursementDAO {
 		}
 		return null;
 	}
+	*/
 	public boolean checkIfReimbursementExists(int employee_id, int expense_id) {
 		String tableName = "employees";
 		try {
