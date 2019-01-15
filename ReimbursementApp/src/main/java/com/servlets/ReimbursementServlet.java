@@ -59,77 +59,30 @@ public class ReimbursementServlet extends HttpServlet implements ServletInterfac
 		PrintWriter output = response.getWriter();
 		HttpSession session = request.getSession(false);
 		
-		/*
-		if (params != null && params.contains("submitted_response_type") && params.contains("error")) {
-			System.out.println("PARAMS: " + params);
-			fullUrl = EmployeeServlet.url + servletHelper.getParams(this, false);
-			session.invalidate();
-			//response.sendRedirect(fullUrl);
-			response.sendRedirect("EmployeeServlet");
-			return;
-		}*/
 		if (session != null && session.getAttribute("logged_in") != null) {
 			servletHelper.printAttributes("RS#GET: ", session);
 			fullUrl = servletHelper.getFullUrl(this, session);
 			response.sendRedirect(fullUrl);
 
 		} else if (session == null || session.getAttribute("logged_in") == null) {
-			//session = request.getSession(true);
-			//session.setAttribute("submission_response", "You Must Log In");
-			//session.setAttribute("submission_response_type", "error");
-			//servletHelper.addParam(params, "submission_response", "You Must Log In");
-			//servletHelper.addParam(params, "submission_response_type", "login_error");
 			System.out.println("PARAMS: " + params);
 			fullUrl = EmployeeServlet.url + "?" + servletHelper.getParams(this, false);
-			//if (session != null) session.invalidate();
-			//this.params.clear();
-			//response.sendRedirect(fullUrl);
+
 			request.setAttribute("submission_response", "You Must Log In");
 			request.setAttribute("submission_response_type", "login_error");
 			
 			RequestDispatcher rd = request.getRequestDispatcher("/EmployeeServlet");
 			rd.forward(request, response);
-			//fullUrl = servletHelper.getFullUrl(this,  session);
-			//response.sendRedirect(fullUrl);
-			//new EmployeeServlet().doGet(request, response);
 		} else {
 			System.out.println("Session Not NULL && LoggedIN NOT NULL");
 			fullUrl = EmployeeServlet.url + "?" + servletHelper.getParams(this, false);
-			//if (session != null) session.invalidate();
-			//this.params.clear();
-			//response.sendRedirect(fullUrl);
+
 			request.setAttribute("submission_response", "You Must Log In");
 			request.setAttribute("submission_response_type", "login_error");
 			
 			RequestDispatcher rd = request.getRequestDispatcher("/EmployeeServlet");
 			rd.forward(request, response);
-			//session.invalidate();
-			//response.sendRedirect("./views/404.html");
 		} 
-
-		//if (servletHelper.getAttributes(session) != null) fullUrl = url + ((servletHelper.getAttributes(session).length() <= 1) ? "" : "?" + servletHelper.getAttributes(session));
-		/*
-		if (params.size() > 0) {
-			fullUrl += ((servletHelper.getAttributes(session).length() <= 1) ? "?" + servletHelper.getParams(this, session, true) : "&" + servletHelper.getParams(this, session, true));
-		}
-		*/
-		/*
-		fullUrl = servletHelper.getFullUrl(this, session);
-		System.out.println("fullUrl = " + fullUrl);
-		
-		if (session.getAttribute("logged_in") != null) {
-			servletHelper.printAttributes("RS#GET: ", session);
-			response.sendRedirect(fullUrl);
-		} else {
-			session.invalidate();
-			//response.sendRedirect("./views/404.html");
-		}
-		*/
-		/*else {
-			System.out.println("Employee Is Not Logged In!");
-			System.out.println("--Redirecting to EmployeeServlet");
-			new EmployeeServlet().doGet(request, response);
-		}*/
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -168,29 +121,25 @@ public class ReimbursementServlet extends HttpServlet implements ServletInterfac
 	    InputStream fileContent = null;
 	    if (filePart != null && (filePart.getContentType().contains("png") 
 	    		|| filePart.getContentType().contains("jpg") || filePart.getContentType().contains("jpeg"))) {
-	    	System.out.println("content type: " + filePart.getContentType());
-	    	System.out.println("size: " + filePart.getSize());
-	    	System.out.println("name: " + filePart.getName());
+
 	    	fileContent = filePart.getInputStream();
 	    	fileName = Paths.get(getTheSubmittedFileName(filePart)).toString();
-	    	System.out.println("File Name: " + fileName);
 	    	
 	    	Image image = new Image(fileName, fileContent);
-	    	System.out.println("IN ReimbursementServlet: " + reimbursement);
-	    	System.out.println("IN ReimbursementServlet: " + image);
+	    	System.out.println("New Reimbursement: " + reimbursement);
+	    	System.out.println("New Image: " + image);
 	    	
 	    	if (reimbursementService.addReimbursement(reimbursement))
 	    		reimbursementService.addImage(image);
 
-	    	System.out.println("The Request Contained An Image File.");
+	    	System.out.println("--The Request Contained An Image File.");
 	    } else {
-	    	System.out.println("IN ReimbursementServlet: " + reimbursement);
+	    	System.out.println("New Reimbursement: " + reimbursement);
 	    	reimbursementService.addReimbursement(reimbursement);
-	    	System.out.println("The Request Does NOT Contain An Image File!");
+	    	System.out.println("--The Request Does NOT Contain An Image File.");
 	    }
 	    
 	    String submissionResponse = reimbursementService.getResponse();
-
     	servletHelper.addParam(params, "submission_response", submissionResponse);
 
     	String responseType = reimbursementService.getButtonType();
@@ -209,5 +158,4 @@ public class ReimbursementServlet extends HttpServlet implements ServletInterfac
 	public synchronized String getUrl() {
 		return url;
 	}
-	
 }

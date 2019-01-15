@@ -46,55 +46,23 @@ public class EmployeeServlet extends HttpServlet implements ServletInterface {
 		System.out.println("fullUrl = " + fullUrl);
 		
 		if (request.getAttribute("submission_response") != null) {
-			System.out.println("ES HAS: " + (String) request.getAttribute("submission_response"));
+			System.out.println("login_error? " + request.getAttribute("submission_response"));
 			servletHelper.addParam(params, "submission_response", (String) request.getAttribute("submission_response"));
 			if (request.getAttribute("submission_response_type") != null) {
-				System.out.println("ES HAS: " + (String) request.getAttribute("submission_response"));
 				servletHelper.addParam(params, "submission_response_type", (String) request.getAttribute("submission_response_type"));
-				//fullUrl = servletHelper.getFullUrl(this, session);
 				fullUrl = url + "?" + servletHelper.getParams(this, false);
-				System.out.println("fullUrl (BEFORE REDIRECT: " + fullUrl);
 				session.invalidate();
-				String urlEnd = "?" + servletHelper.getParams(this, false);
+				//String urlEnd = "?" + servletHelper.getParams(this, false);
 				this.params.clear();
-				response.encodeURL(urlEnd);
+				//response.encodeURL(urlEnd);
 				response.sendRedirect(fullUrl);
 				return;
 			}
-			/*
-			response.setContentType("text/html");
-			out.write("<script>"
-					+ "employee_alert = document.createElement('employee-alert');"
-					+ "employee_alert.innerHTML = \"<script>swal('hiii')</script>\""
-					+ "elv = document.getElementById(employee-login-view)"
-					+ "elv.appendChild(e)"
-					+ "</script>");
-			*/
 		} else System.out.println("employeeServlet does not have submission_response");
-		/*
-		Enumeration<String> attributeNames;
-		if (session != null) attributeNames = request.getAttributeNames();
-		else {
-			attributeNames = null;
-			System.out.println("Session is Null.");
-		}
-		if (attributeNames != null) {
-			System.out.println("PARAMETERS:");
-			while (attributeNames.hasMoreElements()) {
-				String name = attributeNames.nextElement();
-				String value = (String) request.getAttribute(name);
-				if (value != null) {
-					System.out.println("Name: " + name + " | Value: " + value);
-				}
-			}
-		} else System.out.println("attributeNames are null");
-		*/
-		
-		//printParameters(session);
 
 		servletHelper.printAttributes("ES#GET(Top)", session);
 		if (session.getAttribute("home") != null) {
-			System.out.println("--home = " + session.getAttribute("home"));
+			System.out.println("->HOME");
 			session.removeAttribute("home");
 			
 			if (session.getAttribute("remember_employee") != null && session.getAttribute("remember_employee").equals("true")){
@@ -108,13 +76,13 @@ public class EmployeeServlet extends HttpServlet implements ServletInterface {
 			}
 		}
 		if (session.getAttribute("logout") != null) {
-			System.out.println("--logout = " + session.getAttribute("logout"));
+			System.out.println("->LOGOUT");
 
 			servletHelper.clearSession(this, session);
 			
 			session.invalidate();
 			session = request.getSession(true);
-			servletHelper.printAttributes("ES#GET(Invald): ", session);
+			servletHelper.printAttributes("ES#GET(Invalid): ", session);
 			fullUrl = servletHelper.getFullUrl(this, session);
 			EmployeeService.logoutEmployee();
 			response.sendRedirect(fullUrl);
@@ -130,7 +98,7 @@ public class EmployeeServlet extends HttpServlet implements ServletInterface {
 		}
 
 		if (session.getAttribute("remember_employee") != null) session.setAttribute("remember_employee", null);
-		System.out.println("--Redirecting back to home.html");
+		System.out.println("--Redirecting To home.html");
 		fullUrl = servletHelper.getFullUrl(this, session);
 		response.sendRedirect(fullUrl);
 	}
@@ -144,7 +112,6 @@ public class EmployeeServlet extends HttpServlet implements ServletInterface {
 		HttpSession session = request.getSession(true);
 		
 		if (session.getAttribute("username") == null && session.getAttribute("password") == null) {
-			System.out.println("Requesting Parameters...");
 			username = request.getParameter("username");
 			password = request.getParameter("password");
 			remember = request.getParameter("remember_employee");
@@ -152,7 +119,6 @@ public class EmployeeServlet extends HttpServlet implements ServletInterface {
 				remember = "false";
 			}
 		} else {
-			System.out.println("Getting Attributes From Session...");
 			username = (String) session.getAttribute("username");
 			password = (String) session.getAttribute("password");
 			remember = (String) session.getAttribute("remember_employee");
@@ -186,6 +152,7 @@ public class EmployeeServlet extends HttpServlet implements ServletInterface {
 			
 			System.out.println("Employee Verified");
 			reimbursementServlet.doGet(request, response);
+			return;
 		} else {
 			System.out.println("Unable To Verify Employee With Username " + username + " And Password " + password);
 			session.setAttribute("remember_employee",  "false");
@@ -205,7 +172,6 @@ public class EmployeeServlet extends HttpServlet implements ServletInterface {
 		Enumeration<String> attributeNames;
 		if (session != null) attributeNames = session.getAttributeNames();
 		else {
-			System.out.println("Session is Null.");
 			return;
 		}
 		if (attributeNames != null) {
@@ -214,9 +180,9 @@ public class EmployeeServlet extends HttpServlet implements ServletInterface {
 				String name = attributeNames.nextElement();
 				String value = (String) session.getAttribute(name);
 				if (value != null) {
-					System.out.println("Name: " + name + " | Value: " + value);
+					System.out.println("Name: " + name + " - Value: " + value);
 				}
 			}
-		} else System.out.println("attributeNames are null");
+		} 
 	}
 }
