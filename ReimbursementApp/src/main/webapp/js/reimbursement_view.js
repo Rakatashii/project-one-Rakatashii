@@ -3,6 +3,7 @@ var password;
 var remember_employee;
 var logout;
 var logged_in;
+var image_error;
 var submission_response;
 var submission_response_type;
 
@@ -88,31 +89,18 @@ function submission_response_alert() {
     return true;
 }
 
-function check_logged_in(){
-    if (logged_in == undefined || logged_in == null){
-        var wait = false;
-        while (!wait){
-            submission_response = 'You Must Log In First.';
-            submission_response_type = 'error';
-            wait = submission_response_alert();
+function check_logged_in() {
+    if (qmap.has('submission_response_type') && qmap.get('submission_response_type') == 'login_error'){
+        qmap.set('submission_response_type', 'error')
+        if (submission_response != undefined && submission_response != null){
+            let alert_title = 'Error';
+            swal({
+                type: submission_response_type,
+                title: alert_title,
+                text: submission_response
+            });
+        } else {
+            swal(submission_response);
         }
-        (function(){
-            let xhr = new XMLHttpRequest();
-            
-            xhr.onreadystatechange = function() {
-                if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-                    // TODO: Wait For User To Click Button On Alert.
-                    // After The Button Is Clicked, Redirect To Home
-                }
-            }
-            /*
-            submission_response = 'You Must Log In First.';
-            submission_response_type = 'error';
-            submission_response_alert();
-            */
-            xhr.open("GET", "../EmployeeServlet", false);
-            xhr.send();
-
-        })();
     }
 }

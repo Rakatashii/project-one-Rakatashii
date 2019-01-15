@@ -3,13 +3,50 @@ var password;
 var remember_employee;
 var logout;
 var logged_in;
-var image_error;
 var submission_response;
 var submission_response_type;
 
 employee_login();
-
 set_vars();
+
+(function () {
+    if (submission_response_type != undefined && submission_response_type == "login_error"){
+        submission_response_type = 'error';
+        if (submission_response != undefined && submission_response != null){
+            let alert_title = 'Error';
+            swal({
+                type: submission_response_type,
+                title: alert_title,
+                text: submission_response,
+                timer: 2250
+            });
+        } else {
+            swal(submission_response);
+        }
+        submission_response_type = null;
+        submission_response = null;
+        qmap.set('submission_response', null);
+        qmap.set('submission_response_type', null);
+
+        /*
+        let xhr = new XMLHttpRequest();
+        xhr.setRequestHeader
+        xhr.onreadystatechange = function() {
+            xhr_status = 'failed'
+            if (this.readyState == 4 && this.status == 200) {
+               xhr_status = 'succeeded'
+            }
+        };
+        xhr.open('PUT', './home.html', true);
+        setTimeout(xhr.send(), 1000);
+        */
+        setTimeout(function() {
+            window.location.href = window.location.toString().replace(query, "").replace("?", "");
+        }, 2300);
+    }
+} ());
+
+//submission_response_alert();
 
 function employee_login() {
     document.getElementById("employee-login-form-container").innerHTML = `
@@ -46,6 +83,15 @@ function authenticateEmployee(username, password){
         
         document.getElementById('employee-login-form').setAttribute("method", "POST");
         document.getElementById('employee-login-form').method = "POST";
+        xhr.onreadystatechange = function(){
+            if (this.readyState === 4 && this.status === 200){
+                console.log(xhr.responseText);
+                //var skywalkerJSON = xhr.responseText.toString();
+                console.log(skywalkerJSON);
+            } else {
+                console.log('Error');
+            }
+        }
 
         /*
         (function(){
@@ -83,21 +129,20 @@ function submission_response_alert() {
         //swal(`${submission_response}`);
         if (submission_response_type != undefined && submission_response_type != null){
             let alert_title = (submission_response_type == 'success') ? 'Completed' : submission_response_type.charAt(0).toUpperCase() + submission_response_type.slice(1);
-            swal({
+            setTimeout(swal({
                 type: submission_response_type,
                 title: alert_title,
                 text: submission_response
-            });
+            }), 2000);
         } else {
             swal(submission_response);
         }
-        
+        //let time = setInterval(2000);
         submission_response = null;
         submission_response_type = null;
     }
 }
 
-set_vars();
 function set_vars() {
     query = window.location.search.substring(1);
     let qkeys = [], qvals = [];
@@ -122,3 +167,23 @@ function set_vars() {
         if (qmap.has('submission_response_type')) submission_response_type = decodeURI(qmap.get('submission_response_type'));
     }
 };
+
+/* // Good, but going to try as self-invoking function.
+function check_logged_in() {
+    if (submission_response_type != undefined && submission_response_type == "login_error"){
+        submission_response_type = 'error';
+        if (submission_response != undefined && submission_response != null){
+            let alert_title = 'Error';
+            swal({
+                type: submission_response_type,
+                title: alert_title,
+                text: submission_response
+            });
+        } else {
+            swal(submission_response);
+        }
+        submission_response_type = null;
+        submission_response = null;
+    }
+}
+*/ 

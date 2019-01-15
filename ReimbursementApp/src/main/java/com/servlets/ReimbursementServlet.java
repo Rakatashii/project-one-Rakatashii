@@ -10,6 +10,8 @@ import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.annotation.MultipartConfig;
@@ -26,7 +28,7 @@ import reimbursements.Reimbursement;
 import services.EmployeeService;
 import services.ReimbursementService;
 
-@WebServlet("/expenses")
+@WebServlet(urlPatterns = { "/views/employee_view.html/" })
 @MultipartConfig(fileSizeThreshold=1024*1024*2, // 2MB 
 				 maxFileSize=1024*1024*5, //4MB
 				 maxRequestSize=1024*1024*10) // 10MB
@@ -34,7 +36,7 @@ public class ReimbursementServlet extends HttpServlet implements ServletInterfac
 	private static final long serialVersionUID = 1L;
 	EmployeeServlet employeeServlet;
 	
-	private final String url = "./views/employee_view.html";
+	protected final static String url = "/Reimbursements/views/employee_view.html";
 	private ArrayList<String> params = new ArrayList<>();
 	private String fullUrl;
 	ServletHelper servletHelper = new ServletHelper();
@@ -56,25 +58,54 @@ public class ReimbursementServlet extends HttpServlet implements ServletInterfac
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		PrintWriter output = response.getWriter();
 		HttpSession session = request.getSession(false);
-		fullUrl = servletHelper.getFullUrl(this, session);
-		if (params != null && params.contains("submitted_response_type") && params.contains("error"))
-			new EmployeeServlet().doGet(request, response);
-		else if (session == null || session.getAttribute("logged_in") == null) {
+		
+		/*
+		if (params != null && params.contains("submitted_response_type") && params.contains("error")) {
+			System.out.println("PARAMS: " + params);
+			fullUrl = EmployeeServlet.url + servletHelper.getParams(this, false);
+			session.invalidate();
+			//response.sendRedirect(fullUrl);
+			response.sendRedirect("EmployeeServlet");
+			return;
+		}*/
+		if (session != null && session.getAttribute("logged_in") != null) {
+			servletHelper.printAttributes("RS#GET: ", session);
+			fullUrl = servletHelper.getFullUrl(this, session);
+			response.sendRedirect(fullUrl);
+
+		} else if (session == null || session.getAttribute("logged_in") == null) {
 			//session = request.getSession(true);
 			//session.setAttribute("submission_response", "You Must Log In");
 			//session.setAttribute("submission_response_type", "error");
-			servletHelper.addParam(params, "submission_response", "You Must Log In");
-			servletHelper.addParam(params, "submission_response_type", "error");
-			fullUrl = servletHelper.getFullUrl(this,  session);
-			response.sendRedirect(fullUrl);
+			//servletHelper.addParam(params, "submission_response", "You Must Log In");
+			//servletHelper.addParam(params, "submission_response_type", "login_error");
+			System.out.println("PARAMS: " + params);
+			fullUrl = EmployeeServlet.url + "?" + servletHelper.getParams(this, false);
+			//if (session != null) session.invalidate();
+			//this.params.clear();
+			//response.sendRedirect(fullUrl);
+			request.setAttribute("submission_response", "You Must Log In");
+			request.setAttribute("submission_response_type", "login_error");
+			
+			RequestDispatcher rd = request.getRequestDispatcher("/EmployeeServlet");
+			rd.forward(request, response);
+			//fullUrl = servletHelper.getFullUrl(this,  session);
+			//response.sendRedirect(fullUrl);
 			//new EmployeeServlet().doGet(request, response);
-		} else if (session.getAttribute("logged_in") != null) {
-			servletHelper.printAttributes("RS#GET: ", session);
-			response.sendRedirect(fullUrl);
 		} else {
-			session.invalidate();
+			System.out.println("Session Not NULL && LoggedIN NOT NULL");
+			fullUrl = EmployeeServlet.url + "?" + servletHelper.getParams(this, false);
+			//if (session != null) session.invalidate();
+			//this.params.clear();
+			//response.sendRedirect(fullUrl);
+			request.setAttribute("submission_response", "You Must Log In");
+			request.setAttribute("submission_response_type", "login_error");
+			
+			RequestDispatcher rd = request.getRequestDispatcher("/EmployeeServlet");
+			rd.forward(request, response);
+			//session.invalidate();
 			//response.sendRedirect("./views/404.html");
-		}
+		} 
 
 		//if (servletHelper.getAttributes(session) != null) fullUrl = url + ((servletHelper.getAttributes(session).length() <= 1) ? "" : "?" + servletHelper.getAttributes(session));
 		/*

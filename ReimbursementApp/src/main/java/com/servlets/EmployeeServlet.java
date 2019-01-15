@@ -25,8 +25,8 @@ public class EmployeeServlet extends HttpServlet implements ServletInterface {
 	private Employee loggedInEmployee = null;
 	ReimbursementServlet reimbursementServlet;
 	
-	private final String url = "./views/home.html";
-	private ArrayList<String> params = new ArrayList<>();
+	protected final static String url = "/Reimbursements/views/home.html";
+	protected ArrayList<String> params = new ArrayList<>();
 	private String fullUrl;
 	ServletHelper servletHelper = new ServletHelper();
 	
@@ -43,8 +43,54 @@ public class EmployeeServlet extends HttpServlet implements ServletInterface {
 		
 		HttpSession session = request.getSession(true);
 		fullUrl = servletHelper.getFullUrl(this, session);
-		//System.out.println("fullUrl = " + fullUrl);
+		System.out.println("fullUrl = " + fullUrl);
 		
+		if (request.getAttribute("submission_response") != null) {
+			System.out.println("ES HAS: " + (String) request.getAttribute("submission_response"));
+			servletHelper.addParam(params, "submission_response", (String) request.getAttribute("submission_response"));
+			if (request.getAttribute("submission_response_type") != null) {
+				System.out.println("ES HAS: " + (String) request.getAttribute("submission_response"));
+				servletHelper.addParam(params, "submission_response_type", (String) request.getAttribute("submission_response_type"));
+				//fullUrl = servletHelper.getFullUrl(this, session);
+				fullUrl = url + "?" + servletHelper.getParams(this, false);
+				System.out.println("fullUrl (BEFORE REDIRECT: " + fullUrl);
+				session.invalidate();
+				String urlEnd = "?" + servletHelper.getParams(this, false);
+				this.params.clear();
+				response.encodeURL(urlEnd);
+				response.sendRedirect(fullUrl);
+				return;
+			}
+			/*
+			response.setContentType("text/html");
+			out.write("<script>"
+					+ "employee_alert = document.createElement('employee-alert');"
+					+ "employee_alert.innerHTML = \"<script>swal('hiii')</script>\""
+					+ "elv = document.getElementById(employee-login-view)"
+					+ "elv.appendChild(e)"
+					+ "</script>");
+			*/
+		} else System.out.println("employeeServlet does not have submission_response");
+		/*
+		Enumeration<String> attributeNames;
+		if (session != null) attributeNames = request.getAttributeNames();
+		else {
+			attributeNames = null;
+			System.out.println("Session is Null.");
+		}
+		if (attributeNames != null) {
+			System.out.println("PARAMETERS:");
+			while (attributeNames.hasMoreElements()) {
+				String name = attributeNames.nextElement();
+				String value = (String) request.getAttribute(name);
+				if (value != null) {
+					System.out.println("Name: " + name + " | Value: " + value);
+				}
+			}
+		} else System.out.println("attributeNames are null");
+		*/
+		
+		//printParameters(session);
 
 		servletHelper.printAttributes("ES#GET(Top)", session);
 		if (session.getAttribute("home") != null) {
@@ -153,5 +199,24 @@ public class EmployeeServlet extends HttpServlet implements ServletInterface {
 	@Override
 	public String getUrl() {
 		return url;
+	}
+
+	void printParameters(HttpSession session) {
+		Enumeration<String> attributeNames;
+		if (session != null) attributeNames = session.getAttributeNames();
+		else {
+			System.out.println("Session is Null.");
+			return;
+		}
+		if (attributeNames != null) {
+			System.out.println("PARAMETERS:");
+			while (attributeNames.hasMoreElements()) {
+				String name = attributeNames.nextElement();
+				String value = (String) session.getAttribute(name);
+				if (value != null) {
+					System.out.println("Name: " + name + " | Value: " + value);
+				}
+			}
+		} else System.out.println("attributeNames are null");
 	}
 }

@@ -85,7 +85,7 @@ public class ReimbursementService {
 	public String getResponse() {
 		if (imageDAOResponse != null) {
 			buttonType = "error";
-			return imageDAOResponse;
+			return ((imageDAOResponse.contains("_")) ? imageDAOResponse.replace('_', ' ') : imageDAOResponse);
 		}
 		else {
 			
@@ -93,7 +93,7 @@ public class ReimbursementService {
 				System.out.println("!response.contains(\"successful\"): " + reimbursementDAOResponse.toLowerCase());
 				buttonType = "error";
 			} else buttonType = "success";
-			return reimbursementDAOResponse;
+			return ((reimbursementDAOResponse.contains("_")) ? reimbursementDAOResponse.replace('_', ' ') : reimbursementDAOResponse);
 		}
 	}
 	

@@ -19,7 +19,7 @@ public class ServletHelper {
 		if (hs.getAttribute("logout") != null) System.out.println(methName + " logout: " + (String) hs.getAttribute("logout"));
 		if (hs.getAttribute("contact") != null) System.out.println(methName + " contact: " + (String) hs.getAttribute("contact"));
 	}
-	public synchronized <T extends ServletInterface> String getParams(T servlet, HttpSession session, boolean append) {
+	public synchronized <T extends ServletInterface> String getParams(T servlet, boolean append) {
 		ArrayList<String> params = servlet.getParams();
 		String paramString = "";
 		if (servlet.getParams().size() > 0) {
@@ -39,16 +39,18 @@ public class ServletHelper {
 		if (session != null) attributeNames = session.getAttributeNames();
 		else return "";
 		int i = 0;
-		while (attributeNames.hasMoreElements()) {
-			String name = attributeNames.nextElement();
-			String value = (String) session.getAttribute(name);
-			if (value != null) {
-				if (i == 0) {
-					attrString += (name + "=" + value);
-				} else {
-					attrString += "&" + (name + "=" + value);
+		if (attributeNames != null) {
+			while (attributeNames.hasMoreElements()) {
+				String name = attributeNames.nextElement();
+				String value = (String) session.getAttribute(name);
+				if (value != null) {
+					if (i == 0) {
+						attrString += (name + "=" + value);
+					} else {
+						attrString += "&" + (name + "=" + value);
+					}
+					i++;
 				}
-				i++;
 			}
 		}
 		return attrString;
@@ -60,7 +62,7 @@ public class ServletHelper {
 		System.out.println("fullUrl(1) = " + fullUrl);
 		if (session != null) fullUrl += ((getAttributes(session).length() <= 1) ? "" : "?" + getAttributes(session));
 		if (params != null && params.size() > 0) {
-			fullUrl += ((session != null && getAttributes(session).length() <= 1) ? "?" + getParams(servlet, session, true) : "&" + getParams(servlet, session, true));
+			fullUrl += ((session != null && getAttributes(session).length() <= 1) ? "?" + getParams(servlet, true) : "&" + getParams(servlet, true));
 		}
 		System.out.println("fullUrl(1) = " + fullUrl);
 		return fullUrl;
