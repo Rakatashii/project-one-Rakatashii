@@ -7,6 +7,7 @@ var submission_response;
 var submission_response_type;
 
 set_vars();
+check_logged_in(); 
 submission_response_alert()
 
 $(document).ready(function () {
@@ -44,7 +45,7 @@ $(document).ready(function () {
 
 set_vars();
 function set_vars() {
-    let query = window.location.search.substring(1);
+    query = window.location.search.substring(1);
     let qkeys = [], qvals = [];
     qmap = new Map;
     let keyvals = query.split("&");
@@ -83,5 +84,35 @@ function submission_response_alert() {
         
         submission_response = null;
         submission_response_type = null;
+    }
+    return true;
+}
+
+function check_logged_in(){
+    if (logged_in == undefined || logged_in == null){
+        var wait = false;
+        while (!wait){
+            submission_response = 'You Must Log In First.';
+            submission_response_type = 'error';
+            wait = submission_response_alert();
+        }
+        (function(){
+            let xhr = new XMLHttpRequest();
+            
+            xhr.onreadystatechange = function() {
+                if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+                    // TODO: Wait For User To Click Button On Alert.
+                    // After The Button Is Clicked, Redirect To Home
+                }
+            }
+            /*
+            submission_response = 'You Must Log In First.';
+            submission_response_type = 'error';
+            submission_response_alert();
+            */
+            xhr.open("GET", "../EmployeeServlet", false);
+            xhr.send();
+
+        })();
     }
 }

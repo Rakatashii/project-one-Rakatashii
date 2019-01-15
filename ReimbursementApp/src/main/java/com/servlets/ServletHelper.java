@@ -35,7 +35,9 @@ public class ServletHelper {
 	}
 	public synchronized String getAttributes(HttpSession session) {
 		String attrString = "";
-		Enumeration<String> attributeNames = session.getAttributeNames();
+		Enumeration<String> attributeNames;
+		if (session != null) attributeNames = session.getAttributeNames();
+		else return "";
 		int i = 0;
 		while (attributeNames.hasMoreElements()) {
 			String name = attributeNames.nextElement();
@@ -56,9 +58,9 @@ public class ServletHelper {
 		String url = servlet.getUrl();
 		fullUrl = url;
 		System.out.println("fullUrl(1) = " + fullUrl);
-		fullUrl += ((getAttributes(session).length() <= 1) ? "" : "?" + getAttributes(session));
+		if (session != null) fullUrl += ((getAttributes(session).length() <= 1) ? "" : "?" + getAttributes(session));
 		if (params != null && params.size() > 0) {
-			fullUrl += ((getAttributes(session).length() <= 1) ? "?" + getParams(servlet, session, true) : "&" + getParams(servlet, session, true));
+			fullUrl += ((session != null && getAttributes(session).length() <= 1) ? "?" + getParams(servlet, session, true) : "&" + getParams(servlet, session, true));
 		}
 		System.out.println("fullUrl(1) = " + fullUrl);
 		return fullUrl;

@@ -56,21 +56,49 @@ public class ReimbursementServlet extends HttpServlet implements ServletInterfac
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		PrintWriter output = response.getWriter();
 		HttpSession session = request.getSession(false);
+		fullUrl = servletHelper.getFullUrl(this, session);
+		if (params != null && params.contains("submitted_response_type") && params.contains("error"))
+			new EmployeeServlet().doGet(request, response);
+		else if (session == null || session.getAttribute("logged_in") == null) {
+			//session = request.getSession(true);
+			//session.setAttribute("submission_response", "You Must Log In");
+			//session.setAttribute("submission_response_type", "error");
+			servletHelper.addParam(params, "submission_response", "You Must Log In");
+			servletHelper.addParam(params, "submission_response_type", "error");
+			fullUrl = servletHelper.getFullUrl(this,  session);
+			response.sendRedirect(fullUrl);
+			//new EmployeeServlet().doGet(request, response);
+		} else if (session.getAttribute("logged_in") != null) {
+			servletHelper.printAttributes("RS#GET: ", session);
+			response.sendRedirect(fullUrl);
+		} else {
+			session.invalidate();
+			//response.sendRedirect("./views/404.html");
+		}
 
-		if (servletHelper.getAttributes(session) != null) fullUrl = url + ((servletHelper.getAttributes(session).length() <= 1) ? "" : "?" + servletHelper.getAttributes(session));
+		//if (servletHelper.getAttributes(session) != null) fullUrl = url + ((servletHelper.getAttributes(session).length() <= 1) ? "" : "?" + servletHelper.getAttributes(session));
+		/*
 		if (params.size() > 0) {
 			fullUrl += ((servletHelper.getAttributes(session).length() <= 1) ? "?" + servletHelper.getParams(this, session, true) : "&" + servletHelper.getParams(this, session, true));
 		}
+		*/
+		/*
+		fullUrl = servletHelper.getFullUrl(this, session);
 		System.out.println("fullUrl = " + fullUrl);
 		
 		if (session.getAttribute("logged_in") != null) {
 			servletHelper.printAttributes("RS#GET: ", session);
 			response.sendRedirect(fullUrl);
 		} else {
+			session.invalidate();
+			//response.sendRedirect("./views/404.html");
+		}
+		*/
+		/*else {
 			System.out.println("Employee Is Not Logged In!");
 			System.out.println("--Redirecting to EmployeeServlet");
 			new EmployeeServlet().doGet(request, response);
-		}
+		}*/
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

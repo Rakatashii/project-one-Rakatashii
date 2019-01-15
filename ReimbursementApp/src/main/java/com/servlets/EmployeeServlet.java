@@ -44,6 +44,7 @@ public class EmployeeServlet extends HttpServlet implements ServletInterface {
 		HttpSession session = request.getSession(true);
 		fullUrl = servletHelper.getFullUrl(this, session);
 		//System.out.println("fullUrl = " + fullUrl);
+		
 
 		servletHelper.printAttributes("ES#GET(Top)", session);
 		if (session.getAttribute("home") != null) {
