@@ -28,32 +28,19 @@ set_vars();
         qmap.set('submission_response', null);
         qmap.set('submission_response_type', null);
 
-        /*
-        let xhr = new XMLHttpRequest();
-        xhr.setRequestHeader
-        xhr.onreadystatechange = function() {
-            xhr_status = 'failed'
-            if (this.readyState == 4 && this.status == 200) {
-               xhr_status = 'succeeded'
-            }
-        };
-        xhr.open('PUT', './home.html', true);
-        setTimeout(xhr.send(), 1000);
-        */
         setTimeout(function() {
             window.location.href = window.location.toString().replace(query, "").replace("?", "");
         }, 2300);
     }
 } ());
 
-//submission_response_alert();
 
 function employee_login() {
     document.getElementById("employee-login-form-container").innerHTML = `
     
     <div class="container employee-login">
     	<h1 id="employee-login-form-title">Employee Portal</h1>
-        <form id="employee-login-form" onSubmit="authenticateEmployee(username, password)" action="../EmployeeServlet" class="form-signin text-center" enctype="multipart/form-data"> <!--action="../EmployeeServlet" method="POST">-->
+        <form id="employee-login-form" onSubmit="authenticateEmployee(username, password)" action="../EmployeeLogin" class="form-signin text-center" enctype="multipart/form-data"> 
             <h1 class="h3 mb-3 font-weight-normal" style="transform:scale(1.0); white-space:pre">Please  Sign In</h1>
 
             <label for="inputEmail" class="sr-only">Email address</label>
@@ -92,41 +79,11 @@ function authenticateEmployee(username, password){
                 console.log('Error');
             }
         }
-
-        /*
-        (function(){
-            let xhr = new XMLHttpRequest();
-            
-            xhr.onreadystatechange = function() {
-                if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-                    let userInfo = JSON.parse(xhr.responseText);
-                    if(userInfo.auth == "true"){
-                        employeeId = userInfo.id;
-                        employeeFirstName = userInfo.firstname;
-                        employeeLastName = userInfo.lastname;
-                        employeeEmailAddress = userInfo.emailaddress;
-                        employeeAddress = userInfo.address;
-                        employeeLogin();
-                    } else {
-                        alert("Incorrect credentials, try again!");
-                    }
-                }
-            }
-
-            xhr.open("POST", "../EmployeeServlet", false);
-
-            let credentialArray = [username.value, password.value, remember_login.value];
-
-            xhr.send(credentialArray);
-
-        })();
-        */
     }
 }
 
 function submission_response_alert() {
     if (submission_response != undefined && submission_response != null){
-        //swal(`${submission_response}`);
         if (submission_response_type != undefined && submission_response_type != null){
             let alert_title = (submission_response_type == 'success') ? 'Completed' : submission_response_type.charAt(0).toUpperCase() + submission_response_type.slice(1);
             setTimeout(swal({
@@ -137,7 +94,7 @@ function submission_response_alert() {
         } else {
             swal(submission_response);
         }
-        //let time = setInterval(2000);
+
         submission_response = null;
         submission_response_type = null;
     }
@@ -168,22 +125,10 @@ function set_vars() {
     }
 };
 
-/* // Good, but going to try as self-invoking function.
-function check_logged_in() {
-    if (submission_response_type != undefined && submission_response_type == "login_error"){
-        submission_response_type = 'error';
-        if (submission_response != undefined && submission_response != null){
-            let alert_title = 'Error';
-            swal({
-                type: submission_response_type,
-                title: alert_title,
-                text: submission_response
-            });
-        } else {
-            swal(submission_response);
-        }
-        submission_response_type = null;
-        submission_response = null;
+/*
+function display_img_cards(){
+    for (let i = 0; i < num_images; i++){
+        reimbursements.setAttribute(src) = 
     }
 }
-*/ 
+*/

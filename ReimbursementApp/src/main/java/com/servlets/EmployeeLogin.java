@@ -19,21 +19,21 @@ import services.EmployeeService;
 
 @WebServlet("/login")
 @MultipartConfig
-public class EmployeeServlet extends HttpServlet implements ServletInterface {
+public class EmployeeLogin extends HttpServlet implements ServletInterface {
 	private static final long serialVersionUID = 1L;
 	private static EmployeeService employeeService = new EmployeeService();
 	private Employee loggedInEmployee = null;
-	ReimbursementServlet reimbursementServlet;
+	NewReimbursement newReimbursementServlet;
 	
-	protected final static String url = "/Reimbursements/views/home.html";
+	protected final static String url = "/Reimbursements/views/employee_login.html";
 	protected ArrayList<String> params = new ArrayList<>();
 	private String fullUrl;
 	ServletHelper servletHelper = new ServletHelper();
 	
 	private String username, password, remember, home, logout, contact, loggedIn;
 	
-    public EmployeeServlet() {
-    	reimbursementServlet = new ReimbursementServlet();
+    public EmployeeLogin() {
+    	newReimbursementServlet = new NewReimbursement();
     }
 	
 	@Override
@@ -58,9 +58,10 @@ public class EmployeeServlet extends HttpServlet implements ServletInterface {
 				response.sendRedirect(fullUrl);
 				return;
 			}
-		} else System.out.println("employeeServlet does not have submission_response");
+		} else System.out.println("employeeLoginServlet does not have submission_response");
 
 		servletHelper.printAttributes("ES#GET(Top)", session);
+		
 		if (session.getAttribute("home") != null) {
 			System.out.println("->HOME");
 			session.removeAttribute("home");
@@ -68,7 +69,7 @@ public class EmployeeServlet extends HttpServlet implements ServletInterface {
 			if (session.getAttribute("remember_employee") != null && session.getAttribute("remember_employee").equals("true")){
 				if (session.getAttribute("logged_in") != null) {
 					if (session.getAttribute("logout") != null) session.setAttribute("logout", null);
-					reimbursementServlet.doGet(request, response);
+					newReimbursementServlet.doGet(request, response);
 					return;
 				}
 			} else {
@@ -98,7 +99,7 @@ public class EmployeeServlet extends HttpServlet implements ServletInterface {
 		}
 
 		if (session.getAttribute("remember_employee") != null) session.setAttribute("remember_employee", null);
-		System.out.println("--Redirecting To home.html");
+		System.out.println("--Redirecting To Login");
 		fullUrl = servletHelper.getFullUrl(this, session);
 		response.sendRedirect(fullUrl);
 	}
@@ -108,6 +109,7 @@ public class EmployeeServlet extends HttpServlet implements ServletInterface {
 		response.setContentType("text/html");
 		request.setCharacterEncoding("UTF-8");
 		PrintWriter out = response.getWriter();
+		response.setContentType("text/html"); 
 		
 		HttpSession session = request.getSession(true);
 		
@@ -151,7 +153,20 @@ public class EmployeeServlet extends HttpServlet implements ServletInterface {
 			}
 			
 			System.out.println("Employee Verified");
-			reimbursementServlet.doGet(request, response);
+			out.append("<script language=\"text/javascript\"> "
+					+ "x = document.getElementByID('employee-alerts') "
+					+ "document.createElement('y') "
+					+ "y.innerHTML = \"swal('hello')\" "
+					+ "x.appendChild(y) "
+					+ "</script>" );
+			newReimbursementServlet.doGet(request, response);
+			out.append("<html><head>"
+					+ "<script language=\"text/javascript\"> "
+					+ "x = document.getElementByID('employee-alerts') "
+					+ "document.createElement('y') "
+					+ "y.innerHTML = \"swal('hello')\" "
+					+ "x.appendChild(y) "
+					+ "</script></head></html>");
 			return;
 		} else {
 			System.out.println("Unable To Verify Employee With Username " + username + " And Password " + password);

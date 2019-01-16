@@ -5,9 +5,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.Serializable;
 import java.util.Arrays;
 
-public class Image {
+public class Image implements Serializable {
+	private static final long serialVersionUID = 1L;
+	
 	public static final String UPLOAD_DIRECTORY = "C:\\Users\\Associate\\java\\project-one-Rakatashii\\ReimbursementApp\\src\\main\\webapp\\uploads\\";
 	private int employeeID, reimbursementID;
 	private String imageName;
@@ -149,17 +152,20 @@ public class Image {
 		this.imageSize = imageSize;
 	}
 
-	public void uploadLocalFile() {
+	public boolean uploadLocalFile() {
 		if (!imageFile.exists() || imageFile.isDirectory()) {
 			try {
 				imageFile.createNewFile();
 				System.out.println("Image File Was Created.");
+				return true;
 			} catch (IOException e) {
 				System.out.println("Unable To Create New File With Path Specified: " + imageName);
 				e.printStackTrace(); System.out.println();
+				return false;
 			}
 		} else {
 			System.out.println("Image File Already Exists.");
+			return false;
 		} 
 	}
 	public void setFieldsWithInputStream() {

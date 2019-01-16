@@ -3,7 +3,6 @@
 /* HTML TAGS */
 
 body {
-    /* background: url("/Reimbursements/images/explorer_mountains_cropped.jpg") no-repeat center center fixed; */
     background: url("../images/explorer_mountains_cropped.jpg") no-repeat center center fixed;
 
     -webkit-background-size: cover;
@@ -21,9 +20,11 @@ body {
 
 .navbar {
     background-color: rgba(47, 133, 167, 0.966);
+    padding: .5rem 1rem;
 }
 .nav-item{
     padding: 6px 9px 1px 6px;
+    color:white;
 }
 .nav-item button[type="submit"]{
     display: none;
@@ -34,8 +35,91 @@ body {
     color: white;
 }
 
+#img-collapse-button{
+    background-color: rgba(47, 133, 167, 0.966);
+    border: none;
+    margin-right:-10px;
+    background-image:url('../images/P1Icons/box-icon-white.png');
+    background-repeat:no-repeat;
+    background-size: 47px;
+    height: 47px;
+    width: 47px;
+    margin-top: -5px;
+    margin-bottom: -5px;
+    margin-left: -10px;
+    margin-right: 0px;
+}
+#img-dropdown-button{
+    background-color: rgba(47, 133, 167, 0.966);
+    border: none;
+    margin-right:-10px;
+    background-image:url('../images/P1Icons/box-icon-white.png');
+    background-repeat:no-repeat;
+    background-size: 47px;
+    height: 47px;
+    width: 47px;
+    margin-top: -5px;
+    margin-bottom: -5px;
+    margin-left: -10px;
+    margin-right: 0px;
+}
+#img-collapse-button{
+    display:none;
+}
+#img-button:focus {
+    outline:0;
+}
 
+#img-thumbnail{
+    background-color: rgba(47, 133, 167, 0.966);
+    border: none;
+    border-radius: 4px;  
+    padding: 0px; 
+    height:45px;
+    width:45px;
+}
+.dropdown-menu{
+    width: 325px;
+    left: -100px;
+    background-color: rgba(47, 133, 167, 0.966);
+    color:white;
+    margin-top: 10px;
+    margin-right: 100px;
+}
+/*
+#thumbnail{
+    border: 1px solid #ddd;
+    border-radius: 4px;  
+    padding: 0px; 
+    height: 5%;
+    width: 50px; 
+}
+*/
+.dropdown-toggle::after {
+    display:none;
+}
+
+@media (min-width : 575px) {
+    .navbar-expand-sm {
+        padding-bottom: 4px;
+        margin-top: -5px;
+        margin-bottom: 0px;
+    }
+}
+@media (min-width : 991px) {
+    .navbar-expand-sm {
+        margin-top: -2px; 
+        margin-bottom: 8px; 
+    }
+    .navbar{
+        padding-top: -2px;
+        padding-bottom: 8px; 
+    }
+}
 @media (max-width : 577px) {
+    .navbar{
+
+    }
     .li-even {
         padding:0px 0px 10px 10px;
         margin:5px 10px 0px 0px;
@@ -52,8 +136,17 @@ body {
     .search-btn {
         background: rgba(62, 186, 235, 0.966);
     }
+    #img-collapse-button {
+        display:block;
+    }
+    #img-dropdown-button {
+        display:none;
+    }
 }
-
+a{
+    color:white;
+    text-decoration: none;
+}
 .search-input {
     max-width: 80%;
 }
@@ -92,7 +185,7 @@ body {
     padding: 0;
 }
 
-.employee-login .container {
+.employee-login.container {
 
     margin-top: 120px;
     margin-bottom: 120px;
@@ -214,3 +307,50 @@ input[type="file"]{
     
     transform: scale(1.0);
 }
+
+/* ALL REIMBURSEMENTS */
+
+.jumbotron-fluid.wrapper {
+    margin-top: 20px;
+    margin-bottom: 20px;
+
+    height: 100%;
+    width: 100%;
+
+    background-color: rgba(47, 133, 167, 0.0);
+}
+
+.all-reimbursements-view.container.outer {
+    display: inline-block;
+
+    padding: 20px 2.5% 10px 2.5%;
+
+    /* max-width: 1386px; */
+
+    background-color: rgba(47, 133, 167, 0.6);
+}
+
+.container-fluid.inner-top{
+    background: rgba(5, 58, 78, 0.247);
+    height: 55px;
+    margin-bottom: 15px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

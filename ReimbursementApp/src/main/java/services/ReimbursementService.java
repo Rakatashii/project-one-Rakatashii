@@ -57,7 +57,7 @@ public class ReimbursementService {
 		}
 	}
 	
-	public void addImage(Image image) {
+	public boolean addImage(Image image) {
 		if (this.reimbursement != null && image != null) {
 			
 			this.image = image;
@@ -69,17 +69,19 @@ public class ReimbursementService {
 			imageDAOResponse = imageDAO.addImage(this.image);
 			if (imageDAOResponse != null) {
 				System.out.println("imageDAOResponse: " + imageDAOResponse);
+				boolean fileWasCreated = this.image.uploadLocalFile();
+				System.out.println("IN ReimbursementService: " + this.image);
+				if (!fileWasCreated) {
+					buttonType = "error";
+					imageDAOResponse = "Image Already Exists In Database";
+					return false;
+				}
+				return true;
+			} else {
+				buttonType = "error";
 			}
-			else buttonType = "error";
-			/* KEEP THIS TO TEST DAO#addImage AND FILE UPLOAD W THAT INFORMATION */
-			this.image.uploadLocalFile();
-			System.out.println("IN ReimbursementService: " + this.image);
-			
-			/* KEEP THIS TO TEST DAO#getImage AND FILE UPLOAD W THAT INFORMATION */
-			//Image newImage = imageDAO.getImage(reimbursement.getEmployeeID(), reimbursement.getReimbursementID());
-			//newImage.uploadLocalFile();
-			//System.out.println(this.image);
 		}
+		return false;
 	}
 	
 	public String getResponse() {

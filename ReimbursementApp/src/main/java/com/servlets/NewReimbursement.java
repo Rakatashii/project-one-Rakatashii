@@ -28,20 +28,20 @@ import reimbursements.Reimbursement;
 import services.EmployeeService;
 import services.ReimbursementService;
 
-@WebServlet(urlPatterns = { "/views/employee_view.html/" })
+@WebServlet(urlPatterns = { "/views/new_reimbursement.html/" })
 @MultipartConfig(fileSizeThreshold=1024*1024*2, // 2MB 
 				 maxFileSize=1024*1024*5, //4MB
 				 maxRequestSize=1024*1024*10) // 10MB
-public class ReimbursementServlet extends HttpServlet implements ServletInterface{
+public class NewReimbursement extends HttpServlet implements ServletInterface{
 	private static final long serialVersionUID = 1L;
-	EmployeeServlet employeeServlet;
+	EmployeeLogin employeeServlet;
 	
-	protected final static String url = "/Reimbursements/views/employee_view.html";
+	protected final static String url = "/Reimbursements/views/new_reimbursement.html";
 	private ArrayList<String> params = new ArrayList<>();
 	private String fullUrl;
 	ServletHelper servletHelper = new ServletHelper();
 	
-    public ReimbursementServlet() {
+    public NewReimbursement() {
         super();
     }
     
@@ -66,21 +66,21 @@ public class ReimbursementServlet extends HttpServlet implements ServletInterfac
 
 		} else if (session == null || session.getAttribute("logged_in") == null) {
 			System.out.println("PARAMS: " + params);
-			fullUrl = EmployeeServlet.url + "?" + servletHelper.getParams(this, false);
+			fullUrl = EmployeeLogin.url + "?" + servletHelper.getParams(this, false);
 
 			request.setAttribute("submission_response", "You Must Log In");
 			request.setAttribute("submission_response_type", "login_error");
 			
-			RequestDispatcher rd = request.getRequestDispatcher("/EmployeeServlet");
+			RequestDispatcher rd = request.getRequestDispatcher("/EmployeeLogin");
 			rd.forward(request, response);
 		} else {
 			System.out.println("Session Not NULL && LoggedIN NOT NULL");
-			fullUrl = EmployeeServlet.url + "?" + servletHelper.getParams(this, false);
+			fullUrl = EmployeeLogin.url + "?" + servletHelper.getParams(this, false);
 
 			request.setAttribute("submission_response", "You Must Log In");
 			request.setAttribute("submission_response_type", "login_error");
 			
-			RequestDispatcher rd = request.getRequestDispatcher("/EmployeeServlet");
+			RequestDispatcher rd = request.getRequestDispatcher("/EmployeeLogin");
 			rd.forward(request, response);
 		} 
 	}
@@ -97,7 +97,7 @@ public class ReimbursementServlet extends HttpServlet implements ServletInterfac
 		} else {
 			System.out.println("Employee Is Not Logged In!");
 			System.out.println("--Redirecting to EmployeeServlet");
-			new EmployeeServlet().doGet(request, response);
+			new EmployeeLogin().doGet(request, response);
 			return;
 		}
 

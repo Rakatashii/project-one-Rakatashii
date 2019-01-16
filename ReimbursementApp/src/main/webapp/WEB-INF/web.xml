@@ -2,28 +2,39 @@
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
   <servlet>
     <description></description>
-    <display-name>EmployeeServlet</display-name>
-    <servlet-name>EmployeeServlet</servlet-name>
-    <servlet-class>com.servlets.EmployeeServlet</servlet-class>
+    <display-name>EmployeeLogin</display-name>
+    <servlet-name>EmployeeLogin</servlet-name>
+    <servlet-class>com.servlets.EmployeeLogin</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>EmployeeServlet</servlet-name>
-    <url-pattern>/EmployeeServlet</url-pattern>
+    <servlet-name>EmployeeLogin</servlet-name>
+    <url-pattern>/EmployeeLogin</url-pattern>
   </servlet-mapping>
   
   <servlet>
     <description></description>
-    <display-name>ReimbursementServlet</display-name>
-    <servlet-name>ReimbursementServlet</servlet-name>
-    <servlet-class>com.servlets.ReimbursementServlet</servlet-class>
+    <display-name>NewReimbursement</display-name>
+    <servlet-name>NewReimbursement</servlet-name>
+    <servlet-class>com.servlets.NewReimbursement</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>ReimbursementServlet</servlet-name>
-    <url-pattern>/ReimbursementServlet</url-pattern>
+    <servlet-name>NewReimbursement</servlet-name>
+    <url-pattern>/NewReimbursement</url-pattern>
   </servlet-mapping>
   
-   <welcome-file-list>
-    <welcome-file>//views//home.html</welcome-file>
+  <servlet>
+    <description></description>
+    <display-name>AllReimbursements</display-name>
+    <servlet-name>AllReimbursements</servlet-name>
+    <servlet-class>com.servlets.AllReimbursements</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AllReimbursements</servlet-name>
+    <url-pattern>/AllReimbursements</url-pattern>
+  </servlet-mapping>
+  
+  <welcome-file-list>
+    <welcome-file>//views//employee_login.html</welcome-file>
   </welcome-file-list>
   <error-page>
     <error-code>404</error-code>

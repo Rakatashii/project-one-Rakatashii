@@ -9,6 +9,7 @@
 
         <!-- Swal -->
         <link href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" rel="stylesheet"/>
+        
         <!-- Custom fonts for this template -->
         <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
         <!-- <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css"> -->
@@ -21,61 +22,62 @@
             integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
         <!-- Customer CSS -->
-        <link href="../styles/style.css" rel="stylesheet">
+        <link href="../styles/new_reimbursement.css" rel="stylesheet">
     </head>
 
     <body>
         <div id="reimbursement">
             <!-- Nav tabs -->
             <nav class="navbar navbar-expand-sm navbar-dark">
-                <!-- <a class="navbar-brand" href="#">Navbar</a> -->
-                <button class="navbar-toggler d-sm-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId"
+                <button id="img-dropdown-button" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <!--<img id="img-thumbnail" src="../images/P1Icons/box-icon-white.png">-->
+                </button>
+                <button id="img-collapse-button" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavId"
                     aria-controls="collapsibleNavId" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="collapsibleNavId">
                     <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-                        <!--
-                        <li class="nav-item active li-even">
-                            <a class="nav-link" href="../EmployeeServlet">
-                                Home <span class="sr-only">(current)</span>
+
+                        <li class="nav-item dropdown active">
+                            <a class="dropdown-toggle" id="dropdownId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             </a>
+                            <div class="dropdown-menu pull-left" aria-labelledby="dropdownId">
+                                <ul style="list-style:nonex">
+                                    <li class="nav-item active">
+                                        <form action="../AllReimbursements" method="GET">
+                                            <label for="goto_all_reimbursements" >Past Reimbursement Requests</label>
+                                            <button id="goto_all_reimbursements" name="goto_all_reimbursements" class="nav-link" type="submit">
+                                        </form>
+                                    </li>
+                                    <li class="nav-item active">
+                                        <form action="../NewReimbursement" method="GET">
+                                            <label for="submit_new_reimbursement" style="color:rgba(255, 255, 255, 0.521)">Submit A New Reimbursement</label>
+                                            <button id="submit_new_reimbursement" name="submit_new_reimbursement" class="nav-link" type="submit" disabled>
+                                        </form>
+                                    </li>
+                                    <li class="nav-item active">
+                                        <form action="../EmployeeLogin" method="post">
+                                            <label for="logout">Logout</label>
+                                            <button id="logout" name="logout" class="nav-link" type="submit">
+                                        </form>
+                                    </li>
+                                </ul>
+                            </div>
                         </li>
-                        <li class="nav-item active li-odd">
-                            <a class="nav-link" href="../EmployeeServlet">
-                                Logout
-                            </a>
-                        </li>
-                        <li class="nav-item active last-child li-even">
-                            <a class="nav-link" href="#">
-                                Contact Us!
-                            </a>
-                        </li>
-                        -->
-                        <li class="nav-item">
-                            <form action="../EmployeeServlet" method="post">
-                                <label for="home">Home</label>
-                                <button id="home" name="home" class="nav-link" type="submit">
-                            </form>
-                        </li>
-                        <li class="nav-item active li-odd">
-                            <form action="../EmployeeServlet" method="post">
-                                <label for="logout">Logout</label>
-                                <button id="logout" name="logout" class="nav-link" type="submit">
-                            </form>
+   
+                        <li class="nav-item active last-child">
+                            <label for="contact"><a href="#">Reimbursement Info</a></label>
+                            <button id="contact" name="contact" class="nav-link" type="submit">
                         </li>
                         <li class="nav-item active last-child">
-                            <form action="../EmployeeServlet" method="post">
-                                <label for="contact">Contact Us!</label>
-                                <button id="contact" name="contact" class="nav-link" type="submit">
-                            </form>
+                            <label for="contact"><a href="#">Contact Support</a></label>
+                            <button id="contact" name="contact" class="nav-link" type="submit">
                         </li>
-
+					
+					<!--  Don't Delete - Somehow Search Is Centered w/o -->
                     </ul style="float:right">
                     <form class="search-form" action="https://google.com/search" method="get" role="search">
                         <div class="input-group">
-                            <!--<input type="text" class="form-control search-input" placeholder="Search" name="srch-term"
-                                    id="srch-term"> -->
 
                             <input type="hidden" name="sitesearch" value="" />
                             <input type="text" class="form-control search-input" name="q">
@@ -99,11 +101,9 @@
                     </li>
                 </ul>
                 -->
-
-        </div>
         </nav>
 
-        <!-- Tab panes -->
+        <!-- Tab panes 
         <div class="tab-content">
             <div class="tab-pane fade show active" id="tab1Id" role="tabpanel"></div>
             <div class="tab-pane fade" id="tab2Id" role="tabpanel"></div>
@@ -111,18 +111,11 @@
             <div class="tab-pane fade" id="tab4Id" role="tabpanel"></div>
             <div class="tab-pane fade" id="tab5Id" role="tabpanel"></div>
         </div>
-
-        <!--<script>
-                $('#navId a').click(e => {
-                    e.preventDefault();
-                    $(this).tab('show');
-                });
-            </script> -->
+        -->
 
         <div class="jumbotron-fluid text-center reimbursement-view">
             <div class="container reimbursement-view">
-
-                <form class="form-reimbursement" action="../ReimbursementServlet" enctype="multipart/form-data" method="POST">
+                <form class="form-reimbursement" action="../NewReimbursement" enctype="multipart/form-data" method="POST">
                     <h1 class="h1 mb-2 font-weight-normal" style="transform:scale(1.0)">Reimbursements</h1>
                     <h3 class="h4 mb-3 font-weight-normal" style="transform:scale(1.0)">Submit A New Request</h3>
 
@@ -162,7 +155,7 @@
 
             </div>
         </div>
-        </div>
+	</div>
 
         <!-- Optional JavaScript -->
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -173,6 +166,6 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
             crossorigin="anonymous"></script>
         <script src="../js/node_modules/sweetalert2/dist/sweetalert2.all.min.js"></script>
-        <script src="../js/reimbursement_view.js"></script>
+        <script src="../js/all_reimbursements.js"></script>
     </body>
 </html>

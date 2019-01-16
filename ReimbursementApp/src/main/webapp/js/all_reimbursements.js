@@ -8,41 +8,9 @@ var submission_response;
 var submission_response_type;
 
 set_vars();
-check_logged_in(); 
-submission_response_alert()
-
-$(document).ready(function () {
-    $(document).on('change', '.btn-file :file', function () {
-        var input = $(this)
-        var label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
-        input.trigger('fileselect', [label]);
-    });
-    $('.btn-file :file').on('fileselect', function (event, label) {
-        var input = $(this).parents('.input-group').find(':file'),
-            log = label;
-
-        if (input.length) {
-            input.val(log);
-        } else {
-            if (log) alert(log);
-        }
-    });
-
-    function readURL(input) {
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-
-            reader.onload = function (e) {
-                $('#img-upload').attr('src', e.target.result);
-            }
-
-            reader.readAsDataURL(input.files[0]);
-        }
-    }
-    $("#imgInp").change(function () {
-        readURL(this);
-    });
-});
+//check_logged_in(); 
+get_reimbursement_info();
+//submission_response_alert()
 
 set_vars();
 function set_vars() {
@@ -85,10 +53,13 @@ function submission_response_alert() {
         
         submission_response = null;
         submission_response_type = null;
+        qmap.set('submission_response', null);
+        qmap.set('submission_response_type', null);
     }
     return true;
 }
 
+/*
 function check_logged_in() {
     if (qmap.has('submission_response_type') && qmap.get('submission_response_type') == 'login_error'){
         qmap.set('submission_response_type', 'error')
@@ -103,4 +74,21 @@ function check_logged_in() {
             swal(submission_response);
         }
     }
+}
+*/
+
+function get_reimbursement_info(){
+    let xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function(){
+        if (this.readyState === 4 && this.status === 200){
+            res1 = JSON.parse(xhr.responseXML)
+            res2 = 'hi'
+            res3 = JSON.parse(xhr.responseText)
+        } else {
+            res = 'Error'
+        }
+    }
+    xhr.open('POST', 'http://localhost:8080/Reimbursements/AllReimbursements', true);
+    xhr.send();
+
 }
