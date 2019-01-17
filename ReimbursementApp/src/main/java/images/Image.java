@@ -8,20 +8,20 @@ import java.io.OutputStream;
 import java.io.Serializable;
 import java.util.Arrays;
 
-public class Image implements Serializable {
-	private static final long serialVersionUID = 1L;
-	
+public class Image {
+
 	public static final String UPLOAD_DIRECTORY = "C:\\Users\\Associate\\java\\project-one-Rakatashii\\ReimbursementApp\\src\\main\\webapp\\uploads\\";
 	private int employeeID, reimbursementID;
 	private String imageName;
+	private String relativePath;
 	
-	InputStream imageInput;
-	OutputStream imageOutput;
+	private InputStream imageInput;
+	private OutputStream imageOutput;
 	
 	private boolean fileNotEmpty;
-	File imageFile;
-	int imageSize;
-	byte[] bytestream;
+	private File imageFile;
+	private int imageSize;
+	private byte[] bytestream;
 
 	public Image(String imageName, InputStream imageInput) {
 		super();
@@ -88,6 +88,7 @@ public class Image implements Serializable {
 	public String toString() {
 		return "Image [\nemployeeID = " + employeeID + ", reimbursementID=" + reimbursementID 
 				+ ", fileNotEmpty=" + fileNotEmpty + ", \n"
+				+ "\t" + "relativePath=" + (relativePath != null ? relativePath + ", \n" : "null\n")
 				+ "\t" + "imageName=" + (imageName != null ? imageName + ", \n" : "null\n")
 				+ "\t" + "imageFile=" + (imageFile != null ? imageFile + ", \n" : "null\n") 
 				+ "\t" + "imageSize=" + imageSize 
@@ -123,6 +124,14 @@ public class Image implements Serializable {
 	public void setImageName(String imageName) {
 		this.imageName = imageName;
 	}
+	
+	public String getRelativePath() {
+		return relativePath;
+	}
+	
+	public void setRelativePath(String relativePath) {
+		this.relativePath = relativePath;
+	}
 
 	public InputStream getInputStream() {
 		return imageInput;
@@ -153,7 +162,7 @@ public class Image implements Serializable {
 	}
 
 	public boolean uploadLocalFile() {
-		if (!imageFile.exists() || imageFile.isDirectory()) {
+		if (!imageFile.exists()) {
 			try {
 				imageFile.createNewFile();
 				System.out.println("Image File Was Created.");
@@ -192,6 +201,7 @@ public class Image implements Serializable {
 			}
 		}
 	}
+	
 	/*
 	public void setFieldsWithImageFile() {
 		if (imageFile != null) {

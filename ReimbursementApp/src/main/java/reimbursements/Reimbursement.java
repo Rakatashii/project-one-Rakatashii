@@ -1,18 +1,23 @@
 package reimbursements;
 
 import java.io.File;
+import java.io.Serializable;
 
 import dao.ReimbursementDAO;
 import employees.Employee;
+import images.Image;
 
-public class Reimbursement {
+public class Reimbursement implements Serializable {
+	private static final long serialVersionUID = 3004010551915938018L;
 	private int employeeID, reimbursementID;
-	private String expense, source, comments;
+	private String expense, source, comments = "none";
 	private double amount;
-	private Employee employee;
+	private transient Employee employee;
 	private String status = "pending";
 	
-	ReimbursementDAO reimbursementDAO = new ReimbursementDAO();
+	private transient ReimbursementDAO reimbursementDAO = new ReimbursementDAO();
+	private transient Image image;
+	private String relativePath;
 	
 	public Reimbursement(int employeeID, int reimbursementID, String expense, String source, double amount, String comments) {
 		super();
@@ -106,13 +111,26 @@ public class Reimbursement {
 		this.status = status;
 	}
 	
+	public String getRelativePath() {
+		return relativePath;
+	}
+	
+	public void setRelativePath(String relativePath) {
+		this.relativePath = relativePath;
+	}
 	@Override
 	public String toString() {
 		return "Reimbursement [employeeID=" + employeeID + ", reimbursementID=" + reimbursementID + ", "
 				+ "expense=" + (expense != null ? expense + ", " : "null")
 				+ "source=" + (source != null ? source + ", " : "null") 
 				+ "amount=" + amount + ", "
-				+ "comments=" + (comments != null ? comments : "null") + "]";
+				+ "comments=" + (comments != null ? comments : "null")
+				+ "img_relative_path=" + (relativePath != null ? relativePath : "null")
+				+ "status=" + status + "]";
 	}
 	
+	public void addImage(Image image) {
+		this.image = image;
+		if (this.image != null) this.relativePath = image.getRelativePath();
+	}
 }

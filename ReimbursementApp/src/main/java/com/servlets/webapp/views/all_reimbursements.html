@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+
+    <head>
+        <title>Homepage</title>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- Swal -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" rel="stylesheet" />
+
+        <!-- Custom fonts for this template -->
+        <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+        <!-- <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css"> -->
+        <!-- <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css"> -->
+
+        <link href="https://fonts.googleapis.com/css?family=Bitter|Bree+Serif|Merriweather|Roboto" rel="stylesheet">
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+            integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+        <!-- Customer CSS -->
+        <link href="../styles/new_reimbursement.css" rel="stylesheet">
+    </head>
+
+    <body>
+        <div id="all-reimbursements">
+            <!-- Nav tabs -->
+            <nav class="navbar navbar-expand-sm navbar-dark">
+                <button id="img-dropdown-button" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                    aria-expanded="false">
+                    <!--<img id="img-thumbnail" src="../images/P1Icons/box-icon-white.png">-->
+                </button>
+                <button id="img-collapse-button" class="navbar-toggler" type="button" data-toggle="collapse"
+                    data-target="#collapsibleNavId" aria-controls="collapsibleNavId" aria-expanded="false" aria-label="Toggle navigation">
+                </button>
+                <div class="collapse navbar-collapse" id="collapsibleNavId">
+                    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+
+                        <li class="nav-item dropdown active">
+                            <a class="dropdown-toggle" id="dropdownId" data-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="false">
+                            </a>
+                            <div class="dropdown-menu pull-left" aria-labelledby="dropdownId">
+                                <ul id="core-dropdown" style="list-style:nonex">
+                                    
+                                    <li class="nav-item active">
+                                        <form action="../AllReimbursements" method="GET">
+                                            <label for="goto_all_reimbursements" class="nav-label" style="color:rgba(255, 255, 255, 0.521)">Past
+                                                Reimbursement Requests</label>
+                                            <button id="goto_all_reimbursements" name="goto_all_reimbursements" class="nav-link"
+                                                type="submit" disabled>
+                                        </form>
+                                    </li>
+                                    </span>
+                                    <li class="nav-item active">
+                                        <form action="../NewReimbursement" method="GET">
+                                            <label for="submit_new_reimbursement" class="nav-label">Submit A New Reimbursement</label>
+                                            <button id="submit_new_reimbursement" name="submit_new_reimbursement" class="nav-link"
+                                                type="submit">
+                                        </form>
+                                    </li>
+                                    <li class="nav-item active">
+                                        <form action="../EmployeeLogin" method="post">
+                                            <label for="logout" class="nav-label">Logout</label>
+                                            <button id="logout" name="logout" class="nav-link nav-link-btn" type="submit">
+                                        </form>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+
+                        <li class="nav-item active last-child">
+                            <label for="contact"><a href="#">Reimbursement Info</a></label>
+                            <button id="contact" name="contact" class="nav-link" type="submit">
+                        </li>
+                        <li class="nav-item active last-child">
+                            <label for="contact"><a href="#">Contact Support</a></label>
+                            <button id="contact" name="contact" class="nav-link" type="submit">
+                        </li>
+
+                        <!--  Don't Delete - Somehow Search Is Centered w/o -->
+                    </ul style="float:right">
+                    <form class="search-form" action="https://google.com/search" method="get" role="search">
+                        <div class="input-group">
+
+                            <input type="hidden" name="sitesearch" value="" />
+                            <input type="text" class="form-control search-input" name="q">
+
+                            <div class="input-group-btn">
+                                <button class="search-btn btn mr-sm-2" type="submit">Submit<i class="glyphicon glyphicon-search"></i></button>
+                                <!-- removed btn-outline-light -->
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </nav>
+
+            <div class="all-reimbursements-view jumbotron-fluid wrapper text-center">
+                <div class="all-reimbursements-view container outer">
+                    <div class="jumbotron-fluid container-fluid title-container">
+                        <h1 id="all-reimbursements-title">Past Expense Reimbursements</h1>
+                    </div>
+                    <div class="jumbotron-fluid container-fluid card-container">
+                        <div id="reimbursement-cards">
+
+                        </div>
+                    </div>
+                    <!--
+                    <div class="row">
+                        <div class="col-6">
+                            <reimbusements>
+                                
+                            </reimbursements>
+                            <div class="jumbotron jumbotron-fluid inner-left">
+                                <div class="inner-left-container">
+                                    <h1 class="display-3">Fluid jumbo heading</h1>
+                                    <p class="lead">Jumbo helper text</p>
+                                    <hr class="my-2">
+                                    <p>More info</p>
+                                    <p class="lead">
+                                        <a class="btn btn-primary btn-lg" href="Jumbo action link" role="button">Jumbo
+                                            action name</a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-6">
+                            <div class="jumbotron jumbotron-fluid inner-right">
+                                <div class="inner-right-container">
+                                    <h1 class="display-3">Fluid jumbo heading</h1>
+                                    <p class="lead">Jumbo helper text</p>
+                                    <hr class="my-2">
+                                    <p>More info</p>
+                                    <p class="lead">
+                                        <a class="btn btn-primary btn-lg" href="Jumbo action link" role="button">Jumbo
+                                            action name</a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    -->
+                    </div> <!-- end row -->
+                </div>
+            </div>
+
+            <!-- Optional JavaScript -->
+            <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+            <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+                crossorigin="anonymous"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+                crossorigin="anonymous"></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+                crossorigin="anonymous"></script>
+            <script src="../js/node_modules/sweetalert2/dist/sweetalert2.all.min.js"></script>
+            <script src="../js/all_reimbursements.js"></script>
+    </body>
+
+</html>

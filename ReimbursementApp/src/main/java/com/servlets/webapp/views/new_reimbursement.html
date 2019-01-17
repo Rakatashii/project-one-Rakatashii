@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+
+    <head>
+        <title>Homepage</title>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- Swal -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" rel="stylesheet"/>
+        
+        <!-- Custom fonts for this template -->
+        <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+        <!-- <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css"> -->
+        <!-- <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css"> -->
+
+        <link href="https://fonts.googleapis.com/css?family=Bitter|Bree+Serif|Merriweather|Roboto" rel="stylesheet">
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+            integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+        <!-- Customer CSS -->
+        <link href="../styles/new_reimbursement.css" rel="stylesheet">
+    </head>
+
+    <body>
+        <div id="reimbursement">
+            <!-- Nav tabs -->
+            <nav class="navbar navbar-expand-sm navbar-dark">
+                <button id="img-dropdown-button" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <!--<img id="img-thumbnail" src="../images/P1Icons/box-icon-white.png">-->
+                </button>
+                <button id="img-collapse-button" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavId"
+                    aria-controls="collapsibleNavId" aria-expanded="false" aria-label="Toggle navigation">
+                </button>
+                <div class="collapse navbar-collapse" id="collapsibleNavId">
+                    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+
+                        <li class="nav-item dropdown active">
+                            <a class="dropdown-toggle" id="dropdownId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            </a>
+                            <div class="dropdown-menu pull-left" aria-labelledby="dropdownId">
+                                <ul style="list-style:nonex">
+                                    <li class="nav-item active">
+                                        <form action="../NewReimbursement" method="post" enctype="multipart/form-data">
+                                            <label for="goto_all_reimbursements" class="nav-label" >Past Reimbursement Requests</label>
+                                            <button id="goto_all_reimbursements" name="goto_all_reimbursements" class="nav-link" type="submit">
+                                        </form>
+                                    </li>
+                                    <li class="nav-item active">
+                                        <form action="../NewReimbursement" method="GET" enctype="multipart/form-data">
+                                            <label for="submit_new_reimbursement" class="nav-label" style="color:rgba(255, 255, 255, 0.521)">Submit A New Reimbursement</label>
+                                            <button id="submit_new_reimbursement" name="submit_new_reimbursement" class="nav-link" type="submit" disabled>
+                                        </form>
+                                    </li>
+                                    <li class="nav-item active">
+                                        <form action="../EmployeeLogin" method="post" enctype="multipart/form-data">
+                                            <label for="logout" class="nav-label">Logout</label>
+                                            <button id="logout" name="logout" class="nav-link" type="submit">
+                                        </form>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+   
+                        <li class="nav-item active last-child">
+                            <label for="contact"><a href="#">Reimbursement Info</a></label>
+                            <button id="contact" name="contact" class="nav-link" type="submit">
+                        </li>
+                        <li class="nav-item active last-child">
+                            <label for="contact"><a href="#">Contact Support</a></label>
+                            <button id="contact" name="contact" class="nav-link" type="submit">
+                        </li>
+					
+					<!--  Don't Delete - Somehow Search Is Centered w/o -->
+                    </ul style="float:right">
+                    <form class="search-form" action="https://google.com/search" method="get" role="search">
+                        <div class="input-group">
+
+                            <input type="hidden" name="sitesearch" value="" />
+                            <input type="text" class="form-control search-input" name="q">
+
+                            <div class="input-group-btn">
+                                <button class="search-btn btn mr-sm-2" type="submit">Submit<i class="glyphicon glyphicon-search"></i></button>
+                                <!-- removed btn-outline-light -->
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <!--
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownId">
+                            <a class="dropdown-item" href="#">Action 1</a>
+                            <a class="dropdown-item" href="#">Action 2</a>
+                            <a class="dropdown-item" href="#">Action 2</a>
+                        </div>
+                    </li>
+                </ul>
+                -->
+        </nav>
+
+        <!-- Tab panes 
+        <div class="tab-content">
+            <div class="tab-pane fade show active" id="tab1Id" role="tabpanel"></div>
+            <div class="tab-pane fade" id="tab2Id" role="tabpanel"></div>
+            <div class="tab-pane fade" id="tab3Id" role="tabpanel"></div>
+            <div class="tab-pane fade" id="tab4Id" role="tabpanel"></div>
+            <div class="tab-pane fade" id="tab5Id" role="tabpanel"></div>
+        </div>
+        -->
+
+        <div class="jumbotron-fluid text-center reimbursement-view">
+            <div class="container reimbursement-view">
+                <form class="form-reimbursement" action="../NewReimbursement" enctype="multipart/form-data" method="POST">
+                    <h1 class="h1 mb-2 font-weight-normal" style="transform:scale(1.0)">Reimbursements</h1>
+                    <h3 class="h4 mb-3 font-weight-normal" style="transform:scale(1.0)">Submit A New Request</h3>
+
+                    <label for="inputExpense" class="sr-only">Expense</label>
+                    <input type="text" name="expense" id="expense" class="form-control reimbursement-form" placeholder="Expense" 
+                        required autofocus>
+
+                    <label for="inputSource" class="sr-only">Source</label>
+                    <input type="text" name="source" id="source" class="form-control reimbursement-form" placeholder="Source" 
+                        required>
+
+                    <label for="inputAmount" class="sr-only">Value</label>
+                    <input type="text" name="amount" id="amount" class="form-control reimbursement-form" placeholder="Value" 
+                        required>
+
+                    <label for="inputComments" class="sr-only">Comments</label>
+                    <textarea name="comments" id="comments" class="form-control reimbursement-form" placeholder="Additional Comments"
+                        style="margin-bottom:0px"></textarea>
+                    <!--
+                    <img src="" class="img-fluid ${3|rounded-top,rounded-right,rounded-bottom,rounded-left,rounded-circle,|}" alt="">
+                    -->
+
+                    <span class="form-group">
+                        <span class="input-group">
+                            <span class="input-group-btn">
+                                <span class="btn btn-default btn-file">
+                                    <input id="imgInp" type="file" name="image">
+                                </span>
+                            </span>
+                        </span>
+                        <label for="imgInp" class="custom-file-upload">Upload Image</label>
+                        <img id='img-upload' style="display:block">
+                    </span>
+                    <button class="submit-btn btn btn-lg btn-block" type="submit">Submit</button>
+
+                </form>
+
+            </div>
+        </div>
+	</div>
+
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+            crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+            crossorigin="anonymous"></script>
+        <script src="../js/node_modules/sweetalert2/dist/sweetalert2.all.min.js"></script>
+        <script src="../js/new_reimbursement.js"></script>
+    </body>
+</html>

@@ -25,7 +25,7 @@ public class ReimbursementDAO {
 		String tableName = "reimbursements";
 		try {
 			connection = DBConnection.getConnection();
-			String sql = "INSERT INTO " + tableName + " VALUES(?,?,?,?,?,?,?);";
+			String sql = "INSERT INTO " + tableName + " VALUES(?,?,?,?,?,?,?,?);";
 			ps = connection.prepareStatement(sql);
 			ps.setInt(1,  reimbursement.getEmployeeID());
 			ps.setInt(2,  reimbursement.getReimbursementID());
@@ -33,7 +33,8 @@ public class ReimbursementDAO {
 			ps.setString(4, reimbursement.getSource());
 			ps.setDouble(5, reimbursement.getAmount());
 			ps.setString(6, reimbursement.getComments());
-			ps.setString(7, reimbursement.getStatus());
+			ps.setString(7, reimbursement.getRelativePath());
+			ps.setString(8, reimbursement.getStatus());
 			
 			if (ps.executeUpdate() != 0) {
 				ps.close();
@@ -108,7 +109,7 @@ public class ReimbursementDAO {
 		}
 		return count;
 	}
-	public List<Reimbursement> getExpensesByEmployeeID(int employee_id) {
+	public ArrayList<Reimbursement> getReimbursementsByEmployeeID(int employee_id) {
 		String tableName = "reimbursements";
 		ArrayList<Reimbursement> reimbursements = new ArrayList<>();
 		try {
@@ -120,7 +121,9 @@ public class ReimbursementDAO {
 			while (rs.next()) {
 				Reimbursement reimbursement = new Reimbursement(rs.getInt(1), rs.getInt(2), 
 						rs.getString(3), rs.getString(4), rs.getDouble(5), rs.getString(6));
-				reimbursement.setStatus(rs.getString(7));
+				reimbursement.setRelativePath(rs.getString(7));
+				reimbursement.setStatus(rs.getString(8));
+				
 				reimbursements.add(reimbursement);
 				System.out.println(reimbursement);
 			}

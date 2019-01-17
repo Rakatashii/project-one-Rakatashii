@@ -94,6 +94,12 @@ public class NewReimbursement extends HttpServlet implements ServletInterface{
 
 		if (session.getAttribute("logged_in") != null) {
 			servletHelper.printAttributes("RS#POST: ", session);
+			if (request.getParameter("goto_all_reimbursements") != null) {
+				params.clear();
+				fullUrl = AllReimbursements.url + "?" + servletHelper.getAttributes(session);
+				response.sendRedirect(fullUrl);
+				return;
+			}
 		} else {
 			System.out.println("Employee Is Not Logged In!");
 			System.out.println("--Redirecting to EmployeeServlet");
@@ -116,7 +122,11 @@ public class NewReimbursement extends HttpServlet implements ServletInterface{
 		Reimbursement reimbursement = new Reimbursement(expense, source, amount, comments);
 
 	    Part filePart = request.getPart("image");
-	    if (filePart != null) System.out.println("SUBMITTED NAME: " + "`" + filePart.getSubmittedFileName() + "`");
+	    String submittedFileName = null;
+	    if (filePart != null) {
+	    	submittedFileName = filePart.getSubmittedFileName();
+	    	System.out.println("SUBMITTED NAME: " + submittedFileName);
+	    }
 	    String fileName = null;
 	    InputStream fileContent = null;
 	    if (filePart != null && (filePart.getContentType().contains("png") 
@@ -126,11 +136,15 @@ public class NewReimbursement extends HttpServlet implements ServletInterface{
 	    	fileName = Paths.get(getTheSubmittedFileName(filePart)).toString();
 	    	
 	    	Image image = new Image(fileName, fileContent);
+	    	image.setRelativePath(submittedFileName);
+	    	reimbursement.setRelativePath(submittedFileName);
+	
 	    	System.out.println("New Reimbursement: " + reimbursement);
 	    	System.out.println("New Image: " + image);
 	    	
-	    	if (reimbursementService.addReimbursement(reimbursement))
+	    	if (reimbursementService.addReimbursement(reimbursement)) {
 	    		reimbursementService.addImage(image);
+	    	}
 
 	    	System.out.println("--The Request Contained An Image File.");
 	    } else {

@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -17,6 +18,7 @@ import org.postgresql.util.PSQLException;
 
 import database.DBConnection;
 import images.Image;
+import reimbursements.Reimbursement;
 
 public class ImageDAO {
 	Connection connection;
@@ -25,7 +27,7 @@ public class ImageDAO {
 	
 	public String addImage(Image image) {
 		String tableName = "images";
-		String sql = "INSERT INTO " + tableName + " VALUES(?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO " + tableName + " VALUES(?,?,?,?,?,?)";
 		int reimbursementID = image.getReimbursementID();
 		reimbursementDAO = new ReimbursementDAO();
 		try {
@@ -40,9 +42,10 @@ public class ImageDAO {
 						
 						ps.setInt(1, image.getEmployeeID());
 						ps.setInt(2, reimbursementID);
-						ps.setString(3, image.getImageName());
-						ps.setInt(4, image.getImageSize());
-						ps.setBinaryStream(5, fin, image.getImageFile().length());
+						ps.setString(3,  image.getRelativePath());
+						ps.setString(4, image.getImageName());
+						ps.setInt(5, image.getImageSize());
+						ps.setBinaryStream(6, fin, image.getImageFile().length());
 						
 						ps.executeUpdate();
 						
@@ -142,6 +145,27 @@ public class ImageDAO {
     		return match.group(0);
     	}
     	return "Unable To Process Your Request.";
+	}
+	
+	public ArrayList<String> getRelativePathsByEmployeeID(int employee_id) {
+		String tableName = "images";
+		ArrayList<String> relativePaths = new ArrayList<>();
+		try {
+			connection = DBConnection.getConnection();
+			String sql = "SELECT relative_path FROM " + tableName + " WHERE employee_id = " + employee_id + " ORDER BY employee_id;";
+			Statement statement = connection.createStatement();
+			ResultSet rs = statement.executeQuery(sql);
+
+			while (rs.next()) {
+				relativePaths.add(rs.getString(1));
+			}
+			statement.close(); rs.close();
+			//log.debug("Got employees ArraLiys With Size = " + employees.size());
+			if (relativePaths.size() > 0) return relativePaths;
+		} catch (SQLException e) {
+			e.printStackTrace(); System.out.println();
+		}
+		return null;
 	}
 }
 

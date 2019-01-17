@@ -1,6 +1,7 @@
 package services;
 
 import java.util.regex.Pattern;
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 
 import dao.EmployeeDAO;
@@ -67,8 +68,9 @@ public class ReimbursementService {
 			
 			/* NEED THIS IN EITHER CASE... */
 			imageDAOResponse = imageDAO.addImage(this.image);
-			if (imageDAOResponse != null) {
-				System.out.println("imageDAOResponse: " + imageDAOResponse);
+			if (imageDAOResponse == null) {
+				
+				/*
 				boolean fileWasCreated = this.image.uploadLocalFile();
 				System.out.println("IN ReimbursementService: " + this.image);
 				if (!fileWasCreated) {
@@ -76,9 +78,15 @@ public class ReimbursementService {
 					imageDAOResponse = "Image Already Exists In Database";
 					return false;
 				}
+				*/ 
+				
+				System.out.println("imageDAOResponse = " + ((imageDAOResponse != null) ? imageDAOResponse : "null"));
+				buttonType = "success";
 				return true;
 			} else {
+				System.out.println("imageDAOResponse: " + imageDAOResponse);
 				buttonType = "error";
+				return false;
 			}
 		}
 		return false;
@@ -104,9 +112,13 @@ public class ReimbursementService {
 	}
 	
 	public double convertAmountToDouble(String amountString) {
-		Pattern pattern = Pattern.compile("(-?(([0-9]+)|(([0-9]{1,})(\\.?)([0-9]+?))|(([0-9]+?)(\\.?)([0-9]{1,}))))");
-		Matcher match = pattern.matcher(amountString);
 		double val = -1;
+		
+		Pattern pattern = Pattern.compile("(-?(([0-9]+)|(([0-9]{1,})(\\.?)([0-9]+?))|(([0-9]+?)(\\.?)([0-9]{1,}))))");
+		Matcher match;
+		if (amountString != null) match = pattern.matcher(amountString);
+		else return val;
+		
 		boolean negative = (amountString.charAt(0) == '-') ? true : false;
     	if (match.find() == false) {
 			return -1;
@@ -116,4 +128,32 @@ public class ReimbursementService {
     	if (negative && val > 0) val *= -1;
     	return val;
 	}
+	public ArrayList<Reimbursement> getAllReimbursements(){
+		this.employee = EmployeeService.getLoggedInEmployee();
+		ArrayList<Reimbursement> reimbursements = null;
+		if (employee != null) reimbursements = reimbursementDAO.getReimbursementsByEmployeeID(employee.getEmployeeID());
+		return reimbursements;
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
