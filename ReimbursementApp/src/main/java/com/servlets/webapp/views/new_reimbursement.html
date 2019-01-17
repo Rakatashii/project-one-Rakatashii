@@ -37,12 +37,11 @@
                 </button>
                 <div class="collapse navbar-collapse" id="collapsibleNavId">
                     <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-
                         <li class="nav-item dropdown active">
                             <a class="dropdown-toggle" id="dropdownId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             </a>
                             <div class="dropdown-menu pull-left" aria-labelledby="dropdownId">
-                                <ul style="list-style:nonex">
+                                <ul style="list-style:nonex" id='dropdown-list'>
                                     <li class="nav-item active">
                                         <form action="../NewReimbursement" method="post" enctype="multipart/form-data">
                                             <label for="goto_all_reimbursements" class="nav-label" >Past Reimbursement Requests</label>
@@ -65,7 +64,7 @@
                             </div>
                         </li>
    
-                        <li class="nav-item active last-child">
+                        <li class="nav-item last-child">
                             <label for="contact"><a href="#">Reimbursement Info</a></label>
                             <button id="contact" name="contact" class="nav-link" type="submit">
                         </li>

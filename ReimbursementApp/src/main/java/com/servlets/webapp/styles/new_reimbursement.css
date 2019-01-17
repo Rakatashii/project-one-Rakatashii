@@ -88,7 +88,7 @@ body {
 .dropdown-menu{
     width: 325px;
     left: -100px;
-    background-color: rgba(47, 133, 167, 0.966);
+    background-color: rgba(47, 133, 167, 0.866);
     color:white;
     margin-top: 10px;
     margin-right: 100px;
@@ -104,6 +104,12 @@ body {
 */
 .dropdown-toggle::after {
     display:none;
+}
+.dropdown-header {
+    background: rgba(5, 58, 78, 0.247);
+    border-color:transparent;
+    color: white;
+    padding-bottom: 5px;
 }
 
 @media (min-width : 575px) {

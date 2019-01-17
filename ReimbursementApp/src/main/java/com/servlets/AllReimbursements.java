@@ -28,11 +28,10 @@ public class AllReimbursements extends HttpServlet implements ServletInterface{
 	protected static String url = "/Reimbursements/views/all_reimbursements.html";
 	private String fullUrl;
 	private ArrayList<String> params = new ArrayList<>();
-	ServletHelper servletHelper = new ServletHelper();
+	private ServletHelper servletHelper = new ServletHelper();
        
     public AllReimbursements() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -42,7 +41,7 @@ public class AllReimbursements extends HttpServlet implements ServletInterface{
 			servletHelper.printAttributes("RS#GET: ", session);
 			fullUrl = servletHelper.getFullUrl(this, session);
 			response.sendRedirect(fullUrl);
-
+			return;
 		} else if (session == null || session.getAttribute("logged_in") == null) {
 			System.out.println("PARAMS: " + params);
 			fullUrl = EmployeeLogin.url + "?" + servletHelper.getParams(this, false);
@@ -62,8 +61,6 @@ public class AllReimbursements extends HttpServlet implements ServletInterface{
 			RequestDispatcher rd = request.getRequestDispatcher("/EmployeeLogin");
 			rd.forward(request, response);
 		} 
-		fullUrl = servletHelper.getFullUrl(this,  session);
-		response.sendRedirect(fullUrl);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -76,8 +73,8 @@ public class AllReimbursements extends HttpServlet implements ServletInterface{
 	    response.setCharacterEncoding("UTF-8");
 	    response.getWriter().write(json);
 	    
-		fullUrl = servletHelper.getFullUrl(this,  session);
-		response.sendRedirect(fullUrl);
+		//fullUrl = servletHelper.getFullUrl(this,  session);
+		//response.sendRedirect(fullUrl);
 	}
 
 	@Override

@@ -56,7 +56,18 @@ function set_vars() {
         qvals[i] = keyvals[i][1];
         qmap.set(qkeys[i], qvals[i])
     }
-    if (qmap.has('username')) username = qmap.get('username');
+    if (qmap.has('username')){
+        username = qmap.get('username');
+        let temp = username.charAt(0).toUpperCase() + username.slice(1);
+        var firstChild = document.getElementById('dropdown-list').firstElementChild;
+        if (!firstChild.classList.contains('welcome')){
+            userListItem = document.createElement('li');
+            userListItem.className = 'dropdown-header welcome';
+            userListItem.innerHTML = `<h4 class='nav-label text-center' >Welcome ${temp}<\h4>`;
+            dropdown = document.getElementById('dropdown-list');
+            dropdown.insertBefore(userListItem, firstChild);
+        }
+    }
     if (qmap.has('password')) password = qmap.get('password');
     if (qmap.has('remember_employee')) remember_employee = qmap.get('remember_employee');
     if (qmap.has('logout')) logout = qmap.get('logout');
