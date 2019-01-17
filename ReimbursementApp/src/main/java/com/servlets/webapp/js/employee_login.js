@@ -34,6 +34,36 @@ set_vars();
     }
 } ());
 
+function animate_popup(){
+    popup = document.getElementById('popup_spot');
+    popup.innerHTML = `
+        <span id='popup' selector:'[rel="popover"]' type="button" class="popover arrow" data-container="body" data-toggle="popover" data-placement="bottom" 
+            data-content="Use The Dropdown Panel To Select Menu Options.">
+        </span>`
+    //setTimeout($('#popup').popover('hide'), 500);
+};
+animate_popup();
+$(function () {
+    $('#popup').popover({
+      container: 'body',
+      delay: 1,
+      animation: true
+    })
+})
+$(document).ready(function () {
+    showPopup = setTimeout(
+        function(){
+            $('.popover').popover('show');
+        } 
+    ,1500);
+    hidePopup = setTimeout(
+        function(){
+            $('.popover').popover('hide');
+            popup.setAttribute('display', 'none');
+        }
+    ,5000);
+});
+
 
 function employee_login() {
     document.getElementById("employee-login-form-container").innerHTML = `

@@ -2,16 +2,14 @@
 /bin/
 
 # Project
-# Really need to figure out which format supposed to use...
 /src/main/webapp/images/backgrounds/
 /src/main/webapp/images/P1Icons/
-*/webapp/uploads/
+/src/main/webapp/uploads/
 /src/main/webapp/images/P1Icons/
-/Reimbursements/src/main/webapp/js/node_modules
 /src/main/webapp/js/node_modules/
-*/Reimbursements/src/main/webapp/js/node_modules
 /src/main/webapp/package-lock.json
 /preferences/
+
 ### Java ###
 # Compiled class file
 *.class

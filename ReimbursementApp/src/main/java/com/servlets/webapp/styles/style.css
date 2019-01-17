@@ -23,7 +23,7 @@ body {
     padding: .5rem 1rem;
 }
 .nav-item{
-    padding: 6px 9px 1px 6px;
+    padding: 4px 6px 4px 4px;
     color:white;
 }
 .nav-item button[type="submit"]{
@@ -115,6 +115,7 @@ body {
 @media (min-width : 575px) {
     .navbar-expand-sm {
         padding-bottom: 4px;
+        
         margin-top: -5px;
         margin-bottom: 0px;
     }
@@ -126,7 +127,11 @@ body {
     }
     .navbar{
         padding-top: -2px;
-        padding-bottom: 8px; 
+        padding-bottom: 6px; 
+    }
+    .nav-item{
+        padding-top: 7px;
+        padding-bottom: -7px;
     }
 }
 @media (max-width : 577px) {
@@ -177,6 +182,85 @@ a:hover {
 .search-btn:active {
     background-color: rgba(52, 129, 230, 0.966);
 }
+
+
+ /* Popup container */
+ 
+ .popover-btn{
+     display:none;
+ }
+ .popover-body{
+     background: rgba(255, 255, 255, 0.6);
+     color: rgba(52, 129, 230, 0.966);
+     font-size: 21px;
+     font-family: 'Bree Serif', serif;
+     -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, .3);
+        box-shadow: 0 5px 10px rgba(0, 0, 0, .3);
+    -webkit-background-clip: padding-box;
+        background-clip: padding-box;
+    text-align:center;
+    width: 220px;
+    padding-bottom: 10px;
+ }
+ 
+ #popup {
+    visibility: hidden;
+    padding-top: 55px;
+    padding-right: 30px;
+    border:none;
+    z-index: 1;
+}
+  
+  /* The actual popup (appears on top) */
+
+  /*
+  .popup .popuptext {
+    visibility: visible;
+    width: 400px;
+    background-color: rgba(85, 85, 85, 0.479);
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 8px 0;
+    position: absolute;
+    z-index: 1;
+    top: 125%;
+  }
+  */
+
+  /* Popup arrow */
+  /*
+  .popup .popuptext::before {
+    content: "";
+    position: absolute;
+    left: 50px;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+  }
+  */
+  
+  /* Toggle this class when clicking on the popup container (hide and show the popup) */
+  /*
+  .popup .show {
+    visibility: visible;
+    -webkit-animation: fadeIn 1s;
+    animation: fadeIn 1s
+  }
+  */
+  
+  /* Add animation (fade in the popup) */
+  @-webkit-keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
+  }
+  
+  @keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity:1 ;}
+  } 
+
 
 /* CUSTOMER LOGIN */
 
@@ -330,7 +414,6 @@ input[type="file"]{
 
     height: 100%;
     width: 100%;
-    min-width:550px;
 
     background-color: rgba(47, 133, 167, 0.0);
 }
@@ -350,12 +433,10 @@ input[type="file"]{
     background: rgba(5, 58, 78, 0.247);
     height: 55px;
     margin-bottom: 20px;
-    width: 100%;
 }
 
 .container-fluid.card-container{
     width:100%;
-    min-width:400px;
     padding: 0 0 0 0;
     margin-bottom: 15px;
 }
@@ -441,7 +522,7 @@ div.last.item2{
 }
 @media (max-width : 767px){
     #all-reimbursements-title {
-        font-size: 27.5px;
+        font-size: 35px;
     }
     .container-fluid.title-container{
         padding-bottom: 20px;

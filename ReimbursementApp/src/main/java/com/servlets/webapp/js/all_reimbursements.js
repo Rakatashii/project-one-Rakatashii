@@ -28,7 +28,7 @@ function set_vars() {
         qvals[i] = keyvals[i][1];
         qmap.set(qkeys[i], qvals[i])
     }
-    if (qmap.has('username')){ 
+    if (qmap.has('username')){
         username = qmap.get('username');
         let temp = username.charAt(0).toUpperCase() + username.slice(1);
         var firstChild = document.getElementById('dropdown-list').firstElementChild;

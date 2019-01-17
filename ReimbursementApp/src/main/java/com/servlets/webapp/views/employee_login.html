@@ -21,7 +21,7 @@
             integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
         <!-- Customer CSS -->
-        <link href="../styles/employee_login.css" rel="stylesheet">
+        <link href="../styles/style.css" rel="stylesheet">
     </head>
 
     <body">
@@ -29,38 +29,49 @@
         <div id="employee-login-view">
             <!-- Nav tabs -->
             <nav class="navbar navbar-expand-sm navbar-dark">
-                <!-- <a class="navbar-brand" href="#">Navbar</a> -->
-                <button class="navbar-toggler d-sm-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId"
-                    aria-controls="collapsibleNavId" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="collapsibleNavId">
-                    <ul class="navbar-nav mr-auto mt-0 mt-lg-0">
-                        <!--
-                        <li class="nav-item active">
-                            <a class="nav-link" href="../EmployeeServlet">
-                                Home <span class="sr-only">(current)</span>
-                            </a>
-                        </li>
-                        <li class="nav-item active last-child">
-                            <a class="nav-link" href="#">
-                                Contact Us!
-                            </a>
-                        </li>
-                        -->
-
-                        <li class="nav-item">
-                            <form action="../EmployeeLogin" method="post">
-                                <label for="home">Home</label>
-                                <button id="home" name="home" value="home" class="nav-link" type="submit">
-                            </form>
-                        </li>
-                        <li class="nav-item active last-child">
-                            <form action="../EmployeeLogin" method="post">
-                                <label for="contact">Contact Us!</label>
-                                <button id="contact" name="contact" value="contact" class="nav-link" type="submit">
-                            </form>
-                        </li>
+                    <button id="img-dropdown-button" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <!--<img id="img-thumbnail" src="../images/P1Icons/box-icon-white.png">-->
+                    </button>
+                    <button id="img-collapse-button" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavId"
+                        aria-controls="collapsibleNavId" aria-expanded="false" aria-label="Toggle navigation">
+                    </button>
+                    <div class="collapse navbar-collapse" id="collapsibleNavId">
+                        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                            <li class="nav-item dropdown active">
+                                <a class="dropdown-toggle" id="dropdownId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                </a>
+                                <div class="dropdown-menu pull-left" aria-labelledby="dropdownId">
+                                    <ul style="list-style:nonex" id='dropdown-list'>
+                                        <li class="nav-item active">
+                                            <form action="../NewReimbursement" method="post" enctype="multipart/form-data">
+                                                <label for="goto_all_reimbursements" class="nav-label" >Valid Expenses</label>
+                                                <button id="goto_all_reimbursements" name="goto_all_reimbursements" class="nav-link" type="submit" disabled>
+                                            </form>
+                                        </li>
+                                        <li class="nav-item active">
+                                            <form action="../NewReimbursement" method="GET" enctype="multipart/form-data">
+                                                <label for="submit_new_reimbursement" class="nav-label">Contact Support</label>
+                                                <button id="submit_new_reimbursement" name="submit_new_reimbursement" class="nav-link" type="submit" disabled>
+                                            </form>
+                                        </li>
+                                        <li class="nav-item active">
+                                            <form action="../EmployeeLogin" method="post" enctype="multipart/form-data">
+                                                <label for="logout" class="nav-label">About</label>
+                                                <button id="logout" name="logout" class="nav-link" type="submit" disabled>
+                                            </form>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+       
+                            <li class="nav-item">
+                                <label for="contact"><a href="#">Can't Log In?</a></label>
+                                <button id="contact" name="contact" class="nav-link" type="submit">
+                            </li>
+                            <li class="nav-item active last-child">
+                                <label for="contact"><a href="#">Manager Portal</a></label>
+                                <button id="contact" name="contact" class="nav-link" type="submit">
+                            </li>
 
                     </ul style="float:right">
                     <form class="search-form" action="https://google.com/search" method="get">
@@ -77,14 +88,7 @@
                 </div>
             </nav>
 
-            <!-- Tab panes -->
-            <div class="tab-content">
-                <div class="tab-pane fade show active" id="tab1Id" role="tabpanel"></div>
-                <div class="tab-pane fade" id="tab2Id" role="tabpanel"></div>
-                <div class="tab-pane fade" id="tab3Id" role="tabpanel"></div>
-                <div class="tab-pane fade" id="tab4Id" role="tabpanel"></div>
-                <div class="tab-pane fade" id="tab5Id" role="tabpanel"></div>
-            </div>
+            <div id="popup_spot"></div>
         
             <div class="jumbotron-fluid text-center employee-login" id="employee-login-form-container">
                 
