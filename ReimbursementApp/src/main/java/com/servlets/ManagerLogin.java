@@ -107,14 +107,6 @@ public class ManagerLogin extends HttpServlet implements ServletInterface{
 		
 		HttpSession session = request.getSession(true);
 		
-		if (request.getParameter("manager_logged_in") != null) {
-			/*
-			session.invalidate();
-			new EmployeeLogin().doGet(request, response);
-			return;
-			*/
-		}
-		
 		if (session.getAttribute("username") == null && session.getAttribute("password") == null) {
 			username = request.getParameter("username");
 			password = request.getParameter("password");

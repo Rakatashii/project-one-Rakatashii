@@ -88,3 +88,14 @@ function set_vars() {
         if (qmap.has('submission_response_type')) submission_response_type = decodeURI(qmap.get('submission_response_type'));
     }
 };
+
+function make_row(eid){
+    table = document.getElementById('table');
+    new_row = document.createElement('row');
+    new_row.innerHTML = `
+    <form>
+        <label for="employee${eid}" class=""></label>
+        <input type="text" name="employee${id}" class="" 
+    </form>
+    `
+}

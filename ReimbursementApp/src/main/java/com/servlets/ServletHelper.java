@@ -93,4 +93,22 @@ public class ServletHelper {
 		}
 		if (!duplicateKV) params.add(new_param);
 	}
+	
+	public synchronized void printParameters(HttpSession session) {
+		Enumeration<String> attributeNames;
+		if (session != null) attributeNames = session.getAttributeNames();
+		else {
+			return;
+		}
+		if (attributeNames != null) {
+			System.out.println("PARAMETERS:");
+			while (attributeNames.hasMoreElements()) {
+				String name = attributeNames.nextElement();
+				String value = (String) session.getAttribute(name);
+				if (value != null) {
+					System.out.println("PName: " + name + " - Value: " + value);
+				}
+			}
+		} 
+	}
 }

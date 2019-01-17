@@ -31,26 +31,19 @@ public class EmployeeDAO {
 			ps.setInt(6, employee.getNumReimbursements());
 		
 			if (ps.executeUpdate() != 0) {
-				//log.debug("Inserted Into " + tableName + " Values(" + employee.getEmployeeID() + ", " + employee.getUsername() + ", ... )");
+				
 				ps.close();
 				return true;
 			} else {
 				ps.close();
-				//log.debug("Failed To Insert Into " + tableName + " Employee With " + employee.getEmployeeID() + ", username = " + employee.getUsername() + ", ... ");
-				//log.debug("\t" + "ps was closed.");
-				//e.printStackTrace(); System.out.println();
 				return false;
 			} 
 		} catch (PSQLException e) {
-			//log.debug("Failed To Insert Into " + tableName + " Employee With " + employee.getEmployeeID() + ", username = " + employee.getUsername() + ", ... ");
-			//log.debug("\t" + e.getLocalizedMessage());
-			//e.printStackTrace(); System.out.println();
+			e.printStackTrace(); System.out.println();
 			return false;
 		}
 		catch (SQLException e) {
-			//log.debug("Failed To Insert Into " + tableName + " Employee With " + employee.getEmployeeID() + ", username = " + employee.getUsername() + ", ... ");
-			//log.debug("\t" + e.getLocalizedMessage());
-			//e.printStackTrace(); System.out.println();
+			e.printStackTrace(); System.out.println();
 			return false;
 		}
 	}
@@ -71,26 +64,17 @@ public class EmployeeDAO {
 			ps.setInt(7, employee.getEmployeeID());
 		
 			if (ps.executeUpdate() != 0) {
-				//log.debug("Inserted Into " + tableName + " Values(" + employee.getEmployeeID() + ", " + employee.getUsername() + ", ... )");
-				ps.close();
 				return true;
 			} else {
 				ps.close();
-				//log.debug("Failed To Insert Into " + tableName + " Employee With " + employee.getEmployeeID() + ", username = " + employee.getUsername() + ", ... ");
-				//log.debug("\t" + "ps was closed.");
-				//e.printStackTrace(); System.out.println();
 				return false;
 			} 
 		} catch (PSQLException e) {
-			//log.debug("Failed To Insert Into " + tableName + " Employee With " + employee.getEmployeeID() + ", username = " + employee.getUsername() + ", ... ");
-			//log.debug("\t" + e.getLocalizedMessage());
-			//e.printStackTrace(); System.out.println();
+			e.printStackTrace(); System.out.println();
 			return false;
 		}
 		catch (SQLException e) {
-			//log.debug("Failed To Insert Into " + tableName + " Employee With " + employee.getEmployeeID() + ", username = " + employee.getUsername() + ", ... ");
-			//log.debug("\t" + e.getLocalizedMessage());
-			//e.printStackTrace(); System.out.println();
+			e.printStackTrace(); System.out.println();
 			return false;
 		}
 	}
@@ -108,10 +92,9 @@ public class EmployeeDAO {
 			rs.next();
 			count = rs.getInt("count");
 			statement.close(); rs.close();
-			//log.debug("Current Count For " + tableName + " Is " + count);
+
 			return count;
 		} catch (SQLException e) {
-			//log.debug("Could Not Get Count For Table " + tableName);
 			e.printStackTrace(); System.out.println();
 		} 
 		return count;
@@ -132,10 +115,8 @@ public class EmployeeDAO {
 			else return 0;
 			
 			statement.close(); rs.close();
-			//log.debug("MaxID in table " + tableName + " = " + maxID);
 			return maxID;
 		} catch (SQLException e) {
-			//log.debug("Could not get maxID from table " + tableName);
 			e.printStackTrace(); System.out.println();
 		}
 		return maxID;
@@ -156,7 +137,6 @@ public class EmployeeDAO {
 				System.out.println(employee);
 			}
 			statement.close(); rs.close();
-			//log.debug("Got employees ArraLiys With Size = " + employees.size());
 			return employees;
 		} catch (SQLException e) {
 			e.printStackTrace(); System.out.println();
@@ -175,12 +155,9 @@ public class EmployeeDAO {
 			if (rs.next()) 
 				employee = new Employee(rs.getInt(1), rs.getString(2), rs.getString(3), 
 						rs.getString(4), rs.getString(5), rs.getInt(6));
-			//log.debug("Employee Found In Table " + tableName + " with employee_id = " + 
-						//employee.getEmployeeID() + " and username = " + employee.getUsername());
 			return employee;
 		} catch (SQLException e) {
-			//log.debug("Employee Not Found In " + tableName + " With employee_id = " + employee_id);
-			//log.debug("\t" + e.getLocalizedMessage()); 
+			e.printStackTrace(); System.out.println();
 		}
 		return null;
 	}

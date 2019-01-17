@@ -1,17 +1,29 @@
 package employees;
 
+import java.io.Serializable;
+
 import dao.EmployeeDAO;
 
-public class Employee {
-
-	private String username, password;
+public class Employee implements Serializable {
+	private static final long serialVersionUID = 2997598400807350712L;
+	private String username;
+	private transient String password;
 	private String firstname, lastname;
 	private int employeeID;
 	public int numReimbursements;
-	boolean rememberLoginInfo;
+	private transient boolean rememberLoginInfo;
 	
-	EmployeeDAO employeeDAO = new EmployeeDAO();
+	private transient EmployeeDAO employeeDAO = new EmployeeDAO();
 	
+	// This one is just for Dao to serve as container
+	public Employee(int employeeID, String username, String firstname, String lastname, int numReimbursements) {
+		super();
+		this.employeeID = employeeID;
+		this.username = username;
+		this.firstname = firstname;
+		this.lastname = lastname;
+		this.numReimbursements = numReimbursements;
+	}
 	public Employee(String username, String password, String firstname, String lastname, int numReimbursements) {
 		this.employeeID = employeeDAO.getMaxEmployeeID()+1;
 		this.username = username;
@@ -19,7 +31,7 @@ public class Employee {
 		this.firstname = firstname;
 		this.lastname = lastname;
 		this.numReimbursements = numReimbursements;
-		rememberLoginInfo = false;
+		rememberLoginInfo = false; //?
 	}
 	public Employee(int employeeID, String username, String password, String firstname, String lastname, int numReimbursements) {
 		this.employeeID = employeeID;
