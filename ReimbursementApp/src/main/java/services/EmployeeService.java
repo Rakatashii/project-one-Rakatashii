@@ -30,5 +30,4 @@ public class EmployeeService {
 	public static void logoutEmployee() {
 		loggedInEmployee = null;
 	}
-	
 }

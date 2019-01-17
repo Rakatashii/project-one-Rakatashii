@@ -13,30 +13,28 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import dao.EmployeeDAO;
-import employees.Employee;
-import services.EmployeeService;
+import managers.Manager;
+import services.ManagerService;
 
-@WebServlet("/login")
+@WebServlet("/views/manager_login.html/")
 @MultipartConfig
-public class EmployeeLogin extends HttpServlet implements ServletInterface {
+public class ManagerLogin extends HttpServlet implements ServletInterface{
 	private static final long serialVersionUID = 1L;
-	private static EmployeeService employeeService = new EmployeeService();
-	private Employee loggedInEmployee = null;
-	NewReimbursement newReimbursementServlet;
+	private static ManagerService managerService = new ManagerService();
+	private Manager loggedInManager = null;
+	ManagerSelect managerSelect;
 	
-	protected final static String url = "/Reimbursements/views/employee_login.html";
+	protected final static String url = "/Reimbursements/views/manager_login.html";
 	protected ArrayList<String> params = new ArrayList<>();
 	private String fullUrl;
 	ServletHelper servletHelper = new ServletHelper();
 	
-	private String username, password, remember, home, logout, contact, loggedIn;
+	private String username, password, rememberManager, home, logout, contact, managerLoggedIn;
 	
-    public EmployeeLogin() {
-    	newReimbursementServlet = new NewReimbursement();
+    public ManagerLogin() {
+        managerSelect = new ManagerSelect();
     }
-	
-	@Override
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
@@ -52,24 +50,22 @@ public class EmployeeLogin extends HttpServlet implements ServletInterface {
 				servletHelper.addParam(params, "submission_response_type", (String) request.getAttribute("submission_response_type"));
 				fullUrl = url + "?" + servletHelper.getParams(this, false);
 				session.invalidate();
-				//String urlEnd = "?" + servletHelper.getParams(this, false);
 				this.params.clear();
-				//response.encodeURL(urlEnd);
 				response.sendRedirect(fullUrl);
 				return;
 			}
-		} else System.out.println("employeeLoginServlet does not have submission_response");
+		} else System.out.println("managerLoginServlet does not have submission_response");
 
-		servletHelper.printAttributes("ES#GET(Top)", session);
+		servletHelper.printAttributes("ML#GET(Top)", session);
 		
 		if (session.getAttribute("home") != null) {
 			System.out.println("->HOME");
 			session.removeAttribute("home");
 			
-			if (session.getAttribute("remember_employee") != null && session.getAttribute("remember_employee").equals("true")){
-				if (session.getAttribute("logged_in") != null) {
+			if (session.getAttribute("remember_manager") != null && session.getAttribute("remember_manager").equals("true")){
+				if (session.getAttribute("manager_logged_in") != null) {
 					if (session.getAttribute("logout") != null) session.setAttribute("logout", null);
-					newReimbursementServlet.doGet(request, response);
+					managerSelect.doGet(request, response);
 					return;
 				}
 			} else {
@@ -83,53 +79,53 @@ public class EmployeeLogin extends HttpServlet implements ServletInterface {
 			
 			session.invalidate();
 			session = request.getSession(true);
-			servletHelper.printAttributes("ES#GET(Invalid): ", session);
+			servletHelper.printAttributes("ML#GET(Invalid): ", session);
 			fullUrl = servletHelper.getFullUrl(this, session);
-			EmployeeService.logoutEmployee();
+			ManagerService.logoutManager();
 			response.sendRedirect(fullUrl);
 			return;
-		} else if (session.getAttribute("remember_employee") == null || session.getAttribute("remember_employee").equals("false")) {
+		} else if (session.getAttribute("remember_manager") == null || session.getAttribute("remember_manager").equals("false")) {
 			session.invalidate();
 			session = request.getSession(true);
-			servletHelper.printAttributes("ES#GET(Invalid): ", session);
+			servletHelper.printAttributes("ML#GET(Invalid): ", session);
 			fullUrl = servletHelper.getFullUrl(this, session);
-			EmployeeService.logoutEmployee();
+			ManagerService.logoutManager();
 			response.sendRedirect(fullUrl);
 			return;
 		}
 
-		if (session.getAttribute("remember_employee") != null) session.setAttribute("remember_employee", null);
+		if (session.getAttribute("remember_manager") != null) session.setAttribute("remember_manager", null);
 		System.out.println("--Redirecting To Login");
 		fullUrl = servletHelper.getFullUrl(this, session);
 		response.sendRedirect(fullUrl);
 	}
 
-	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html");
 		request.setCharacterEncoding("UTF-8");
 		PrintWriter out = response.getWriter();
-		response.setContentType("text/html"); 
 		
 		HttpSession session = request.getSession(true);
 		
-		if (request.getParameter("manager_login") != null) {
+		if (request.getParameter("manager_logged_in") != null) {
+			/*
 			session.invalidate();
-			new ManagerLogin().doGet(request, response);
+			new EmployeeLogin().doGet(request, response);
 			return;
+			*/
 		}
 		
 		if (session.getAttribute("username") == null && session.getAttribute("password") == null) {
 			username = request.getParameter("username");
 			password = request.getParameter("password");
-			remember = request.getParameter("remember_employee");
-			if (remember == null) {
-				remember = "false";
+			rememberManager = request.getParameter("remember_manager");
+			if (rememberManager == null) {
+				rememberManager = "false";
 			}
 		} else {
 			username = (String) session.getAttribute("username");
 			password = (String) session.getAttribute("password");
-			remember = (String) session.getAttribute("remember_employee");
+			rememberManager = (String) session.getAttribute("remember_manager");
 		}
 		
 		home = request.getParameter("home");
@@ -147,48 +143,38 @@ public class EmployeeLogin extends HttpServlet implements ServletInterface {
 			return;
 		} 
 		
-		if (employeeService.verifyLoginInfo(username, password)) {
+		if (managerService.verifyLoginInfo(username, password)) {
 			if (username != null && password != null) { 
-				loggedIn = "true";
-				session.setAttribute("logged_in", "true");
+				managerLoggedIn = "true";
+				session.setAttribute("manager_logged_in", "true");
 				session.setAttribute("username", username);
 				session.setAttribute("password", password);
-				session.setAttribute("remember_employee",  remember);
+				session.setAttribute("remember_manager",  rememberManager);
 				
-				servletHelper.printAttributes("ES#POST: ", session);
+				servletHelper.printAttributes("ML#POST: ", session);
 			}
 			
-			System.out.println("Employee Verified");
-			out.append("<script language=\"text/javascript\"> "
-					+ "x = document.getElementByID('employee-alerts') "
-					+ "document.createElement('y') "
-					+ "y.innerHTML = \"swal('hello')\" "
-					+ "x.appendChild(y) "
-					+ "</script>" );
-			newReimbursementServlet.doGet(request, response);
-			out.append("<html><head>"
-					+ "<script language=\"text/javascript\"> "
-					+ "x = document.getElementByID('employee-alerts') "
-					+ "document.createElement('y') "
-					+ "y.innerHTML = \"swal('hello')\" "
-					+ "x.appendChild(y) "
-					+ "</script></head></html>");
+			System.out.println("Manager Verified");
+			managerSelect.doGet(request, response);
+
 			return;
 		} else {
-			System.out.println("Unable To Verify Employee With Username " + username + " And Password " + password);
-			session.setAttribute("remember_employee",  "false");
+			System.out.println("Unable To Verify Manager With Username " + username + " And Password " + password);
+			session.setAttribute("remember_manager",  "false");
 			response.sendRedirect(servletHelper.getFullUrl(this, session));
 		}
 	}
+
 	@Override
 	public ArrayList<String> getParams() {
 		return params;
 	}
+
 	@Override
 	public String getUrl() {
 		return url;
 	}
-
+	
 	void printParameters(HttpSession session) {
 		Enumeration<String> attributeNames;
 		if (session != null) attributeNames = session.getAttributeNames();

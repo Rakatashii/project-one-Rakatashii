@@ -1,12 +1,11 @@
 var username;
-var password;
-var remember_employee;
+var remember_manager;
 var logout;
-var logged_in;
+var manager_logged_in;
 var submission_response;
 var submission_response_type;
 
-employee_login();
+manager_login();
 set_vars();
 
 (function () {
@@ -34,62 +33,17 @@ set_vars();
     }
 } ());
 
-function animate_popup(){
-    popup = document.getElementById('popup_spot');
-    popup.innerHTML = `
-        <span id='popup' selector:'[rel="popover"]' type="button" class="popover arrow" data-container="body" data-toggle="popover" data-placement="bottom" 
-            data-content="Use The Dropdown Panel To Select Menu Options.">
-        </span>`
-    //setTimeout($('#popup').popover('hide'), 500);
-};
-animate_popup();
-$(function () {
-    $('#popup').popover({
-      container: 'body',
-      delay: 1,
-      animation: true
-    })
-})
-$(document).ready(function () {
-    showPopup = setTimeout(
-        function(){
-            $('.popover').popover('show');
-        } 
-    ,1500);
-    hidePopup = setTimeout(
-        function(){
-            $('.popover').popover('hide');
-            popup.setAttribute('display', 'none');
-        }
-    ,5000);
-});
-
-
-function employee_login() {
-    document.getElementById("employee-login-form-container").innerHTML = `
-    
-    <div class="container employee-login">
-    	<h1 id="employee-login-form-title">Employee Portal</h1>
-        <form id="employee-login-form" onSubmit="authenticateEmployee(username, password)" action="../EmployeeLogin" class="form-signin text-center" enctype="multipart/form-data"> 
-            <h1 class="h3 mb-3 font-weight-normal" style="transform:scale(1.0); white-space:pre">Please  Sign In</h1>
-
-            <label for="inputEmail" class="sr-only">Email address</label>
-            <input type="text" name="username" id="username" class="form-control" placeholder="Username"
-                required autofocus>
-
-            <label for="inputPassword" class="sr-only">Password</label>
-            <input type="password" name="password" id="password" class="form-control" placeholder="Password"
-                required>
-            <div class="checkbox mb-3">
-                <label>
-                    <input type="checkbox" name="remember_employee" value="true"> Remember me
-                </label>
-            </div>
-            <button class="submit-btn btn btn-lg btn-block" type="submit" active>Sign in</button>
-        </form>
-    </div>
-    `;
+function checkSelectedIdIsNumeric(id){
+    if (Number.parseInt(id) != id) {
+        alert("Selection Must Be Numeric.");
+        setTimeout(function(){ 
+            widow.location.reload();
+        }, 2300); 
+        // window.reload
+    } 
 }
+
+// TODO: Select Employees Table
 
 function submission_response_alert() {
     if (submission_response != undefined && submission_response != null){
@@ -103,7 +57,6 @@ function submission_response_alert() {
         } else {
             swal(submission_response);
         }
-
         submission_response = null;
         submission_response_type = null;
         qmap.set('submission_response', null);
@@ -126,20 +79,12 @@ function set_vars() {
     }
     if (qmap.has('username')) username = qmap.get('username');
     if (qmap.has('password')) password = qmap.get('password');
-    if (qmap.has('remember_employee')) remember_employee = qmap.get('remember_employee');
+    if (qmap.has('remember_manager')) remember_manager = qmap.get('remember_manager');
     if (qmap.has('logout')) logout = qmap.get('logout');
-    if (qmap.has('logged_in')) logged_in = qmap.get('logged_in');
+    if (qmap.has('manager_logged_in')) manager_logged_in = qmap.get('manager_logged_in');
     if (qmap.has('submission_response')) submission_response = decodeURI(qmap.get('submission_response'));
     if (qmap.has('submission_response')) {
         submission_response = decodeURI(qmap.get('submission_response'));
         if (qmap.has('submission_response_type')) submission_response_type = decodeURI(qmap.get('submission_response_type'));
     }
 };
-
-/*
-function display_img_cards(){
-    for (let i = 0; i < num_images; i++){
-        reimbursements.setAttribute(src) = 
-    }
-}
-*/

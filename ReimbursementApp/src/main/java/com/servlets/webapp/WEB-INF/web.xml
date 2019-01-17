@@ -33,6 +33,28 @@
     <url-pattern>/AllReimbursements</url-pattern>
   </servlet-mapping>
   
+  <servlet>
+    <description></description>
+    <display-name>ManagerLogin</display-name>
+    <servlet-name>ManagerLogin</servlet-name>
+    <servlet-class>com.servlets.ManagerLogin</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ManagerLogin</servlet-name>
+    <url-pattern>/ManagerLogin</url-pattern>
+  </servlet-mapping>
+  
+   <servlet>
+    <description></description>
+    <display-name>ManagerSelect</display-name>
+    <servlet-name>ManagerSelect</servlet-name>
+    <servlet-class>com.servlets.ManagerSelect</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ManagerSelect</servlet-name>
+    <url-pattern>/ManagerSelect</url-pattern>
+  </servlet-mapping>
+  
   <welcome-file-list>
     <welcome-file>//views//employee_login.html</welcome-file>
   </welcome-file-list>

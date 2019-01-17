@@ -2,7 +2,7 @@
 <html lang="en">
 
     <head>
-        <title>Employee Login</title>
+        <title>Manager Login</title>
         <!-- Required meta tags -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -25,6 +25,7 @@
     </head>
 
     <body">
+        <div id="manager-alerts"></div>
         <div id="employee-login-view">
             <!-- Nav tabs -->
             <nav class="navbar navbar-expand-sm navbar-dark">
@@ -55,8 +56,8 @@
                                         </li>
                                         <li class="nav-item active">
                                             <form action="../EmployeeLogin" method="post" enctype="multipart/form-data">
-                                                <label for="logout" class="nav-label">About</label>
-                                                <button id="logout" name="logout" class="nav-link" type="submit" disabled>
+                                                <label for="about" class="nav-label">About</label>
+                                                <button id="about" name="about" class="nav-link" type="submit" disabled>
                                             </form>
                                         </li>
                                     </ul>
@@ -70,9 +71,9 @@
                                 </form>
                             </li>
                             <li class="nav-item active last-child">
-                                <form action="../ManagerLogin" method="post" enctype="multipart/form-data">
-                                    <label for="manager_login" class="nav-label">Manager Portal</label>
-                                    <button id="manager_login" name="manager_login" class="nav-link" type="submit">
+                                <form action="../EmployeeLogin" method="post" enctype="multipart/form-data">
+                                    <label for="employee_login" class="nav-label">Employee Portal</label>
+                                    <button id="employee_login" name="employee_login" class="nav-link" type="submit">
                                 </form>
                             </li>
 
@@ -94,11 +95,10 @@
             <div id="popup_spot"></div>
         
             <div class="jumbotron-fluid text-center employee-login" id="employee-login-form-container">
-                <!-- Employee Login Info Injected Here From JS -->
+                <!-- Manager Select Code Inserted Here -->
             </div>
         </div>
         
-
         <!-- Optional JavaScript -->
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
@@ -108,7 +108,6 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
             crossorigin="anonymous"></script>
         <script src="../js/node_modules/sweetalert2/dist/sweetalert2.all.min.js"></script>
-        <script src="../js/employee_login.js"></script>
-        </body>
-
+        <script src="../js/manager_select.js"></script>
+    </body>
 </html>

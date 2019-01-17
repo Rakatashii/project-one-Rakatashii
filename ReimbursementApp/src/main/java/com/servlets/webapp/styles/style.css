@@ -186,11 +186,19 @@ a:hover {
 
  /* Popup container */
  
- .popover-btn{
-     display:none;
- }
- .popover-body{
-     background: rgba(255, 255, 255, 0.6);
+.popover.show{
+    -webkit-animation: fadeIn 1s;
+    animation: fadeIn 1s
+}
+.popover.fadeOut{
+    -webkit-animation: fadeOut 1s;
+    animation: fadeOut 1s
+}
+.popover-btn{
+    display:none;
+}
+.popover-body{
+     background: rgba(255, 255, 255, 0.1);
      color: rgba(52, 129, 230, 0.966);
      font-size: 21px;
      font-family: 'Bree Serif', serif;
@@ -201,8 +209,7 @@ a:hover {
     text-align:center;
     width: 220px;
     padding-bottom: 10px;
- }
- 
+}
  #popup {
     visibility: hidden;
     padding-top: 55px;
@@ -211,6 +218,26 @@ a:hover {
     z-index: 1;
 }
   
+/* Add animation (fade in the popup) */
+@keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity:1 ;}
+}
+/* Add animation (fade in the popup) */
+@-webkit-keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+/* Add animation (fade out the popup) */
+@keyframes fadeOut {
+    from {opacity: 1;}
+    to {opacity:0 ;}
+}
+/* Add animation (fade out the popup) */
+@-webkit-keyframes fadeOut {
+    from {opacity: 1;}
+    to {opacity: 0;}
+}
   /* The actual popup (appears on top) */
 
   /*

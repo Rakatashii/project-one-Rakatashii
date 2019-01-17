@@ -101,7 +101,6 @@ public class EmployeeDAO {
 			connection = DBConnection.getConnection();
 			if (connection == null) {
 				System.out.println("Connection is Null!");
-				Thread.sleep(2000);
 			}
 			String sql = "SELECT COUNT(*) AS count FROM " + tableName + ";";
 			Statement statement = connection.createStatement();
@@ -114,10 +113,7 @@ public class EmployeeDAO {
 		} catch (SQLException e) {
 			//log.debug("Could Not Get Count For Table " + tableName);
 			e.printStackTrace(); System.out.println();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		} 
 		return count;
 	}
 	public int getMaxEmployeeID() {

@@ -9,4 +9,4 @@ CREATE TABLE employees (
 	lastname VARCHAR(255),
 	num_reimbursements INTEGER CONSTRAINT Invalid_Number_Of_Reimbursements CHECK (num_reimbursements >= 0)
 );
-INSERT INTO employees VALUES(0, 'employee', 'password', 'Randy', 'Montana', 0);loyee', 'password', 'Randy', 'Montana', 0);
+INSERT INTO employees VALUES(0, 'employee', 'password', 'Randy', 'Montana', 0);
