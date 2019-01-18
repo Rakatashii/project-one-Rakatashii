@@ -19,10 +19,10 @@ import reimbursements.Reimbursement;
 public class ReimbursementDAO {
 	private Connection connection;
 	private PreparedStatement ps;
+	private final String tableName = "reimbursements";
 	//final Logger log = Logger.getLogger(EmployeeDAO.class);
 	
 	public String addReimbursement(Reimbursement reimbursement) {
-		String tableName = "reimbursements";
 		try {
 			connection = DBConnection.getConnection();
 			String sql = "INSERT INTO " + tableName + " VALUES(?,?,?,?,?,?,?,?);";
@@ -56,6 +56,22 @@ public class ReimbursementDAO {
 		catch (SQLException e) {
 			e.printStackTrace(); System.out.println();
 			return "Unable To Process Your Request.";
+		}
+	}
+	public void updateStatus(int employeeID, int reimbursementID, String status) {
+		try {
+			connection = DBConnection.getConnection();
+			String sql = "UPDATE " + tableName + " SET status=? WHERE employee_id=? AND reimbursement_id=?";
+			ps = connection.prepareStatement(sql);
+			ps.setString(1, status);
+			ps.setInt(2,  employeeID);
+			ps.setInt(3,  reimbursementID);
+			
+			ps.executeQuery();
+			
+			ps.close();
+		} catch (SQLException e) {
+			e.printStackTrace(); System.out.println();
 		}
 	}
 	public void deleteReimbursementByID(int reimbursementID) {

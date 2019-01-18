@@ -124,11 +124,11 @@ function create_card_for(reimbursement) {
     let statusColor;
     if (status == 'Pending'){
         statusColor = "color:rgb(108, 49, 218)";
-    } else if (status == 'Approved'){
-        statusColor = "color:green";
+    }else if (status == 'Approved'){
+        statusColor = "color:rgba(55, 182, 55, .8)";
     }else if (status == 'Denied'){
-        statusColor = "color:red";
-    }
+        statusColor = "color:rgba(230, 28, 55, .8)";
+    } else statusColor = "color:white";
 
     card.innerHTML = `
             <div class='row'>
@@ -193,13 +193,13 @@ function insert_buttons_for(x) {
     new_url = window.location.href.toString() + new_params;
     buttons.innerHTML = `
     <row id='btn-row' style="width: 400px;">
-        <form id=${form_id}" class="approve-btn-form" action="${new_url}" enctype="multipart/form-data" method="GET">
-            <button id='approve_btn' class="btn btn-success card-btns" name="approve" value="approve" type="submit">
+        <form id=${"form_"+x.reimbursementID}" class="approve-btn-form" action="../ManagerResolve" enctype="multipart/form-data" method="GET">
+            <button id='approve_btn' class="btn btn-success card-btns" name="approved" value="${x.reimbursementID + '_approved'}" type="submit">
                 Approve
             </button>
-            <button id='deny_btn' class="btn btn-danger card-btns" name="deny" value="deny" type="submit">
-            Deny
-        </button>
+            <button id='deny_btn' class="btn btn-danger card-btns" name="denied" value="${x.reimbursementID + '_denied'}" type="submit">
+                Deny
+            </button>
         </form>
     </row>
     `

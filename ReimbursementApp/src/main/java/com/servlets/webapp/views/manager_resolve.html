@@ -46,6 +46,12 @@
                             <div class="dropdown-menu pull-left" aria-labelledby="dropdownId">
                                 <ul id="dropdown-list" style="list-style:nonex">
                                     <li class="nav-item active">
+                                        <form action="../ManagerResolve" method="GET" enctype="multipart/form-data">
+                                            <label for="goto_view_reimbursements" class="nav-label" >Raw Data</label>
+                                            <button id="goto_view_reimbursements" name="goto_view_reimbursements" class="nav-link" type="submit">
+                                        </form>
+                                    </li>
+                                    <li class="nav-item active">
                                         <form action="../NewReimbursement" method="post" enctype="multipart/form-data">
                                             <label for="goto_all_reimbursements" class="nav-label" >Valid Expenses</label>
                                             <button id="goto_all_reimbursements" name="goto_all_reimbursements" class="nav-link" type="submit" disabled>

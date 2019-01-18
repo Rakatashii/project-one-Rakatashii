@@ -29,11 +29,59 @@ public class ManagerResolve extends HttpServlet implements ServletInterface{
 	private ArrayList<String> params = new ArrayList<>();
 	private ServletHelper servletHelper = new ServletHelper();
 	
+	Employee currentEmployee;
+	
     public ManagerResolve() {
         super();
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		response.setContentType("text/html");
+		request.setCharacterEncoding("UTF-8");
+		
+		System.out.println("GET");
+		servletHelper.printRequestParameters(request);
+		servletHelper.printRequestAttributes(request);
+		
+		if (request.getParameter("go_back") != null) {
+			request.removeAttribute("approved");
+			request.removeAttribute("denied");
+			response.sendRedirect("../ManagerSelect");
+			return;
+		} else if (request.getParameter("goto_view_reimbursements") != null) {
+			request.removeAttribute("approved");
+			request.removeAttribute("denied");
+			doPost(request, response);
+			return;
+		}
+		
+		if (currentEmployee != null) {
+			EmployeeService employeeService = new EmployeeService();
+			if (request.getParameter("approved") != null) {
+				String[] fields = request.getParameter("approved").split("_");
+				int rid = Integer.parseInt(fields[0]);
+				employeeService.approve(currentEmployee.getEmployeeID(), rid);
+			} else System.out.println("No Parameter \"Approved\"");
+			if (request.getParameter("denied") != null) {
+				String[] fields = request.getParameter("denied").split("_");
+				int rid = Integer.parseInt(fields[0]);
+				employeeService.deny(currentEmployee.getEmployeeID(), rid);
+			} else System.out.println("No Parameter \"Denied\"");
+		}
+		if (currentEmployee != null) {
+			EmployeeService employeeService = new EmployeeService();
+			if (request.getAttribute("approved") != null) {
+				String[] fields = ((String) request.getAttribute("approved")).split("_");
+				int rid = Integer.parseInt(fields[0]);
+				employeeService.approve(currentEmployee.getEmployeeID(), rid);
+			} else System.out.println("No Parameter \"Approved\"");
+			if (request.getAttribute("denied") != null) {
+				String[] fields = ((String) request.getAttribute("denied")).split("_");
+				int rid = Integer.parseInt(fields[0]);
+				employeeService.deny(currentEmployee.getEmployeeID(), rid);
+			} else System.out.println("No Parameter \"Denied\"");
+		}
+		
 		HttpSession session = request.getSession(false);
 		
 		if (session != null && session.getAttribute("manager_logged_in") != null) {
@@ -69,9 +117,39 @@ public class ManagerResolve extends HttpServlet implements ServletInterface{
 		response.setContentType("text/html");
 		request.setCharacterEncoding("UTF-8");
 		
+		System.out.println("POST");
+		servletHelper.printRequestParameters(request);
+		servletHelper.printRequestAttributes(request);
+		
+		if (currentEmployee != null) {
+			EmployeeService employeeService = new EmployeeService();
+			if (request.getParameter("approved") != null) {
+				String[] fields = request.getParameter("approved").split("_");
+				int rid = Integer.parseInt(fields[0]);
+				employeeService.approve(currentEmployee.getEmployeeID(), rid);
+			} else System.out.println("No Parameter \"Approved\"");
+			if (request.getParameter("denied") != null) {
+				String[] fields = request.getParameter("denied").split("_");
+				int rid = Integer.parseInt(fields[0]);
+				employeeService.deny(currentEmployee.getEmployeeID(), rid);
+			} else System.out.println("No Parameter \"Deny\"");
+		} 
+		if (currentEmployee != null) {
+			EmployeeService employeeService = new EmployeeService();
+			if (request.getAttribute("approved") != null) {
+				String[] fields = ((String) request.getAttribute("approved")).split("_");
+				int rid = Integer.parseInt(fields[0]);
+				employeeService.approve(currentEmployee.getEmployeeID(), rid);
+			} else System.out.println("No Parameter \"Approved\"");
+			if (request.getAttribute("denied") != null) {
+				String[] fields = ((String) request.getAttribute("denied")).split("_");
+				int rid = Integer.parseInt(fields[0]);
+				employeeService.deny(currentEmployee.getEmployeeID(), rid);
+			} else System.out.println("No Parameter \"Denied\"");
+		}
+		
 		HttpSession session = request.getSession(false);
 		
-		Employee employee = null;
 		ArrayList<Reimbursement> reimbursements = new ArrayList<>();
 		
 		System.out.println("in MR#POST");
@@ -81,8 +159,8 @@ public class ManagerResolve extends HttpServlet implements ServletInterface{
 			System.out.println("selected_id = " + selectedID);
 			int id = Integer.parseInt(selectedID);
 			System.out.println("int = " + id);
-			employee = new ManagerService().getSelectedEmployee(id);
-			if (employee != null) {
+			currentEmployee = new ManagerService().getSelectedEmployee(id);
+			if (currentEmployee != null) {
 				ReimbursementService reimbursementService = new ReimbursementService();
 				reimbursements = reimbursementService.getAllReimbursements(id);
 

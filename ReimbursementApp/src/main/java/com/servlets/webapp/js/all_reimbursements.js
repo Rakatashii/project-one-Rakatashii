@@ -123,10 +123,11 @@ function create_card_for(reimbursement) {
     if (status == 'Pending'){
         statusColor = "color:rgb(108, 49, 218)";
     }else if (status == 'Approved'){
-        statusColor = "color:green";
+        statusColor = "color:rgba(55, 182, 55, .8)";
     }else if (status == 'Denied'){
-        statusColor = "color:red";
-    }
+        statusColor = "color:rgba(230, 28, 55, .8)";
+    } else statusColor = "color:white";
+    
 
     card.innerHTML = `
             <div class='row'>

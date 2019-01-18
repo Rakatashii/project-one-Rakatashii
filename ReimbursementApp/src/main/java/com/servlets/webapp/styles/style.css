@@ -766,5 +766,7 @@ div.last.item2{
 
 .card-btns {
     float: center;
-    width: 125px;
+    width: 100%;
 }
+
+
