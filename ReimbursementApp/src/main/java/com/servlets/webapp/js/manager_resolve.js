@@ -97,37 +97,43 @@ function get_reimbursement_info() {
         if (this.readyState === 4 && this.status === 200) {
             reimbursements = JSON.parse(xhr.responseText)
             if (reimbursements.length == 0) {
-                document.getElementById('manager-all-reimbursements-title').innerHTML = 'No Records Were Found'
+                document.getElementById('all-reimbursements-title').innerHTML = 'No Records Were Found'
                 return;
             } else {
                 for (i in reimbursements) {
                     data = reimbursements[i];
                     create_card_for(data);
+                    insert_buttons_for(data)
                 }
             }
         } else {
-            data = 'Error'
+            console.log('Error');
         }
     }
-    xhr.open('POST', 'http://localhost:8080/Reimbursements/ManagerResolve', true);
+    xhr.open('POST', "../ManagerResolve", true);
     xhr.send();
 }
 
 function create_card_for(reimbursement) {
     card = document.createElement('div')
     card.className = 'section'
+    card.id = reimbursement.relativePath;
 
     let comments = (reimbursement.comments == null || reimbursement.comments == "null") ? "N/A" : reimbursement.comments;
     let status = reimbursement.status.charAt(0).toUpperCase() + reimbursement.status.slice(1);
     let statusColor;
     if (status == 'Pending'){
         statusColor = "color:rgb(108, 49, 218)";
+    } else if (status == 'Approved'){
+        statusColor = "color:green";
+    }else if (status == 'Denied'){
+        statusColor = "color:red";
     }
 
     card.innerHTML = `
-            <div class='manager-row'>
+            <div class='row'>
                 <div class='col-sm-6 col-sm-offset-2'>
-                    <div class='manager-card'>
+                    <div class='card'>
                         <div class='card-block'>
                             <span> 
                             <h4 class='card-header column-text' style='color:rgba(12, 84, 112, 0.966)'>Reimbursement Status:<span style=\"${statusColor}\"> ${status}<\span></h4> 
@@ -174,10 +180,28 @@ function create_card_for(reimbursement) {
                 </div> 
             </div>  
     `
-    document.getElementById('manager-reimbursement-cards').appendChild(card);
+    document.getElementById('reimbursement-cards').appendChild(card);
 
 };
 
-function redirect_to_image_location(){
-
+function insert_buttons_for(x) {
+    let card_ref = document.getElementById(x.relativePath);
+    var buttons = document.createElement('div');
+    buttons.id = x.reimbursementID;
+    let form_id = x.employeeID+'_'+x.reimbursementID;
+    new_params = encodeURIComponent("&rid="+x.reimbursementID).toString()
+    new_url = window.location.href.toString() + new_params;
+    buttons.innerHTML = `
+    <row id='btn-row' style="width: 400px;">
+        <form id=${form_id}" class="approve-btn-form" action="${new_url}" enctype="multipart/form-data" method="GET">
+            <button id='approve_btn' class="btn btn-success card-btns" name="approve" value="approve" type="submit">
+                Approve
+            </button>
+            <button id='deny_btn' class="btn btn-danger card-btns" name="deny" value="deny" type="submit">
+            Deny
+        </button>
+        </form>
+    </row>
+    `
+    card_ref.appendChild(buttons);
 }

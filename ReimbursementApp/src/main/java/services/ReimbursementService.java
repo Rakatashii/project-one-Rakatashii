@@ -1,6 +1,7 @@
 package services;
 
 import java.util.regex.Pattern;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 
@@ -49,7 +50,6 @@ public class ReimbursementService {
 			
 			System.out.println("IN ReimbursementService: " + this.reimbursement);
 			reimbursementDAOResponse = "Your Submission Was Successful!";
-			
 			return true;
 		} else {
 			reimbursementDAOResponse = "Your Request Could Not Be Processed.";
@@ -66,11 +66,10 @@ public class ReimbursementService {
 			this.image.setEmployeeID(reimbursement.getEmployeeID());
 			this.image.setReimbursementID(reimbursement.getReimbursementID());
 			
-			//boolean fileWasCreated = this.image.uploadLocalFile();
-			
+			if (!(new File(image.getImageName()).exists())) image.uploadLocalFile();
 			imageDAOResponse = imageDAO.addImage(this.image);
 			if (imageDAOResponse == null) {
-				
+				boolean fileWasCreated = this.image.uploadLocalFile();
 				System.out.println("IN ReimbursementService: " + this.image);
 				/*
 				if (!fileWasCreated) {
@@ -135,9 +134,12 @@ public class ReimbursementService {
 	}
 	public ArrayList<Reimbursement> getAllReimbursements(int id){
 		EmployeeDAO employeeDAO = new EmployeeDAO();
+		/*
 		this.employee = employeeDAO.getEmployeeByID(id);
 		ArrayList<Reimbursement> reimbursements = null;
 		if (employee != null) reimbursements = reimbursementDAO.getReimbursementsByEmployeeID(employee.getEmployeeID());
+		*/
+		ArrayList<Reimbursement> reimbursements = reimbursementDAO.getReimbursementsByEmployeeID(id);
 		return reimbursements;
 	}
 }

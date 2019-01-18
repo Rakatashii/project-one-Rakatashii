@@ -12,9 +12,9 @@ import java.util.Arrays;
 public class Image {
 
 	//public static final String UPLOAD_DIRECTORY = "C:\\Users\\Associate\\java\\project-one-Rakatashii\\ReimbursementApp\\src\\main\\webapp\\uploads\\";
-	//UPLOAD_DIRECTORY = "/Reimbursements/src/main/java/com/servlets/webapp/uploads/";
+	public static final String UPLOAD_DIRECTORY = "C:\\Users\\Associate\\java\\project-one-Rakatashii\\ReimbursementApp\\src\\main\\java\\com\\servlets\\webapp\\uploads\\";
 	//public static final String UPLOAD_DIRECTORY = "/Reimbursements/src/main/java/com/servlets/webapp/uploads/";
-	public static final String UPLOAD_DIRECTORY = "/Reimbursements/src/main/java/com/servlets/webapp/uploads/";
+	//public static final String UPLOAD_DIRECTORY = "\\Reimbursements\\src\\main\\java\\com\\servlets\\webapp\\uploads\\";
 	/*
 	static {
 		File dir = new File(UPLOAD_DIRECTORY);

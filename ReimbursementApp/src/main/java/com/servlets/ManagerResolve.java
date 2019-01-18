@@ -39,6 +39,7 @@ public class ManagerResolve extends HttpServlet implements ServletInterface{
 		if (session != null && session.getAttribute("manager_logged_in") != null) {
 			servletHelper.printAttributes("MR#GET: ", session);
 			fullUrl = servletHelper.getFullUrl(this, session);
+			//doPost(request, response);
 			response.sendRedirect(fullUrl);
 			return;
 		} else if (session == null || session.getAttribute("manager_logged_in") == null) {
@@ -73,11 +74,13 @@ public class ManagerResolve extends HttpServlet implements ServletInterface{
 		Employee employee = null;
 		ArrayList<Reimbursement> reimbursements = new ArrayList<>();
 		
-		if (request.getParameter("selected_id") != null) {
-			String selectedID = request.getParameter("selected_id");
+		System.out.println("in MR#POST");
+		if (session.getAttribute("selected_id") != null || request.getParameter("selected_id") != null) {
+			String selectedID = ((request.getParameter("selected_id") == null) ? (String) session.getAttribute("selected_id") : request.getParameter("selected_id"));
 			session.setAttribute("selected_id", selectedID);
 			System.out.println("selected_id = " + selectedID);
 			int id = Integer.parseInt(selectedID);
+			System.out.println("int = " + id);
 			employee = new ManagerService().getSelectedEmployee(id);
 			if (employee != null) {
 				ReimbursementService reimbursementService = new ReimbursementService();

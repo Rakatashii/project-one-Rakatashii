@@ -24,9 +24,9 @@ public class ImageDAO {
 	Connection connection;
 	PreparedStatement ps;
 	ReimbursementDAO reimbursementDAO;
+	private final String tableName = "images";
 	
 	public String addImage(Image image) {
-		String tableName = "images";
 		String sql = "INSERT INTO " + tableName + " VALUES(?,?,?,?,?,?)";
 		int reimbursementID = image.getReimbursementID();
 		reimbursementDAO = new ReimbursementDAO();
@@ -34,9 +34,10 @@ public class ImageDAO {
 			connection = DBConnection.getConnection();
 			ps = connection.prepareStatement(sql);
 			
+			if (!(new File(image.getImageName()).exists())) new File(Image.UPLOAD_DIRECTORY).mkdirs();
 			try {
 				if (image.hasImageFile() && !image.getImageFile().isDirectory()) {
-					if (image.getImageFile() != null && image.getImageName() != null) {
+					if (image.getImageName() != null) {
 						
 						FileInputStream fin = new FileInputStream(image.getImageFile());
 						
@@ -61,19 +62,9 @@ public class ImageDAO {
 				return "System Error";
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
+				ps.close();
 				return "File Not Found";
-			} catch (IOException e) {
-				e.printStackTrace(); System.out.println();
-				if (reimbursementID >= 0) {
-					try {
-						reimbursementDAO.deleteReimbursementByID(reimbursementID);
-					} catch (Exception ex) {
-						ex.printStackTrace(); System.out.println();
-						return "Error: Duplicate Image May Already Exist In The Database.";
-					}
-					return getErrorMessage(e.getLocalizedMessage());
-				}
-			}
+			} 
 		} catch (PSQLException e) {
 			e.printStackTrace(); System.out.println();
 			if (reimbursementID >= 0) {
@@ -97,11 +88,9 @@ public class ImageDAO {
 			}
 			return "Error: Duplicate Image May Already Exist In The Database.";
 		}
-		return "Unable To Process Your Request.";
 	}
 	public Image getImage(int employeeID, int reimbursementID) {
-		String tableName = "images";
-		String sql = "SELECT image_name, image_length, bytestream FROM images WHERE employee_id=? AND reimbursement_id=?";
+		String sql = "SELECT absolute_path, image_length, bytestream FROM images WHERE employee_id=? AND reimbursement_id=?";
 		Image image = null;
 		
 		String name = "";
@@ -119,6 +108,7 @@ public class ImageDAO {
 				if (!name.contains(Image.UPLOAD_DIRECTORY)) name = Image.UPLOAD_DIRECTORY + name.replaceAll("[ ]+", "");
 				length = rs.getInt(2);
 				File file = new File(name);
+				if (!file.exists()) new File(Image.UPLOAD_DIRECTORY).mkdirs();
 				buffer = rs.getBytes("bytestream");
 				try (FileOutputStream fos = new FileOutputStream(file)){
 					fos.write(buffer, 0, length);

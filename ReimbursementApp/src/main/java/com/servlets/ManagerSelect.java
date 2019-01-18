@@ -100,11 +100,10 @@ public class ManagerSelect extends HttpServlet implements ServletInterface{
 		
 		String json = new Gson().toJson(employees);
 		
-	    response.setContentType("application/json");
-	    response.setCharacterEncoding("UTF-8");
 	    out.write(json);
 		
 		if (request.getParameter("selected_id") != null) {
+			session.setAttribute("manager_logged_in", "true");
 			session.setAttribute("selected_id",  request.getParameter("selected_id"));
 			response.sendRedirect("../ManagerResolve");
 		}

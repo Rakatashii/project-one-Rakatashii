@@ -106,7 +106,7 @@ function get_reimbursement_info() {
                 }
             }
         } else {
-            data = 'Error'
+            console.log('Error');
         }
     }
     xhr.open('POST', 'http://localhost:8080/Reimbursements/AllReimbursements', true);
@@ -122,6 +122,10 @@ function create_card_for(reimbursement) {
     let statusColor;
     if (status == 'Pending'){
         statusColor = "color:rgb(108, 49, 218)";
+    }else if (status == 'Approved'){
+        statusColor = "color:green";
+    }else if (status == 'Denied'){
+        statusColor = "color:red";
     }
 
     card.innerHTML = `

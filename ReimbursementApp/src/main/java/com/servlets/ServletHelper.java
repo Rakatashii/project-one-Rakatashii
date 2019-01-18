@@ -19,6 +19,7 @@ public class ServletHelper {
 		if (hs.getAttribute("home") != null) System.out.println(methName + " home: " + (String) hs.getAttribute("home"));
 		if (hs.getAttribute("logout") != null) System.out.println(methName + " logout: " + (String) hs.getAttribute("logout"));
 		if (hs.getAttribute("contact") != null) System.out.println(methName + " contact: " + (String) hs.getAttribute("contact"));
+		if (hs.getAttribute("selected_id") != null) System.out.println(methName + " selected_id: " + (String) hs.getAttribute("selected_id"));
 	}
 	public synchronized <T extends ServletInterface> String getParams(T servlet, boolean append) {
 		ArrayList<String> params = servlet.getParams();
