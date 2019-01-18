@@ -40,6 +40,7 @@ public class ManagerLogin extends HttpServlet implements ServletInterface{
 		PrintWriter out = response.getWriter();
 		
 		HttpSession session = request.getSession(true);
+		
 		fullUrl = servletHelper.getFullUrl(this, session);
 		System.out.println("fullUrl = " + fullUrl);
 		

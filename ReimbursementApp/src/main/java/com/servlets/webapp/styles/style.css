@@ -559,8 +559,8 @@ div.last.item2{
 /* MANAGER SELECT */
 
 .jumbotron-fluid.manager-table-view {
-    margin-top: 20px;
-    margin-bottom: 20px;
+    margin-top: 50px;
+    margin-bottom: 50px;
 
     height: 100%;
     width: 100%;
@@ -572,33 +572,39 @@ div.last.item2{
     display: inline-block;
 
     padding: 20px 2.5% 20px 2.5%;
-    margin-top: 5px;
-    margin-bottom: 40px;
 
     align-content:center;
     
     /* max-width: 1386px; */
     width: 80%;
+    min-width: 500px;
+    height: 585px;
 
     background-color:rgba(47, 133, 167, 0.6);
 }
 table {
+    display: inline-block;
     background-color: rgba(12, 84, 112, 0.966);
-    width: 100%;
+    width: auto;
+    min-width: 450px;
+    height: 400px;
+    overflow: auto;
 }
 tbody {
     background-color: #fff;
-    height: 150px;
-    overflow: auto;
     color: black;
     width: 100%;
+    min-width: 450px;
+    height: 400px;
+    overflow: auto;
 }
 td {
-    padding: 3px 10px;
+    padding: 4px 10px;
     color: black;
 }
 .column-headers{
     color: white;
+    overflow: none;
 }
 tr {
     color: black;
@@ -618,34 +624,146 @@ thead > tr, tbody{
 #entries tr.highlight { 
     background: rgb(43, 156, 160); 
 }
-#entries tr.focusable { 
-    background: rgb(141, 32, 32); 
+.table-buttons{
+    padding-top: 20px;
+}
+#edit_selected_id, #view_selected_id {
+    border: 1.5px solid white;
+    background: rgba(47, 133, 167, 0.966);
+    color: white;
+    -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, .3);
+        box-shadow: 0 5px 10px rgba(0, 0, 0, .3);
+    font-size: 20px;
+    padding-top: 10px;
 }
 
-
-
-
-
-
-
+/* MANAGER RESOLVE */
 
 /*
-.card-block{
-    text-align:center;
-    padding: 5px 5px 5px 5px;
-    line-height: 10pt;
+.jumbotron-fluid.wrapper {
+    margin-top: 20px;
+    margin-bottom: 20px;
+
+    height: 100%;
+    width: 100%;
+
+    background-color: rgba(47, 133, 167, 0.0);
 }
-.card-block > .column-text{
-    float:left;
-    white-space: pre;
+*/
+
+.manager-all-reimbursements-view.container.outer {
+    display: inline-block;
+
+    padding: 20px 2.5% 10px 2.5%;
+
+    /* max-width: 1386px; */
+    width: 100%;
+
+    background-color: rgba(47, 133, 167, 0.6);
+}
+
+.container-fluid.manager-title-container{
+    background: rgba(5, 58, 78, 0.247);
+    height: 55px;
+    margin-bottom: 20px;
+}
+
+.container-fluid.manager-card-container{
+    width:100%;
+    padding: 0 0 0 0;
+    margin-bottom: 15px;
+}
+
+#manager-reimbursement-cards{
+    width:100%;
+    background: rgba(5, 58, 78, 0.4);
+    padding: 3px 1px 3px 1px;
+}
+.row{
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    width: 100%;
+    padding: 0 2.5px 2px 2.5px;
+    margin: 0;
+}
+.col-sm-6{
+    padding-left: 0.5px;
+    padding-right: 0.5px;
+    /*
+    padding-left: 0.5px;
+    padding-right: 0.5px;
+    */
+}
+.manager-card{
+    width:100%;
+    border-radius: 0;
+    background: white center no-repeat;
+    background-size: cover;
+    border: none;
+    height: 20rem;
+}
+/*
+h4.card-header {
+    padding-bottom: 7.5px;
+}
+.card-img-bottom {
+    color: #fff;
+    height: 20rem;
+    border: none;
+    background: white center no-repeat;
+    background-size: cover;
+}
+
+
+.grid-container {
+    display: grid;
+    grid-template-columns: 30% 70%;
+    grid-gap: 5px;
+    background-color: rgba(47, 133, 167, 0.5); 
+    padding: 5px 5px 0 5px;
+}  
+
+.grid-container.last{
+    padding: 5px 5px 5px 5px;
+}
+
+.grid-container > div {
+    background-color: rgba(255, 255, 255, 0.8);
+    text-align: left;
+    font-size: 20px;
+    padding: 2.5px 2.5px 0 2.5px;
+    height: 40px;
+}
+.grid-container > div.last {
+    padding: 2.5px 2.5px 2.5px 2.5px;
+    margin-bottom: 30px;
+}
+
+div.last.item2{
+    height: 140px;
+    margin-bottom: 0px;
+    background: rgba(255, 255, 255, 0.8);
+}
+
+.column-text{
+    padding: 0 0 0 5px;
     color:rgba(12, 84, 112, 0.966);
     text-decoration: underline;
     text-decoration-color:rgba(47, 133, 167, 0.966); 
 }
-.card-block > .value-text{
-    white-space: pre;
+.value-text{
     color:rgba(47, 133, 167, 0.966); 
     text-decoration: none;
 }
 */
+@media (max-width : 767px){
+    #manager-all-reimbursements-title {
+        font-size: 35px;
+    }
+    .container-fluid.manager-title-container{
+        padding-bottom: 20px;
+    }
+}
+
+
+
 

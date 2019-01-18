@@ -91,6 +91,17 @@ function employee_login() {
     `;
 }
 
+function authenticateEmployee(username, password){
+    if(username.value.length > 20) {
+        alert("Username is too long! Please enter in a valid username.");
+    } else if(password.value.length > 20){
+        alert("Password is too long! Please enter in a valid password.");
+    } else if(username.value.length > 0 && password.value.length > 0){
+        document.getElementById('employee-login-form').setAttribute("method", "POST");
+        document.getElementById('employee-login-form').method = "POST";
+    }
+}
+
 function submission_response_alert() {
     if (submission_response != undefined && submission_response != null){
         if (submission_response_type != undefined && submission_response_type != null){

@@ -134,6 +134,13 @@ public class ReimbursementService {
 		if (employee != null) reimbursements = reimbursementDAO.getReimbursementsByEmployeeID(employee.getEmployeeID());
 		return reimbursements;
 	}
+	public ArrayList<Reimbursement> getAllReimbursements(int id){
+		EmployeeDAO employeeDAO = new EmployeeDAO();
+		this.employee = employeeDAO.getEmployeeByID(id);
+		ArrayList<Reimbursement> reimbursements = null;
+		if (employee != null) reimbursements = reimbursementDAO.getReimbursementsByEmployeeID(employee.getEmployeeID());
+		return reimbursements;
+	}
 }
 
 

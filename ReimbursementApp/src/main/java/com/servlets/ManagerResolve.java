@@ -1,7 +1,6 @@
 package com.servlets;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
@@ -15,62 +14,44 @@ import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 
-import dao.EmployeeDAO;
 import employees.Employee;
 import reimbursements.Reimbursement;
+import services.EmployeeService;
+import services.ManagerService;
 import services.ReimbursementService;
 
-@WebServlet(urlPatterns = { "/views/manager_select.html/" })
+@WebServlet(urlPatterns = { "/views/manager_resolve.html/" })
 @MultipartConfig
-public class ManagerSelect extends HttpServlet implements ServletInterface{
+public class ManagerResolve extends HttpServlet implements ServletInterface{
 	private static final long serialVersionUID = 1L;
-	ManagerLogin managerLogin;
-	
-	protected final static String url = "/Reimbursements/views/manager_select.html";
-	private ArrayList<String> params = new ArrayList<>();
+	protected static String url = "/Reimbursements/views/manager_resolve.html";
 	private String fullUrl;
-	ServletHelper servletHelper = new ServletHelper();
+	private ArrayList<String> params = new ArrayList<>();
+	private ServletHelper servletHelper = new ServletHelper();
 	
-	private Employee currentEmployee;
-       
-    public ManagerSelect() {
+    public ManagerResolve() {
         super();
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.setContentType("text/html");
-		PrintWriter out = response.getWriter();
-		
 		HttpSession session = request.getSession(false);
 		
 		if (session != null && session.getAttribute("manager_logged_in") != null) {
-			servletHelper.printAttributes("MS#GET: ", session);
+			servletHelper.printAttributes("MR#GET: ", session);
 			fullUrl = servletHelper.getFullUrl(this, session);
-			
-			/* Handle Get All Employees By User/ID Here or Ajax? */
-			
-			/*
-			ReimbursementService reimbursementService = new ReimbursementService();
-			ArrayList<Reimbursement> reimbursements = reimbursementService.getAllReimbursements();
-			
-			String json = new Gson().toJson(reimbursements);
-		    response.setContentType("application/json");
-		    response.setCharacterEncoding("UTF-8");
-		    response.getWriter().write(json);
-		    */
-			
-			response.sendRedirect(fullUrl); // Need? Problems?
+			response.sendRedirect(fullUrl);
 			return;
 		} else if (session == null || session.getAttribute("manager_logged_in") == null) {
 			System.out.println("PARAMS: ");
 			servletHelper.printParameters(session);
 			fullUrl = ManagerLogin.url + "?" + servletHelper.getParams(this, false);
 
-			request.setAttribute("submission_response", "You Must Log In First");
+			request.setAttribute("submission_response", "You Must Log In");
 			request.setAttribute("submission_response_type", "login_error");
 			
 			RequestDispatcher rd = request.getRequestDispatcher("/ManagerLogin");
 			rd.forward(request, response);
+			//session.invalidate(); ???
 		} else {
 			System.out.println("Session Not NULL && LoggedIN NOT NULL");
 			fullUrl = ManagerLogin.url + "?" + servletHelper.getParams(this, false);
@@ -81,47 +62,42 @@ public class ManagerSelect extends HttpServlet implements ServletInterface{
 			RequestDispatcher rd = request.getRequestDispatcher("/ManagerLogin");
 			rd.forward(request, response);
 		} 
-
-		/*
-		HttpSession session = request.getSession();
-		response.sendRedirect(servletHelper.getFullUrl(this, session));
-		*/
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html");
 		request.setCharacterEncoding("UTF-8");
-		PrintWriter out = response.getWriter();
 		
 		HttpSession session = request.getSession(false);
 		
-		EmployeeDAO employeeDAO = new EmployeeDAO();
-		ArrayList<Employee> employees = employeeDAO.getAllEmployees();
-		
-		String json = new Gson().toJson(employees);
-		
-	    response.setContentType("application/json");
-	    response.setCharacterEncoding("UTF-8");
-	    out.write(json);
+		Employee employee = null;
+		ArrayList<Reimbursement> reimbursements = new ArrayList<>();
 		
 		if (request.getParameter("selected_id") != null) {
-			session.setAttribute("selected_id",  request.getParameter("selected_id"));
-			response.sendRedirect("../ManagerResolve");
+			String selectedID = request.getParameter("selected_id");
+			session.setAttribute("selected_id", selectedID);
+			System.out.println("selected_id = " + selectedID);
+			int id = Integer.parseInt(selectedID);
+			employee = new ManagerService().getSelectedEmployee(id);
+			if (employee != null) {
+				ReimbursementService reimbursementService = new ReimbursementService();
+				reimbursements = reimbursementService.getAllReimbursements(id);
+
+				String json = new Gson().toJson(reimbursements);
+			    response.setContentType("application/json");
+			    response.setCharacterEncoding("UTF-8");
+			    response.getWriter().write(json);
+				//fullUrl = servletHelper.getFullUrl(this,  session);
+				//response.sendRedirect(fullUrl);
+				//return;
+			} else {
+				System.out.println("Employee is null");
+			}
+		} else if (request.getAttribute("selected_id") != null) {
+			System.out.println("selected_id = " + request.getAttribute("selected_id"));
+		} else {
+			System.out.println("selected_id is null");
 		}
-		
-		//TODO finish rows in JS
-		/*
-		ReimbursementService reimbursementService = new ReimbursementService();
-		ArrayList<Reimbursement> reimbursements = reimbursementService.getAllReimbursements();
-		
-		String json = new Gson().toJson(reimbursements);
-	    response.setContentType("application/json");
-	    response.setCharacterEncoding("UTF-8");
-	    response.getWriter().write(json);
-	    */
-	    
-		//fullUrl = servletHelper.getFullUrl(this,  session);
-		//response.sendRedirect(fullUrl);
 	}
 
 	@Override
@@ -133,4 +109,5 @@ public class ManagerSelect extends HttpServlet implements ServletInterface{
 	public String getUrl() {
 		return url;
 	}
+
 }

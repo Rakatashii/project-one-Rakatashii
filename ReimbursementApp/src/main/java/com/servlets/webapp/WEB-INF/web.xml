@@ -10,7 +10,6 @@
     <servlet-name>EmployeeLogin</servlet-name>
     <url-pattern>/EmployeeLogin</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <description></description>
     <display-name>NewReimbursement</display-name>
@@ -21,7 +20,6 @@
     <servlet-name>NewReimbursement</servlet-name>
     <url-pattern>/NewReimbursement</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <description></description>
     <display-name>AllReimbursements</display-name>
@@ -32,7 +30,6 @@
     <servlet-name>AllReimbursements</servlet-name>
     <url-pattern>/AllReimbursements</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <description></description>
     <display-name>ManagerLogin</display-name>
@@ -44,7 +41,7 @@
     <url-pattern>/ManagerLogin</url-pattern>
   </servlet-mapping>
   
-   <servlet>
+  <servlet>
     <description></description>
     <display-name>ManagerSelect</display-name>
     <servlet-name>ManagerSelect</servlet-name>
@@ -53,6 +50,17 @@
   <servlet-mapping>
     <servlet-name>ManagerSelect</servlet-name>
     <url-pattern>/ManagerSelect</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <description></description>
+    <display-name>ManagerResolve</display-name>
+    <servlet-name>ManagerResolve</servlet-name>
+    <servlet-class>com.servlets.ManagerResolve</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ManagerResolve</servlet-name>
+    <url-pattern>/ManagerResolve</url-pattern>
   </servlet-mapping>
   
   <welcome-file-list>

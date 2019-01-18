@@ -5,6 +5,7 @@ import java.util.Enumeration;
 import java.util.List;
 
 import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 public class ServletHelper {
@@ -101,10 +102,45 @@ public class ServletHelper {
 			return;
 		}
 		if (attributeNames != null) {
-			System.out.println("PARAMETERS:");
+			System.out.println("Custom Parameters:");
 			while (attributeNames.hasMoreElements()) {
 				String name = attributeNames.nextElement();
 				String value = (String) session.getAttribute(name);
+				if (value != null) {
+					System.out.println("PName: " + name + " - Value: " + value);
+				}
+			}
+		} 
+	}
+	public synchronized void printRequestParameters(HttpServletRequest request) {
+		Enumeration<String> requestParameterNames;
+		if (request != null) requestParameterNames = request.getParameterNames();
+		else {
+			return;
+		}
+		if (requestParameterNames != null) {
+			System.out.println("Request Parameters:");
+			while (requestParameterNames.hasMoreElements()) {
+				String name = requestParameterNames.nextElement();
+				if (name != null) System.out.print("RPName: " + name); 
+				String value = (String) request.getParameter(name);
+				if (value != null) {
+					System.out.println(" - Value: " + value + "\n");
+				}
+			}
+		} 
+	}
+	public synchronized void printRequestAttributes(HttpServletRequest request) {
+		Enumeration<String> requestAttributeNames;
+		if (request != null) requestAttributeNames = request.getAttributeNames();
+		else {
+			return;
+		}
+		if (requestAttributeNames != null) {
+			System.out.println("Attributes:");
+			while (requestAttributeNames.hasMoreElements()) {
+				String name = requestAttributeNames.nextElement();
+				String value = (String) request.getAttribute(name);
 				if (value != null) {
 					System.out.println("PName: " + name + " - Value: " + value);
 				}

@@ -45,40 +45,39 @@
                             </a>
                             <div class="dropdown-menu pull-left" aria-labelledby="dropdownId">
                                 <ul id="dropdown-list" style="list-style:nonex">
-                                    
                                     <li class="nav-item active">
-                                        <form action="../AllReimbursements" method="GET">
-                                            <label for="goto_all_reimbursements" class="nav-label" style="color:rgba(255, 255, 255, 0.521)">Past
-                                                Reimbursement Requests</label>
-                                            <button id="goto_all_reimbursements" name="goto_all_reimbursements" class="nav-link"
-                                                type="submit" disabled>
-                                        </form>
-                                    </li>
-                                    </span>
-                                    <li class="nav-item active">
-                                        <form action="../NewReimbursement" method="GET">
-                                            <label for="submit_new_reimbursement" class="nav-label">Submit A New Reimbursement</label>
-                                            <button id="submit_new_reimbursement" name="submit_new_reimbursement" class="nav-link"
-                                                type="submit">
+                                        <form action="../NewReimbursement" method="post" enctype="multipart/form-data">
+                                            <label for="goto_all_reimbursements" class="nav-label" >Valid Expenses</label>
+                                            <button id="goto_all_reimbursements" name="goto_all_reimbursements" class="nav-link" type="submit" disabled>
                                         </form>
                                     </li>
                                     <li class="nav-item active">
-                                        <form action="../EmployeeLogin" method="post">
-                                            <label for="logout" class="nav-label">Logout</label>
-                                            <button id="logout" name="logout" class="nav-link nav-link-btn" type="submit">
+                                        <form action="../NewReimbursement" method="GET" enctype="multipart/form-data">
+                                            <label for="submit_new_reimbursement" class="nav-label">Contact Administrator</label>
+                                            <button id="submit_new_reimbursement" name="submit_new_reimbursement" class="nav-link" type="submit" disabled>
+                                        </form>
+                                    </li>
+                                    <li class="nav-item active">
+                                        <form action="../EmployeeLogin" method="post" enctype="multipart/form-data">
+                                            <label for="about" class="nav-label">About</label>
+                                            <button id="about" name="about" class="nav-link" type="submit" disabled>
                                         </form>
                                     </li>
                                 </ul>
                             </div>
                         </li>
 
-                        <li class="nav-item active last-child">
-                            <label for="contact"><a href="#">Reimbursement Info</a></label>
-                            <button id="contact" name="contact" class="nav-link" type="submit">
+                        <li class="nav-item">
+                            <form action="../ManagerLogin" method="post" enctype="multipart/form-data">
+                                <label for="logout" class="nav-label" style="margin-left:10px">Logout</label>
+                                <button id="logout" name="logout" class="nav-link" type="submit">
+                            </form>
                         </li>
                         <li class="nav-item active last-child">
-                            <label for="contact"><a href="#">Contact Support</a></label>
-                            <button id="contact" name="contact" class="nav-link" type="submit">
+                            <form action="../EmployeeLogin" method="post" enctype="multipart/form-data">
+                                <label for="employee_login" class="nav-label">Submit A Ticket</label>
+                                <button id="employee_login" name="employee_login" class="nav-link" type="submit" disabled>
+                            </form>
                         </li>
 
                         <!--  Don't Delete - Somehow Search Is Centered w/o -->
@@ -98,17 +97,17 @@
                 </div>
             </nav>
 
-            <div class="all-reimbursements-view jumbotron-fluid wrapper text-center">
-                <div class="all-reimbursements-view container outer">
-                    <div class="jumbotron-fluid container-fluid title-container">
+            <div class="manager-all-reimbursements-view jumbotron-fluid wrapper text-center">
+                <div class="manager-all-reimbursements-view container outer">
+                    <div class="jumbotron-fluid container-fluid manager-title-container">
                         <h1 id="all-reimbursements-title">Past Expense Reimbursements</h1>
                     </div>
-                    <div class="jumbotron-fluid container-fluid card-container">
+                    <div class="jumbotron-fluid container-fluid manager-card-container">
                         <div id="reimbursement-cards">
-
+                             <!-- All Reimbursements Injected Here From JS -->
                         </div>
                     </div>
-                        <!-- All Reimbursements Injected Here From JS -->
+                         <!-- Anything Go Here? -->
                     </div> 
                 </div>
             </div>
@@ -122,7 +121,7 @@
             <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
                 crossorigin="anonymous"></script>
             <script src="../js/node_modules/sweetalert2/dist/sweetalert2.all.min.js"></script>
-            <script src="../js/all_reimbursements.js"></script>
+            <script src="../js/manager_resolve.js"></script>
     </body>
 
 </html>

@@ -50,7 +50,7 @@
                                         </li>
                                         <li class="nav-item active">
                                             <form action="../NewReimbursement" method="GET" enctype="multipart/form-data">
-                                                <label for="submit_new_reimbursement" class="nav-label">Contact Support</label>
+                                                <label for="submit_new_reimbursement" class="nav-label">Contact Administrator</label>
                                                 <button id="submit_new_reimbursement" name="submit_new_reimbursement" class="nav-link" type="submit" disabled>
                                             </form>
                                         </li>
@@ -65,15 +65,15 @@
                             </li>
        
                             <li class="nav-item">
-                                <form action="../EmployeeLogin" method="post" enctype="multipart/form-data">
-                                    <label for="logout" class="nav-label" style="margin-left:10px">Can't Log In?</label>
-                                    <button id="logout" name="logout" class="nav-link" type="submit" disabled>
+                                <form action="../ManagerLogin" method="post" enctype="multipart/form-data">
+                                    <label for="logout" class="nav-label" style="margin-left:10px">Logout</label>
+                                    <button id="logout" name="logout" class="nav-link" type="submit">
                                 </form>
                             </li>
                             <li class="nav-item active last-child">
                                 <form action="../EmployeeLogin" method="post" enctype="multipart/form-data">
-                                    <label for="employee_login" class="nav-label">Employee Portal</label>
-                                    <button id="employee_login" name="employee_login" class="nav-link" type="submit">
+                                    <label for="employee_login" class="nav-label">Submit A Ticket</label>
+                                    <button id="employee_login" name="employee_login" class="nav-link" type="submit" disabled>
                                 </form>
                             </li>
 
@@ -94,7 +94,8 @@
         
             <div class="jumbotron-fluid text-center manager-table-view" id="employee-login-form-container">
 				<div class="manager-table-view fluid-container">
-					<form action="../EmployeeLogin" method="post" enctype="multipart/form-data">
+					<h1 class="text-center" style="padding-bottom: 5px">Select Employee</h1>
+					<form action="../ManagerResolve" method="get" enctype="multipart/form-data">
 						<table class="tablelistjs" id="entries">
 							<thead>
 								<tr class="column-headers">
@@ -112,12 +113,12 @@
 						<br>
 					
 						<div class="table-buttons" style="margin-bottom:5px">
-								<button name="edit_selected_id" class="btn btn-primary" id="edit_selected_id" type=submit name=action value="Modify" tabindex="2">
-										Edit
-									</button>
-									<button name="view_selected_id" class="btn btn-primary" id="view_selected_id" type=submit tabindex="3">
-										View Reimbursements
-									</button>
+							<button name="edit_selected_id" class="btn btn-light" id="edit_selected_id" type=submit tabindex="2">
+								Edit
+							</button>
+							<button name="view_selected_id" class="btn btn-light" id="view_selected_id" onclick="postSelected()" tabindex="3">
+								View Reimbursements
+							</button>
 						</div>
 					</form>
 				</div>

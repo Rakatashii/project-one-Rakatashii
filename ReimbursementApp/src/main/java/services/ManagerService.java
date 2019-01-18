@@ -2,7 +2,9 @@ package services;
 
 import java.util.ArrayList;
 
+import dao.EmployeeDAO;
 import dao.ManagerDAO;
+import employees.Employee;
 import managers.Manager;
 
 public class ManagerService {
@@ -29,5 +31,9 @@ public class ManagerService {
 	}
 	public static void logoutManager() {
 		loggedInManager = null;
+	}
+	public Employee getSelectedEmployee(int id){
+		EmployeeDAO employeeDAO = new EmployeeDAO();
+		return employeeDAO.getEmployeeByID(id);
 	}
 }

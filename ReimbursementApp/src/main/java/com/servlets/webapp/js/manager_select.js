@@ -4,6 +4,7 @@ var logout;
 var manager_logged_in;
 var submission_response;
 var submission_response_type;
+var selected_id;
 
 set_vars();
 
@@ -76,7 +77,18 @@ function set_vars() {
         qvals[i] = keyvals[i][1];
         qmap.set(qkeys[i], qvals[i])
     }
-    if (qmap.has('username')) username = qmap.get('username');
+    if (qmap.has('username')){
+        username = qmap.get('username');
+        let temp = username.charAt(0).toUpperCase() + username.slice(1);
+        var firstChild = document.getElementById('dropdown-list').firstElementChild;
+        if (!firstChild.classList.contains('welcome')){
+            userListItem = document.createElement('li');
+            userListItem.className = 'dropdown-header welcome';
+            userListItem.innerHTML = `<h4 class='nav-label text-center' >Welcome ${temp}<\h4>`;
+            dropdown = document.getElementById('dropdown-list');
+            dropdown.insertBefore(userListItem, firstChild);
+        }
+    }
     if (qmap.has('password')) password = qmap.get('password');
     if (qmap.has('remember_manager')) remember_manager = qmap.get('remember_manager');
     if (qmap.has('logout')) logout = qmap.get('logout');
@@ -96,6 +108,7 @@ function get_customer_info() {
             employees = JSON.parse(xhr.responseText)
             if (employees.length == 0) {
                 document.getElementById('all_employees_table').innerHTML = 'No Records Were Found'
+                console.log('Success in ManagerSelect(but no results were found)');
                 return;
             } else {
                 rows = [];
@@ -118,9 +131,10 @@ function get_customer_info() {
                 //tb = document.getElementById("table-body");
                 //targetChild = tb.firstElementChild.firstElementChild.nextElementSibling;
                 //targetChild.className += "focused";
+                console.log('Success in Post to ManagerSelect');
             }
         } else {
-            data = 'Error'
+            console.log('Error in Post to ManagerSelect');
         }
     }
     xhr.open('POST', 'http://localhost:8080/Reimbursements/ManagerSelect', true);
@@ -135,15 +149,15 @@ function addRow(col1, width1,
     if (!document.getElementsByTagName) {
         return;
     }
-    var x = document.getElementById("entries").rows.length;
+   // var x = document.getElementById("entries").rows.length;
     tabBody=document.getElementsByTagName("tbody").item(0);
     row=document.createElement("tr");
-    x =`employee${col1}`
+    x = col1
     row.id = x
     $(`#${x}`).keyup(function(event) {
         if (event.keyCode === 13) {
-            $("#view_selected_id").click();
-            $("#view_selected_id").submit();
+            $("#selected_id").click();
+            $("#selected_id").submit();
         }
     });
     cell1 = document.createElement("td");
@@ -215,17 +229,20 @@ function tableHighlightRow() {
                                 
                                 this.className='clicked';
 
+                                last_clicked_element=this;
+
                                 if (document.getElementsByClassName('clicked').length > 1){
                                     document.getElementsByClassName('clicked')[0].className = ' ';
                                 }
 
                                 redirect_on_enter((document.getElementsByClassName('clicked')[0].id));
                                
-                               
                                 selected = this;
+                                selected_id = selected.id;
                             } else {
                                 this.className='';
                                 selected = null;
+                                selected_id = -1;
                             } 
                             return true
                         }
@@ -282,3 +299,75 @@ $(document).keydown(
         }
     }
 );
+
+function ensureSelected(){
+    if (selected != undefined && selected != null){
+        return true;
+    } else {
+        setTimeout(swal({
+            type: 'error',
+            title: 'Error',
+            text: 'No Employee Selected'
+        }), 2000);
+        return false;
+    }
+}
+
+/*
+function postSelected(){
+    var data;
+    if (ensureSelected()) data = JSON.stringify({'selected_id': new Number(selected_id)});
+    else return false;
+    returnString = window.location.search.substring(1) + "&selected_id=" + selected_id;
+    xhr = new XMLHttpRequest();
+    xhr.responseType = 'json';
+    xhr.onreadystatechange = function () {
+        if (this.readyState === 4 && this.status === 200) {
+            console.log('Success in Post to ManagerResolve')
+        } else {
+            console.log('Error! in Post to ManagerResolve')
+        }
+    }
+    xhr.open('POST', 'http://localhost:8080/Reimbursements/ManagerResolve', true);
+    xhr.setRequestHeader("json", "http://localhost:8080/Reimbursements/views/json/manager_select_info.json");
+    xhr.send(data);
+    //'http://localhost:8080/Reimbursements/ManagerResolve'
+}
+*/
+
+function postSelected() {
+    var xhr = new XMLHttpRequest();
+    var urlEncodedData = "";
+    var urlEncodedDataPairs = [];
+  
+    // Turn the data object into an array of URL-encoded key/value pairs.
+    urlEncodedDataPairs.push(encodeURIComponent('selected_id') + '=' + encodeURIComponent(selected_id));
+    urlEncodedData = urlEncodedDataPairs.join('&').replace(/%20/g, '+');
+  
+    // Success
+    xhr.addEventListener('load', function(event) {
+        console.log('Success')
+        /*
+        swal({
+            type: 'success',
+            title: 'Success',
+            text: 'Redirecting...'
+        })
+        */
+    });
+  
+    // Error
+    xhr.addEventListener('error', function(event) {
+        swal({
+            type: 'error',
+            title: 'Error',
+            text: 'Something Went Wrong.'
+        })
+    });
+    xhr.open('POST', 'http://localhost:8080/Reimbursements/ManagerResolve');
+  
+    //xhr.setRequestHeader("Content-Type","multipart/form-data");
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+  
+    xhr.send(urlEncodedData);
+  }
