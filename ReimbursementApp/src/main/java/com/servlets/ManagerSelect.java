@@ -26,7 +26,7 @@ public class ManagerSelect extends HttpServlet implements ServletInterface{
 	private static final long serialVersionUID = 1L;
 	ManagerLogin managerLogin;
 	
-	protected final static String url = "/Reimbursements/views/404.html";
+	protected final static String url = "/Reimbursements/views/manager_select.html";
 	private ArrayList<String> params = new ArrayList<>();
 	private String fullUrl;
 	ServletHelper servletHelper = new ServletHelper();
@@ -58,15 +58,6 @@ public class ManagerSelect extends HttpServlet implements ServletInterface{
 		    response.setCharacterEncoding("UTF-8");
 		    response.getWriter().write(json);
 		    */
-			
-			EmployeeDAO employeeDAO = new EmployeeDAO();
-			ArrayList<Employee> employees = employeeDAO.getAllEmployees();
-			
-			String json = new Gson().toJson(employees);
-			
-		    response.setContentType("application/json");
-		    response.setCharacterEncoding("UTF-8");
-		    out.write(json);
 			
 			response.sendRedirect(fullUrl); // Need? Problems?
 			return;
@@ -103,6 +94,15 @@ public class ManagerSelect extends HttpServlet implements ServletInterface{
 		PrintWriter out = response.getWriter();
 		
 		HttpSession session = request.getSession(false);
+		
+		EmployeeDAO employeeDAO = new EmployeeDAO();
+		ArrayList<Employee> employees = employeeDAO.getAllEmployees();
+		
+		String json = new Gson().toJson(employees);
+		
+	    response.setContentType("application/json");
+	    response.setCharacterEncoding("UTF-8");
+	    out.write(json);
 		
 		if (request.getParameter("selected_employee_id") != null) {
 			//currentEmployee = new Employee(Integer.parseInt(""))

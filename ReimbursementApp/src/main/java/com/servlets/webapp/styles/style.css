@@ -556,9 +556,71 @@ div.last.item2{
     }
 }
 
+/* MANAGER SELECT */
 
+.jumbotron-fluid.manager-table-view {
+    margin-top: 20px;
+    margin-bottom: 20px;
 
+    height: 100%;
+    width: 100%;
 
+    background-color: rgba(47, 133, 167, 0.0);
+}
+
+.manager-table-view.fluid-container {
+    display: inline-block;
+
+    padding: 20px 2.5% 20px 2.5%;
+    margin-top: 5px;
+    margin-bottom: 40px;
+
+    align-content:center;
+    
+    /* max-width: 1386px; */
+    width: 80%;
+
+    background-color:rgba(47, 133, 167, 0.6);
+}
+table {
+    background-color: rgba(12, 84, 112, 0.966);
+    width: 100%;
+}
+tbody {
+    background-color: #fff;
+    height: 150px;
+    overflow: auto;
+    color: black;
+    width: 100%;
+}
+td {
+    padding: 3px 10px;
+    color: black;
+}
+.column-headers{
+    color: white;
+}
+tr {
+    color: black;
+    width: 100%;
+}
+#column-headers > td{
+    color: white;
+}
+
+thead > tr, tbody{ 
+    width: 100%;
+}
+ 
+#entries tr.clicked { 
+    background: rgb(47, 187, 187); 
+}
+#entries tr.highlight { 
+    background: rgb(43, 156, 160); 
+}
+#entries tr.focusable { 
+    background: rgb(141, 32, 32); 
+}
 
 
 

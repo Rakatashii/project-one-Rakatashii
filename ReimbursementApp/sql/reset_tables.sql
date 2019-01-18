@@ -10,6 +10,10 @@ CREATE TABLE employees (
 	num_reimbursements INTEGER CONSTRAINT Invalid_Number_Of_Reimbursements CHECK (num_reimbursements >= 0)
 );
 INSERT INTO employees VALUES(0, 'employee', 'password', 'Randy', 'Montana', 0);
+INSERT INTO employees VALUES(1, 'Jstunna', 'drstunna', 'json', 'soffer', 0);
+INSERT INTO employees VALUES(2, 'bearo', 'jacksonh', 'john', 'leary', 0);
+INSERT INTO employees VALUES(3, 'tcracken', 'lauren', 'Trever', 'McCracken', 0);
+INSERT INTO employees VALUES(4, 'HarrisV', 'password', 'nathn', 'VH', 0);
 
 CREATE TABLE reimbursements (
 	employee_id INTEGER CONSTRAINT Invalid_Employee_ID CHECK (employee_id >= 0) REFERENCES employees(employee_id), 

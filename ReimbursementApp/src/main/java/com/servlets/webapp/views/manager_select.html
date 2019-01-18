@@ -91,11 +91,36 @@
                     </form>
                 </div>
             </nav>
-
-            <div id="popup_spot"></div>
         
-            <div class="jumbotron-fluid text-center employee-login" id="employee-login-form-container">
-                <!-- Manager Select Code Inserted Here -->
+            <div class="jumbotron-fluid text-center manager-table-view" id="employee-login-form-container">
+				<div class="manager-table-view fluid-container">
+					<form action="../EmployeeLogin" method="post" enctype="multipart/form-data">
+						<table class="tablelistjs" id="entries">
+							<thead>
+								<tr class="column-headers">
+									<td width='150px' class="column-headers">Employee ID</td>
+									<td width='150px' class="column-headers">Username</td>
+									<td width='150px' class="column-headers">First Name</td>
+									<td width='150px' class="column-headers">Last Name</td>
+									<td width='150px' class="column-headers">Number Of Reimbursements</td>
+								</tr>
+							</thead>
+							<tbody>
+								
+							</tbody>
+						</table>
+						<br>
+					
+						<div class="table-buttons" style="margin-bottom:5px">
+								<button name="edit_selected_id" class="btn btn-primary" id="edit_selected_id" type=submit name=action value="Modify" tabindex="2">
+										Edit
+									</button>
+									<button name="view_selected_id" class="btn btn-primary" id="view_selected_id" type=submit tabindex="3">
+										View Reimbursements
+									</button>
+						</div>
+					</form>
+				</div>
             </div>
         </div>
         
