@@ -4,11 +4,8 @@
 # Project
 /src/main/webapp/images/backgrounds/
 /src/main/webapp/images/P1Icons/
-/src/main/webapp/uploads/
-/src/main/webapp/images/P1Icons/
-/src/main/webapp/js/node_modules/
-/src/main/webapp/package-lock.json
-/preferences/
+#/src/main/webapp/uploads/
+#/preferences/
 
 ### Java ###
 # Compiled class file

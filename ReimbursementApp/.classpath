@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry excluding="com/servlets/webapp/images/|com/servlets/webapp/images/backgrounds/|com/servlets/webapp/images/P1Icons/|com/servlets/webapp/images/receipts/|com/servlets/webapp/img/|com/servlets/webapp/js/|com/servlets/webapp/js/node_modules/sweetalert2/|com/servlets/webapp/js/node_modules/sweetalert2/dist/|com/servlets/webapp/js/node_modules/sweetalert2/src/|com/servlets/webapp/js/node_modules/sweetalert2/src/enhancers/|com/servlets/webapp/js/node_modules/sweetalert2/src/instanceMethods/|com/servlets/webapp/js/node_modules/sweetalert2/src/staticMethods/|com/servlets/webapp/js/node_modules/sweetalert2/src/utils/|com/servlets/webapp/js/node_modules/sweetalert2/src/utils/dom/|com/servlets/webapp/js/node_modules/sweetalert2/src/utils/dom/renderers/|com/servlets/webapp/styles/|com/servlets/webapp/uploads/|com/servlets/webapp/views/" kind="src" output="target/classes" path="src/main/java">
+	<classpathentry kind="src" output="target/classes" path="src/main/java">
 		<attributes>
 			<attribute name="optional" value="true"/>
 			<attribute name="maven.pomderived" value="true"/>

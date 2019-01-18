@@ -66,20 +66,19 @@ public class ReimbursementService {
 			this.image.setEmployeeID(reimbursement.getEmployeeID());
 			this.image.setReimbursementID(reimbursement.getReimbursementID());
 			
-			/* NEED THIS IN EITHER CASE... */
+			//boolean fileWasCreated = this.image.uploadLocalFile();
+			
 			imageDAOResponse = imageDAO.addImage(this.image);
 			if (imageDAOResponse == null) {
 				
-				/*
-				boolean fileWasCreated = this.image.uploadLocalFile();
 				System.out.println("IN ReimbursementService: " + this.image);
+				/*
 				if (!fileWasCreated) {
 					buttonType = "error";
 					imageDAOResponse = "Image Already Exists In Database";
 					return false;
 				}
-				*/ 
-				
+				*/
 				System.out.println("imageDAOResponse = " + ((imageDAOResponse != null) ? imageDAOResponse : "null"));
 				buttonType = "success";
 				return true;

@@ -35,7 +35,7 @@ public class ImageDAO {
 			ps = connection.prepareStatement(sql);
 			
 			try {
-				if (image.hasImageFile()) {
+				if (image.hasImageFile() && !image.getImageFile().isDirectory()) {
 					if (image.getImageFile() != null && image.getImageName() != null) {
 						
 						FileInputStream fin = new FileInputStream(image.getImageFile());
@@ -59,6 +59,9 @@ public class ImageDAO {
 				}
 				ps.close();
 				return "System Error";
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+				return "File Not Found";
 			} catch (IOException e) {
 				e.printStackTrace(); System.out.println();
 				if (reimbursementID >= 0) {

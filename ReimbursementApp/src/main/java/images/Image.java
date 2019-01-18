@@ -8,9 +8,20 @@ import java.io.OutputStream;
 import java.io.Serializable;
 import java.util.Arrays;
 
+
 public class Image {
 
-	public static final String UPLOAD_DIRECTORY = "C:\\Users\\Associate\\java\\project-one-Rakatashii\\ReimbursementApp\\src\\main\\webapp\\uploads\\";
+	//public static final String UPLOAD_DIRECTORY = "C:\\Users\\Associate\\java\\project-one-Rakatashii\\ReimbursementApp\\src\\main\\webapp\\uploads\\";
+	//UPLOAD_DIRECTORY = "/Reimbursements/src/main/java/com/servlets/webapp/uploads/";
+	//public static final String UPLOAD_DIRECTORY = "/Reimbursements/src/main/java/com/servlets/webapp/uploads/";
+	public static final String UPLOAD_DIRECTORY = "/Reimbursements/src/main/java/com/servlets/webapp/uploads/";
+	/*
+	static {
+		File dir = new File(UPLOAD_DIRECTORY);
+		if (!dir.exists() || !dir.isDirectory()) dir.mkdirs();
+	}
+	*/
+	
 	private int employeeID, reimbursementID;
 	private String imageName;
 	private String relativePath;
@@ -80,7 +91,7 @@ public class Image {
 		this.imageSize = imageSize;
 		if (this.imageSize > 0) {
 			fileNotEmpty = true;
-			//uploadLocalFile();
+			uploadLocalFile();
 		}
 	}
 
@@ -162,11 +173,16 @@ public class Image {
 	}
 
 	public boolean uploadLocalFile() {
-		if (!imageFile.exists()) {
+		if (!imageFile.exists() || imageFile.isDirectory()) {
 			try {
-				imageFile.createNewFile();
-				System.out.println("Image File Was Created.");
-				return true;
+				if (imageFile.createNewFile()) {
+					System.out.println("Image File Was Created.");
+					return true;
+				} else {
+					System.out.println("Image File Was Created.");
+					System.out.println("Unable To Create New File With Path Specified: " + imageName);
+					return false;
+				}
 			} catch (IOException e) {
 				System.out.println("Unable To Create New File With Path Specified: " + imageName);
 				e.printStackTrace(); System.out.println();
@@ -178,7 +194,8 @@ public class Image {
 		} 
 	}
 	public void setFieldsWithInputStream() {
-		if (imageName == null || imageName.length() == 0 || !imageName.contains(UPLOAD_DIRECTORY)) {
+		if (imageName == null) return;
+		if (imageName.length() == 0 || !imageName.contains(UPLOAD_DIRECTORY)) {
 			imageName = UPLOAD_DIRECTORY + this.imageName.replaceAll("[ ]+", "");
 			imageFile = new File(imageName);
 		}
@@ -199,6 +216,9 @@ public class Image {
 			} catch (IOException e) {
 				e.printStackTrace(); System.out.println();
 			}
+		}
+		else {
+			uploadLocalFile();
 		}
 	}
 	

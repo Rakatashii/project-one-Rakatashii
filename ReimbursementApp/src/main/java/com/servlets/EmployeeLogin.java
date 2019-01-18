@@ -25,6 +25,7 @@ public class EmployeeLogin extends HttpServlet implements ServletInterface {
 	private Employee loggedInEmployee = null;
 	NewReimbursement newReimbursementServlet;
 	
+	
 	protected final static String url = "/Reimbursements/views/employee_login.html";
 	protected ArrayList<String> params = new ArrayList<>();
 	private String fullUrl;
@@ -35,7 +36,7 @@ public class EmployeeLogin extends HttpServlet implements ServletInterface {
     public EmployeeLogin() {
     	newReimbursementServlet = new NewReimbursement();
     }
-	
+    
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html");
